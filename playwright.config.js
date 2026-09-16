@@ -1,19 +1,25 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
+import {defineBddConfig, cucumberReporter} from 'playwright-bdd';
 
+const testDir =defineBddConfig({
+  features:['features/**.feature'],
+  steps:['steps/**.js'],
+});
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+ import dotenv from 'dotenv';
+ import path from 'path';
+ dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  testDir: './test',
+  //testDir: './tests',
+  testDir,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
