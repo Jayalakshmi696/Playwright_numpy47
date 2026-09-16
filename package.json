@@ -18,6 +18,10 @@
   "homepage": "https://github.com/Jayalakshmi696/Playwright_numpy47#readme",
   "devDependencies": {
     "@playwright/test": "^1.63.0",
-    "@types/node": "^26.5.0"
+    "@types/node": "^26.5.0",
+    "playwright-bdd": "^9.2.1"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }
