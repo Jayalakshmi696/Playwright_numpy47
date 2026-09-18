@@ -1,0 +1,36 @@
+{
+  "emptyUsername": {
+    "username": "",
+    "password": "will",
+    "expectedResult": "Missing required field"
+  },
+  "emptyPassword": {
+    "username": "will",
+    "password": "",
+    "expectedResult": "Missing required field"
+  },
+  "emptyUsernameAndPassword": {
+    "username": "",
+    "password": "",
+    "expectedResult": "Missing required field"
+  },
+   "invalidUsername": {
+    "username": "invaliduser",
+    "password": "will"
+    
+  },
+   "invalidPassword": {
+    "username": "will",
+    "password": "invalidpass"    
+  },
+  "invalidUsernameAndPassword": {
+    "username": "invaliduser",
+    "password": "invalidpass"
+   
+  },
+  "validUsernameAndPassword": {
+    "username": "will",
+    "password": "will"
+    
+  }
+}
