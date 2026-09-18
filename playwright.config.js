@@ -1,26 +1,35 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
 import {defineBddConfig} from 'playwright-bdd';
-const testDir =defineBddConfig({
-  features:['features/**.feature'],
-  steps:['step-definitions/**.js'],
-  });
 
+const testDir = defineBddConfig({
+  features: ['features/**.feature'],
+  steps: [
+    'steps/**/*.js',
+   ],
+  // importTestFrom: './fixtures/accountfixture.js',
+  // tags: '@validlogintest or @Accounts or @invalidlogintest',
+});
+
+// const testDir =defineBddConfig({
+// features:'features/**/*.feature',
+//  steps:'steps/**/*.js',
+//  });
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-import dotenv from 'dotenv';
-import path from 'path';
-dotenv.config({ path: path.resolve(__dirname, 'QA.env') });
+// import dotenv from 'dotenv';
+// import path from 'path';
+// dotenv.config({ path: path.resolve(__dirname, 'QA.env') });
 
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  testDir: './tests',
- // testDir,
+  //testDir: './tests',
+ testDir,
   /* Run tests in files in parallel */
  
   fullyParallel: true,
