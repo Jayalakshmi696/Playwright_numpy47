@@ -1,11 +1,12 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
-import {defineBddConfig} from 'playwright-bdd';
-const testDir =defineBddConfig({
-  features:['features/**.feature'],
-  steps:['step-definitions/**.js'],
-  });
-
+import { defineBddConfig, cucumberReporter } from 'playwright-bdd'; 
+ 
+const testDir = defineBddConfig({
+  features: ['features/**/*.feature'],
+  steps: 'steps/**/*.js',
+  tags : '@calendar or @document or @more',
+});
 
 /**
  * Read environment variables from file.
@@ -19,10 +20,9 @@ dotenv.config({ path: path.resolve(__dirname, 'QA.env') });
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  testDir: './tests',
- // testDir,
+  //testDir: './test',
+  testDir,
   /* Run tests in files in parallel */
- 
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
