@@ -1,5 +1,5 @@
 // Generated from: features\loginPageUI.feature
-import { test } from "playwright-bdd";
+import { test } from "../../fixtures/loginFixture.js";
 
 test.describe('Login Page UI Verification', () => {
 

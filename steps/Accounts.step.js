@@ -1,28 +1,44 @@
 import { createBdd } from 'playwright-bdd';
+import { test} from '../fixtures/loginFixture.js';
 import { expect } from '@playwright/test';
-const { Given, When, Then } = createBdd();
+//import { expect } from '@playwright/test';
+const { Given, When, Then } = createBdd(test);
 
-When('the user clicks on Accounts module from left navigation', async ({}) => {
+When('the user clicks on Accounts module from left navigation', async ({accountsPage }) => {
   // Step: When the user clicks on Accounts module from left navigation
   // From: features\Accounts.feature:13:5
+  await accountsPage.clickAccountsModule(); 
+  
 });
 
-Then('the user should be navigated to Accounts Dashboard page and should see the list in dropdown', async ({}, dataTable) => {
+Then('the user should be navigated to Accounts Dashboard page and should see the list in dropdown', async ({accountsPage,loggedInPage}, dataTable) => {
   // Step: Then the user should be navigated to Accounts Dashboard page and should see the list in dropdown
   // From: features\Accounts.feature:14:5
-});
+       // Verify Accounts Dashboard
+    await accountsPage.verifyAccountsDashboard();
 
-When('the user clicks on Create Account from dropdown', async ({}) => {
-  // Step: When the user clicks on Create Account from dropdown
+    for (const [label] of dataTable.raw()) {
+      await expect(
+        loggedInPage.getByRole('link', { name: label, exact: true })
+      ).toBeVisible();
+    }
+  });
+
+When('the user opens Accounts module and clicks Create Account', async ({accountsPage}) => {
+  // Step: When the user opens Accounts module and clicks Create Account
   // From: features\Accounts.feature:21:5
+  await accountsPage.clickAccountsModule();
+  await accountsPage.clickCreateAccount();
+ 
 });
 
-Then('the user should be navigated to Create Account page', async ({}) => {
+Then('the user should be navigated to Create Account page', async ({accountsPage}) => {
   // Step: Then the user should be navigated to Create Account page
   // From: features\Accounts.feature:22:5
+   await accountsPage.verifyCreateAccountPage();
 });
 
-Given('User is on Create Account page', async ({}) => {
+Given('User is on Create Account page', async ({accountsPage}) => {
   // Step: Given User is on Create Account page
   // From: features\Accounts.feature:25:5
 });

@@ -8,19 +8,20 @@ Feature:Accounts module functionality of suite8demo application
   Background:
     Given User successfully logged into the suite8demo application
     
-@Accounts
+@Accounts1
   Scenario: Verify Accounts module navigation
     When the user clicks on Accounts module from left navigation
     Then the user should be navigated to Accounts Dashboard page and should see the list in dropdown
          |Create Account|
          |Import Accounts|
          |View Accounts|
-         |Recently Viewed|
-
+              
+@Accounts2
   Scenario: Verify Create Account page navigation
-    When the user clicks on Create Account from dropdown
+    When the user opens Accounts module and clicks Create Account
     Then the user should be navigated to Create Account page
-
+    
+@CreateAccount
    Scenario: Verify Create Account page validation
     Given User is on Create Account page
     When User clicks the save button without entering mandatory fields
