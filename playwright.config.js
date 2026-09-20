@@ -10,8 +10,9 @@ const testDir = defineBddConfig({
     ],
     importTestFrom: './fixtures/loginFixture.js',
   //tags: '@Login1 or @Accounts1'
-  // importTestFrom: './fixtures/accountfixture.js',
-  // tags: '@validlogintest or @Accounts or @invalidlogintest',
+  // importTestFrom: './fixtures/accountfixture.js'
+   tags : '@calendar or @document or @more',
+
 });
 
 /**
