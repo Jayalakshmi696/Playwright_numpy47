@@ -1,12 +1,13 @@
 import { createBdd } from 'playwright-bdd';
 import { expect } from '@playwright/test';
+import { test } from '../fixtures/loginFixture.js';
 import testData from '../test-data/loginData.json' with {
   type: 'json'
 };
 
 import { LoginPage } from '../pages/LoginPage.js';
 
-const { Given, When, Then } = createBdd();
+const { Given, When, Then } = createBdd(test);
 //const { LoginPage } = require('../pages/LoginPage').default;
 
 Given('User is on suite8demo login page', async ({page}) => {
