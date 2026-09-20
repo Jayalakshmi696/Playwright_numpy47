@@ -1,4 +1,4 @@
-// Generated from: features/calendar/createTask.feature
+// Generated from: features\calendar\createTask.feature
 import { test } from "playwright-bdd";
 
 test.describe('Create Task page', () => {
@@ -67,7 +67,7 @@ test.describe('Create Task page', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/calendar/createTask.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\calendar\\createTask.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

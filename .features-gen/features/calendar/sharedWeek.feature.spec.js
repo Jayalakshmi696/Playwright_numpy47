@@ -1,4 +1,4 @@
-// Generated from: features/calendar/sharedWeek.feature
+// Generated from: features\calendar\sharedWeek.feature
 import { test } from "playwright-bdd";
 
 test.describe('Calendar shared week View', () => {
@@ -69,7 +69,7 @@ test.describe('Calendar shared week View', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/calendar/sharedWeek.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\calendar\\sharedWeek.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

@@ -1,4 +1,4 @@
-// Generated from: features/calendar/weekView.feature
+// Generated from: features\calendar\weekView.feature
 import { test } from "playwright-bdd";
 
 test.describe('Calendar Week View', () => {
@@ -86,7 +86,7 @@ test.describe('Calendar Week View', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/calendar/weekView.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\calendar\\weekView.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

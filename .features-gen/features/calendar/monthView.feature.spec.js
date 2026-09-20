@@ -1,4 +1,4 @@
-// Generated from: features/calendar/monthView.feature
+// Generated from: features\calendar\monthView.feature
 import { test } from "playwright-bdd";
 
 test.describe('Calendar Month View', () => {
@@ -81,7 +81,7 @@ test.describe('Calendar Month View', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/calendar/monthView.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\calendar\\monthView.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

@@ -1,4 +1,4 @@
-// Generated from: features/calendar/calendarTopNavigation.feature
+// Generated from: features\calendar\calendarTopNavigation.feature
 import { test } from "playwright-bdd";
 
 test.describe('Calendar Module - View, Navigate and Create Activities', () => {
@@ -129,7 +129,7 @@ test.describe('Calendar Module - View, Navigate and Create Activities', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/calendar/calendarTopNavigation.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\calendar\\calendarTopNavigation.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

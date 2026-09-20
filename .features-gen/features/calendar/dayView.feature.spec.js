@@ -1,4 +1,4 @@
-// Generated from: features/calendar/dayView.feature
+// Generated from: features\calendar\dayView.feature
 import { test } from "playwright-bdd";
 
 test.describe('Calendar Day View', () => {
@@ -75,7 +75,7 @@ test.describe('Calendar Day View', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/calendar/dayView.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\calendar\\dayView.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

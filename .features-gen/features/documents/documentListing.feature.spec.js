@@ -1,4 +1,4 @@
-// Generated from: features/documents/documentListing.feature
+// Generated from: features\documents\documentListing.feature
 import { test } from "playwright-bdd";
 
 test.describe('Document listing', () => {
@@ -89,7 +89,7 @@ test.describe('Document listing', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/documents/documentListing.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\documents\\documentListing.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

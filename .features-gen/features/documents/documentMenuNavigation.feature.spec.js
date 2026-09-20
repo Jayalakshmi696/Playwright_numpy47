@@ -1,4 +1,4 @@
-// Generated from: features/documents/documentMenuNavigation.feature
+// Generated from: features\documents\documentMenuNavigation.feature
 import { test } from "playwright-bdd";
 
 test.describe('Document  Menu  Navigation', () => {
@@ -26,7 +26,7 @@ test.describe('Document  Menu  Navigation', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/documents/documentMenuNavigation.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\documents\\documentMenuNavigation.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

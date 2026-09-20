@@ -1,4 +1,4 @@
-// Generated from: features/calendar/ calendarSettings.feature
+// Generated from: features\calendar\ calendarSettings.feature
 import { test } from "playwright-bdd";
 
 test.describe('Calender Settings', () => {
@@ -70,7 +70,7 @@ test.describe('Calender Settings', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/calendar/ calendarSettings.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\calendar\\ calendarSettings.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

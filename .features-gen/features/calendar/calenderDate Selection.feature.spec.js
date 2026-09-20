@@ -1,4 +1,4 @@
-// Generated from: features/calendar/calenderDate Selection.feature
+// Generated from: features\calendar\calenderDate Selection.feature
 import { test } from "playwright-bdd";
 
 test.describe('Calender date Selection icon View', () => {
@@ -47,7 +47,7 @@ test.describe('Calender date Selection icon View', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/calendar/calenderDate Selection.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\calendar\\calenderDate Selection.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 
