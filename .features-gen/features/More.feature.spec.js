@@ -1,5 +1,5 @@
 // Generated from: features\More.feature
-import { test } from "playwright-bdd";
+import { test } from "../../fixtures/loginFixture.js";
 
 test.describe('More module dropdown list functionality of suite8demo application', () => {
 

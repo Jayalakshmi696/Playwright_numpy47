@@ -1,5 +1,5 @@
 // Generated from: features\login.feature
-import { test } from "playwright-bdd";
+import { test } from "../../fixtures/loginFixture.js";
 
 test.describe('Login functionality of suite8demo application', () => {
 

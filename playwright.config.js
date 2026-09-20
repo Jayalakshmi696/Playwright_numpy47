@@ -5,8 +5,11 @@ import {defineBddConfig} from 'playwright-bdd';
 const testDir = defineBddConfig({
   features: ['features/**.feature'],
   steps: [
-    'steps/**/*.js',
-   ],
+     'steps/**/*.js',
+    'fixtures/**/*.js'
+    ],
+    importTestFrom: './fixtures/loginFixture.js',
+  //tags: '@Login1 or @Accounts1'
   // importTestFrom: './fixtures/accountfixture.js',
   // tags: '@validlogintest or @Accounts or @invalidlogintest',
 });
@@ -28,7 +31,7 @@ const testDir = defineBddConfig({
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  //testDir: './tests',
+  //testDir: './features-gen',
  testDir,
   /* Run tests in files in parallel */
  
