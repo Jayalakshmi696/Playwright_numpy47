@@ -30,6 +30,11 @@ export class LoginPage {
 //     this.errorMessage = page.getByText(/Missing required field|failed login attempts|error/i);
 //   }
 
+async login(username, password) {
+    await this.usernameInput.fill(username);
+    await this.passwordInput.fill(password);
+    await this.loginButton.click();
+  }
 
   
   }

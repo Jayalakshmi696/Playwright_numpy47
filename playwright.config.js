@@ -3,9 +3,15 @@ import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig, cucumberReporter } from 'playwright-bdd'; 
  
 const testDir = defineBddConfig({
-  features: ['features/**/*.feature'],
-  steps: 'steps/**/*.js',
-  tags : '@calendar or @document or @more',
+  features: ['features/**.feature'],
+  steps: [
+     'steps/**/*.js',
+    'fixtures/**/*.js'
+    ],
+    importTestFrom: './fixtures/loginFixture.js',
+  //tags: '@Login1 or @Accounts1'
+  // importTestFrom: './fixtures/accountfixture.js',
+  // tags: '@validlogintest or @Accounts or @invalidlogintest',
 });
 
 /**
@@ -20,8 +26,8 @@ const testDir = defineBddConfig({
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  //testDir: './test',
-  testDir,
+  //testDir: './features-gen',
+ testDir,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
