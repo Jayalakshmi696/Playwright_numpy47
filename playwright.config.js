@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
-import {defineBddConfig} from 'playwright-bdd';
-
+import { defineBddConfig, cucumberReporter } from 'playwright-bdd'; 
+ 
 const testDir = defineBddConfig({
   features: ['features/**.feature'],
   steps: [
@@ -13,11 +13,6 @@ const testDir = defineBddConfig({
   // importTestFrom: './fixtures/accountfixture.js',
   // tags: '@validlogintest or @Accounts or @invalidlogintest',
 });
-
-// const testDir =defineBddConfig({
-// features:'features/**/*.feature',
-//  steps:'steps/**/*.js',
-//  });
 
 /**
  * Read environment variables from file.
@@ -34,7 +29,6 @@ export default defineConfig({
   //testDir: './features-gen',
  testDir,
   /* Run tests in files in parallel */
- 
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
