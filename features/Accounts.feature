@@ -26,7 +26,7 @@ Feature:Accounts module functionality of suite8demo application
     Given User is on Create Account page
     When User clicks the save button without entering mandatory fields
     Then User should see the error message "Missing required field: Name"
-
+@validDataCreateAccount
     Scenario: Verify Create Account page with valid data
     Given User is on Create Account page
     When User enters valid data in all mandatory fields and clicks save button
