@@ -16,7 +16,7 @@ export class AccountsPage {
 
 
     async clickAccountsModule() {
-
+     await expect(this.accountsMenu).toBeVisible();
     await this.accountsMenu.click();
     await expect(this.createAccount).toBeVisible();
   }

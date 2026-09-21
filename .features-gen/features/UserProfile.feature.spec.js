@@ -1,5 +1,5 @@
 // Generated from: features\UserProfile.feature
-import { test } from "../../fixtures/loginFixture.js";
+import { test } from "playwright-bdd";
 
 test.describe('User Profile functionality of suite8demo application', () => {
 
