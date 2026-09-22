@@ -1,6 +1,12 @@
 import { createBdd } from 'playwright-bdd';
+
+import { test} from '../fixtures/suite8Fixtures.js';
+
 import { expect } from '@playwright/test';
-const { Given, When, Then } = createBdd();
+
+//import { expect } from '@playwright/test';
+
+const { Given, When, Then } = createBdd(test);
 
 Given('User launches the application', async ({}) => {
   // Step: Given User launches the application
@@ -11,7 +17,7 @@ Given('User successfully logged in to the application', async ({}) => {
   // Step: Given User successfully logged in to the application
   // From: features\Leads.feature:9:5
 });
-
+//not needed
 When('User is on the Home dashboard page', async ({}) => {
   // Step: When User is on the Home dashboard page
   // From: features\Leads.feature:10:5
@@ -52,8 +58,8 @@ Given('User is on the Create Lead page', async ({}) => {
   // From: features\Leads.feature:31:11
 });
 
-When('User enters Leads Valid Data and clicks the Save button', async ({}) => {
-  // Step: When User enters Leads Valid Data and clicks the Save button
+When('User enters Leads Valid Data1 and clicks the Save button', async ({}) => {
+  // Step: When User enters Leads Valid Data1 and clicks the Save button
   // From: features\Leads.feature:32:11
 });
 
@@ -72,8 +78,8 @@ Then('User should see Create Leads Required field error messages', async ({}) =>
   // From: features\Leads.feature:33:11
 });
 
-When('User enters Leads Valid Data and clicks the Cancel button', async ({}) => {
-  // Step: When User enters Leads Valid Data and clicks the Cancel button
+When('User enters Leads Valid Data2 and clicks the Cancel button', async ({}) => {
+  // Step: When User enters Leads Valid Data2 and clicks the Cancel button
   // From: features\Leads.feature:32:11
 });
 

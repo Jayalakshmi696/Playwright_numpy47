@@ -1,4 +1,4 @@
-// Generated from: features/Document.feature
+// Generated from: features\Document.feature
 import { test } from "playwright-bdd";
 
 test.describe('Documents Module - View, Navigate and  Activities', () => {
@@ -90,7 +90,7 @@ test.describe('Documents Module - View, Navigate and  Activities', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/Document.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\Document.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 
