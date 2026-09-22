@@ -16,7 +16,7 @@ Feature:Accounts module functionality of suite8demo application
          |Import Accounts|
          |View Accounts|
               
-@Accounts2 @skip
+@Accounts2 
   Scenario: Verify Create Account page navigation
     When the user opens Accounts module and clicks Create Account
     Then the user should be navigated to Create Account page
