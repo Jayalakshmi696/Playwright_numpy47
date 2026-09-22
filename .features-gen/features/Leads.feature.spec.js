@@ -1,5 +1,5 @@
 // Generated from: features\Leads.feature
-import { test } from "../../fixtures/loginFixture.js";
+import { test } from "../../fixtures/suite8Fixture.js";
 
 test.describe('Testing Leads module in SuiteCRM application', () => {
 
