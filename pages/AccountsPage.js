@@ -8,7 +8,6 @@ export class AccountsPage {
     this.createAccount= page.getByRole('link', { name: 'Create Account' });
     this.viewAccount = page.getByRole('link', { name: 'View Accounts' });
     this.importAccount = page.getByRole('link', { name: 'Import Accounts' });
-    this.accountsDashboard = page.getByText('ACCOUNTS', { exact: true });
     this.create=page.getByText('Create', { exact: true });
       
     
@@ -16,9 +15,9 @@ export class AccountsPage {
 
 
     async clickAccountsModule() {
-
+     await expect(this.accountsMenu).toBeVisible();
     await this.accountsMenu.click();
-    await expect(this.createAccount).toBeVisible();
+    console.log('After Accounts click:', this.page.url());
   }
 
   async clickCreateAccount() {
@@ -30,7 +29,9 @@ export class AccountsPage {
 }
 
   async verifyAccountsDashboard() {
-    await expect(this.accountsDashboard).toBeVisible();
+    await expect(this.createAccount).toBeVisible({ timeout: 10000 });
+    await expect(this.importAccount).toBeVisible({ timeout: 10000 });
+    await expect(this.viewAccount).toBeVisible({ timeout: 10000 });
   }
 
   
