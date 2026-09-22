@@ -11,9 +11,7 @@ When('the user clicks on Accounts module from left navigation', async ({accounts
   // From: features\Accounts.feature:13:5
     //await page.goto('https://suite8demo.suiteondemand.com/#/home');
     await accountsPage.clickAccountsModule();
-
-  
-  
+    
 });
 
 Then('the user should be navigated to Accounts Dashboard page and should see the list in dropdown', async ({accountsPage}, dataTable) => {
