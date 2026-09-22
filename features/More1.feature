@@ -1,4 +1,4 @@
-@MoreModule
+@MoreModule1
 Feature: More module dropdown list functionality of suite8demo application
   As a user I want to verify the More module dropdown listfunctionality of 
   suite8demo application 
