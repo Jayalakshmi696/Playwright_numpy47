@@ -1,7 +1,12 @@
 import { createBdd } from 'playwright-bdd';
-import { expect } from '@playwright/test';
-const { Given, When, Then } = createBdd();
 
+import { test} from '../fixtures/suite8Fixtures.js';
+
+import { expect } from '@playwright/test';
+
+//import { expect } from '@playwright/test';
+
+const { Given, When, Then } = createBdd(test);
 Then('User should see More menu in the menu bar', async ({}) => {
   // Step: Then User should see More menu in the menu bar
   // From: features\MoreItems3.feature:10:9

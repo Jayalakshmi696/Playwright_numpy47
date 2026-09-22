@@ -1,5 +1,5 @@
 // Generated from: features\Quotes.feature
-import { test } from "../../fixtures/loginFixture.js";
+import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Testing Quotes module in SuiteCRM application', () => {
 

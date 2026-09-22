@@ -1,5 +1,5 @@
 // Generated from: features\More3.feature
-import { test } from "../../fixtures/loginFixture.js";
+import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Testing 3rd section of modules listed on More menu in SuiteCRM application', () => {
 

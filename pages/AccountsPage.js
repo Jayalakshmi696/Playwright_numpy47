@@ -8,7 +8,6 @@ export class AccountsPage {
     this.createAccount= page.getByRole('link', { name: 'Create Account' });
     this.viewAccount = page.getByRole('link', { name: 'View Accounts' });
     this.importAccount = page.getByRole('link', { name: 'Import Accounts' });
-    this.accountsDashboard = page.getByText('ACCOUNTS', { exact: true });
     this.create=page.getByText('Create', { exact: true });
       
     

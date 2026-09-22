@@ -1,6 +1,12 @@
 import { createBdd } from 'playwright-bdd';
+
+import { test} from '../fixtures/suite8Fixtures.js';
+
 import { expect } from '@playwright/test';
-const { Given, When, Then } = createBdd();
+
+//import { expect } from '@playwright/test';
+
+const { Given, When, Then } = createBdd(test);
 
 Then('User should see Quotes menu in the menu bar', async ({}) => {
   // Step: Then User should see Quotes menu in the menu bar

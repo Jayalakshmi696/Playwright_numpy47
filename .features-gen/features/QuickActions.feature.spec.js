@@ -1,5 +1,5 @@
 // Generated from: features\QuickActions.feature
-import { test } from "../../fixtures/loginFixture.js";
+import { test } from "playwright-bdd";
 
 test.describe('Quick Actions module functionality of suite8demo application', () => {
 
