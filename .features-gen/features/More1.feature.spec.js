@@ -1,5 +1,5 @@
 // Generated from: features\More1.feature
-import { test } from "../../fixtures/loginFixture.js";
+import { test } from "../../fixtures/suite8Fixture.js";
 
 test.describe('More module dropdown list functionality of suite8demo application', () => {
 
