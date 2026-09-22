@@ -36,7 +36,7 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 4 : undefined,
+  workers: process.env.CI ? 2 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -59,7 +59,7 @@ export default defineConfig({
          // 2. Login tests - MUST start without authentication
   {
     name: 'login',
-    testMatch: /.*login\.feature\.spec\.js/,
+    testMatch: /.*login(?:PageUI)?\.feature\.spec\.js/,
     use: {
       ...devices['Desktop Chrome'],
       browserName: 'chromium',
@@ -69,7 +69,7 @@ export default defineConfig({
 
     {
       name: 'chromium',
-       testIgnore: /.*login\.feature\.spec\.js/,
+       testIgnore: /.*login(?:PageUI)?\.feature\.spec\.js/,
       use: { 
          ...devices['Desktop Chrome'],
          browserName: 'chromium',
@@ -79,7 +79,7 @@ export default defineConfig({
     },
     {
       name: 'firefox',
-       testIgnore: /.*login\.feature\.spec\.js/,
+       testIgnore: /.*login(?:PageUI)?\.feature\.spec\.js/,
       use: { 
         
         ...devices['Desktop Firefox'], 
@@ -92,7 +92,7 @@ export default defineConfig({
 
     {
       name: 'webkit',
-      testIgnore: /.*login\.feature\.spec\.js/,
+      testIgnore: /.*login(?:PageUI)?\.feature\.spec\.js/,
       use: { 
         ...devices['Desktop Safari'],
       storageState: 'playwright/.auth/user.json',

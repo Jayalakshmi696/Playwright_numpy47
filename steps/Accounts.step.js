@@ -30,20 +30,20 @@ Then('the user should be navigated to Accounts Dashboard page and should see the
     }
   });
 
-When('the user opens Accounts module and clicks Create Account', async ({page}) => {
+When('the user opens Accounts module and clicks Create Account', async ({accountsPage}) => {
   // Step: When the user opens Accounts module and clicks Create Account
   // From: features\Accounts.feature:21:5
-   const accountsPage = new AccountsPage(page);
-  await page.goto('https://suite8demo.suiteondemand.com/#/home');
+  // const accountsPage = new AccountsPage(page);
+ // await accountsPage.page.goto('https://suite8demo.suiteondemand.com/#/home');
   await accountsPage.clickAccountsModule();
   await accountsPage.clickCreateAccount();
  
 });
 
-Then('the user should be navigated to Create Account page', async ({page}) => {
+Then('the user should be navigated to Create Account page', async ({accountsPage}) => {
   // Step: Then the user should be navigated to Create Account page
   // From: features\Accounts.feature:22:5
-   const accountsPage = new AccountsPage(page);
+   //const accountsPage = new AccountsPage(page);
    await accountsPage.verifyCreateAccountPage();
 });
 

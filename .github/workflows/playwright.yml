@@ -17,8 +17,8 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: npx playwright test --grep "@AccountsModule" --workers=1
-      run: npx playwright test
+    - name: npx playwright test
+      run:  npx playwright test 
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
