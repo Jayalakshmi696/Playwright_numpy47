@@ -1,0 +1,18 @@
+{
+  "validData1": {
+    "firstName": "Test",
+    "lastName":  "User1",
+    "expectedResult": "Detailed view page of new lead"
+  },
+  "noData": {
+    "firstName": " ",
+    "lastName":  " ",
+    "expectedResult": "Required field error message"
+  },
+    "ValidData2": {
+    "firstName": "Test ",
+    "lastName":  "User2 ",
+    "expectedResult": "Confirmation dialogbox appears"
+  }
+  
+}

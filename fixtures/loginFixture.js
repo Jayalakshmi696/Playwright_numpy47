@@ -29,8 +29,16 @@ export const test = base.extend({
     const accountsPage = new AccountsPage(loggedInPage);
 
     await use(accountsPage);
+  },
+
+  //Leads fixture
+  leadsPage: async ({ loggedInPage }, use) => {
+    const leadsPage = new LeadsPage(loggedInPage);
+
+    await use(leadsPage);
   }
-  
+    
+
 });
 
 // 2. Pass your extended test to createBdd

@@ -32,22 +32,22 @@ Given User launches the application
           When User enters Leads <Data> and clicks the <Action> button
           Then User should see Create Leads <Result>
           Examples:
-          | Data         | Action | Result                                 |
-          | Valid Data   | Save   | Detailed view page of new Lead         |
-          | No Data      | Save   | Required field error messages          |
-          | Valid Data   | Cancel | Confirmation dialog appears            |
+          | Data           | Action | Result                                 |
+          | Valid Data1   | Save   | Detailed view page of new Lead         |
+          | No Data       | Save   | Required field error messages          |
+          | Valid Data2   | Cancel | Confirmation dialog appears            |
 
       @ViewLeadsPage
       Scenario: Verify components on the View Leads page
         Given Leads menu drop-down list is displayed
         When User clicks on the View Leads option in the Leads Menu
         Then User should see the correct components on the Leads dashboard page
-        | Component       | Expected Values                                                                                                         |
-        | PageTitle       | Leads                                                                                                                   |
-        | Buttons         | Filter, Insights                                                                                                        |
-        | Sections        | Records, QuickCharts                                                                                                    |
-        | Header Contents | SelectDropDown, BulkActionsDropDown, NextPageButton, PreviousPageButton, BeginingPageButton, EndPageButton, PageNumber  |
-        | Footer Contents | SelectDropDown, BulkActionsDropDown, NextPageButton, PreviousPageButton, BeginingPageButton, EndPageButton, PageNumber  |
+        | Component       | Expected Values                                                                                                                       |
+        | PageTitle       | Leads                                                                                                                                 |
+        | Buttons         | Filter, Insights                                                                                                                      |
+        | Sections        | Records, QuickCharts                                                                                                                  |
+        | Header Contents | SelectDropDown, BulkActionsDropDown, ColumnButton, NextPageButton, PreviousPageButton, EndPageButton, BeginingPageButton, PageNumber  |
+        | Footer Contents | SelectDropDown, BulkActionsDropDown, columnButton, NextPageButton, PreviousPageButton, EndPageButton, BeginingPageButton, PageNumber  |
 
       @VCardpage
       Scenario: Verify that user is on the vCard page
@@ -57,7 +57,7 @@ Given User launches the application
         | Component       | Expected Values           |
         | PageTitle       | Import VCard              |
         | Buttons         | Choose File, Import VCard |
-        | Label           | No File Chosen            | 
+        | Label           | Information text          | 
 
         @CreateLeadFromVCard
         Scenario Outline: Verify the functionality of creating Lead from vCard
