@@ -1,4 +1,4 @@
-@MoreModule
+@MoreModule1
 Feature: More module dropdown list functionality of suite8demo application
   As a user I want to verify the More module dropdown listfunctionality of 
   suite8demo application 
@@ -29,3 +29,5 @@ Feature: More module dropdown list functionality of suite8demo application
   Scenario: Verify Meetings page navigation
     When User clicks Meetings item from More
     Then User is navigating to the Meetings page
+
+

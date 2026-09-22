@@ -1,5 +1,5 @@
 // Generated from: features\loginPageUI.feature
-import { test } from "../../fixtures/loginFixture.js";
+import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Login Page UI Verification', () => {
 

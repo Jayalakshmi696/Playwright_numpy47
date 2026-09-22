@@ -1,6 +1,6 @@
 import { createBdd } from 'playwright-bdd';
 import { expect } from '@playwright/test';
-import { test } from '../fixtures/loginFixture.js';
+import { test } from '../fixtures/suite8Fixtures.js';
 import testData from '../test-data/loginData.json' with {
   type: 'json'
 };

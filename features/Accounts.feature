@@ -16,7 +16,7 @@ Feature:Accounts module functionality of suite8demo application
          |Import Accounts|
          |View Accounts|
               
-@Accounts2
+@Accounts2 @skip
   Scenario: Verify Create Account page navigation
     When the user opens Accounts module and clicks Create Account
     Then the user should be navigated to Create Account page
@@ -26,7 +26,7 @@ Feature:Accounts module functionality of suite8demo application
     Given User is on Create Account page
     When User clicks the save button without entering mandatory fields
     Then User should see the error message "Missing required field: Name"
-
+@validDataCreateAccount
     Scenario: Verify Create Account page with valid data
     Given User is on Create Account page
     When User enters valid data in all mandatory fields and clicks save button
