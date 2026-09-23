@@ -57,7 +57,7 @@ When('the user clicks {string}', async ({}, arg) => {
   // From: features/Calendar.feature:39:5
 });
 
-Then('User should see the {string}  component .', async ({}, arg, dataTable) => {
+Then('User should see the {string} component.', async ({}, arg, dataTable) => {
   // Step: Then User should see the "Schedule Meeting"  component .
   // From: features/Calendar.feature:40:5
 });
@@ -77,7 +77,7 @@ Then('a validation message is displayed {string}', async ({}, arg) => {
   // From: features/Calendar.feature:53:3
 });
 
-Then('the survey is not saved', async ({}) => {
+Then('the meeting is not saved', async ({}) => {
   // Step: And the survey is not saved
   // From: features/Calendar.feature:54:3
 });
@@ -116,7 +116,7 @@ Then('the assigned user\'s name is displayed', async ({}) => {
   // From: features/Calendar.feature:127:5
 });
 
-When('the user clicks the cell corresponding to a specific time slot in the calendar grid', async ({}) => {
+When('the user click the cell corresponding to a specific time slot in the calendar grid', async ({}) => {
   // Step: When the user clicks the cell corresponding to a specific time slot in the calendar grid
   // From: features/Calendar.feature:132:5
 });
@@ -126,7 +126,7 @@ Then('a popup window appears with options to create a new activity, including fi
   // From: features/Calendar.feature:133:5
 });
 
-When('the user enters a valid value in the {string} field', async ({}, arg) => {
+When('the user enters a valid value in the {string}, {string}, {string}',async ({}, arg, arg1, arg2) => {
   // Step: And the user enters a valid value in the "Subject" field
   // From: features/Calendar.feature:139:3
 });

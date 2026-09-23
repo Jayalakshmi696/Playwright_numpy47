@@ -23,7 +23,7 @@ Feature: Documents Module - View, Navigate and  Activities
   Scenario: Verify "Creat Document" page opens 
     Given the user has opened the"Documents" dropdown menu
     When the user clicks "Create Document"
-    Then User should see the "Create Document"  component .
+    Then User should see the"Create Document" component .
 
     |component  |  expected value|
     |Page Title |  Create |
@@ -36,7 +36,7 @@ Scenario Outline: Validate error on saving Create Document Page with a mandatory
   Given the user is on the "Create Document" page
   When the user leaves the "<Field>" field blank and clicks "Save"
   Then a validation message is displayed "Missing required field: <Field>"
-  And the survey is not saved
+  And the meeting is not saved
 
       Examples:
     | Field       | ErrorMessage                          |
@@ -66,7 +66,7 @@ Scenario: Create a document and verify it on the detail page and in the View Doc
   Scenario: Verify "View Document" page opens 
     Given the user has opened the"Documents" dropdown menu
     When the user clicks "View Documents"
-    Then User should see the "View Documents"  component .
+    Then User should see the"View Documents"component .
 
         | Component     | Expected Value                                                                             |
     | Page Title    | DOCUMENTS                                                                                  |
