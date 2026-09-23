@@ -66,7 +66,7 @@ Scenario: Create a document and verify it on the detail page and in the View Doc
   Scenario: Verify "View Document" page opens 
     Given the user has opened the"Documents" dropdown menu
     When the user clicks "View Documents"
-    Then User should see the"View Documents"component .
+    Then User should see the "View Documents" component.
 
         | Component     | Expected Value                                                                             |
     | Page Title    | DOCUMENTS                                                                                  |
