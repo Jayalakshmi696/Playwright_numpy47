@@ -23,7 +23,7 @@ Feature: Documents Module - View, Navigate and  Activities
   Scenario: Verify "Creat Document" page opens 
     Given the user has opened the"Documents" dropdown menu
     When the user clicks "Create Document"
-    Then User should see the"Create Document" component .
+    Then User should see the "Create Document" component.
 
     |component  |  expected value|
     |Page Title |  Create |
