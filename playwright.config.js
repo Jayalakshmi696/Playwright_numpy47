@@ -1,38 +1,42 @@
 import { defineConfig, devices } from '@playwright/test';
-import {defineBddConfig} from 'playwright-bdd';
-
+import { defineBddConfig, cucumberReporter } from 'playwright-bdd'; 
+ 
 const testDir = defineBddConfig({
-  features: ['features/**.feature'],
-  steps: [
-    'steps/**/*.js',
-   ],
-  // importTestFrom: './fixtures/accountfixture.js',
-  // tags: '@validlogintest or @Accounts or @invalidlogintest',
+  features: ['features/**/*.feature'],
+  steps: [
+     'steps/**/*.js',
+    'fixtures/**/*.js',
+    
+    ],
+   // importTestFrom: './fixtures/loginFixture.js',
+  //tags: '@Login1 or @Accounts1'
+  // importTestFrom: './fixtures/accountfixture.js'
+   //tags : '@calendar or @document or @more',
+
 });
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-//import dotenv from 'dotenv';
-import path from 'path';
+// import dotenv from 'dotenv';
+// import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, 'QA.env') });
 
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
- // testDir: './tests',
-  testDir,
+  //testDir: './features-gen',
+ testDir,
   /* Run tests in files in parallel */
- 
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 2 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -47,18 +51,53 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+            name: 'setup',
+             testDir: './setup',
+            testMatch:/.*auth\.setup\.js/,
+        },
+
+         // 2. Login tests - MUST start without authentication
+  {
+    name: 'login',
+    testMatch: /.*login(?:PageUI)?\.feature\.spec\.js/,
+    use: {
+      ...devices['Desktop Chrome'],
+      browserName: 'chromium',
+      storageState: undefined,
     },
+  },
 
     {
+      name: 'chromium',
+       testIgnore: /.*login(?:PageUI)?\.feature\.spec\.js/,
+      use: { 
+         ...devices['Desktop Chrome'],
+         browserName: 'chromium',
+                storageState: 'playwright/.auth/user.json'
+      },
+      dependencies: ['setup']
+    },
+    {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+       testIgnore: /.*login(?:PageUI)?\.feature\.spec\.js/,
+      use: { 
+        
+        ...devices['Desktop Firefox'], 
+         storageState: 'playwright/.auth/user.json',
+
+      
+      },
+       dependencies: ['setup'],
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      testIgnore: /.*login(?:PageUI)?\.feature\.spec\.js/,
+      use: { 
+        ...devices['Desktop Safari'],
+      storageState: 'playwright/.auth/user.json',
+      },
+      dependencies: ['setup'],
     },
 
     /* Test against mobile viewports. */
