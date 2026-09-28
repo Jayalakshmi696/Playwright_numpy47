@@ -1,59 +1,73 @@
 
-const { createBdd } = require('playwright-bdd');
-const { expect } = require('@playwright/test');
-const { Given, When, Then, Before } = createBdd();
+import { createBdd } from 'playwright-bdd';
+import { expect } from '@playwright/test';
+import { More4Page } from '../pages/More4Page.js';
+import { test} from '../fixtures/suite8Fixtures.js';
 
+const { When, Then } = createBdd();
 
-//PDF - Templates,Report,Knowledge Base ,KB-Categories,Email-Templates,Surveys
-
-
-When('User clicks PDF - Templates item from More', async ({}) => {
-  // Step: When User clicks PDF - Templates item from More
-  // From: features\More.feature:32:6
+// PDF - Templates
+When('User clicks "PDF - Templates" item from More', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.openMoreMenu();
+  await morePage.clickMoreItem('PDF - Templates');
+});
+Then('User is navigating to the "PDF - Templates" page', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.verifyPageOpened('PDF - Templates');
 });
 
-Then('User is navigating to the PDF - Templates page', async ({}) => {
-  // Step: Then User is navigating to the PDF - Templates page
-  // From: features\More.feature:33:6
+// Reports
+When('User clicks "Reports" item from More', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.openMoreMenu();
+  await morePage.clickMoreItem('Reports');
+});
+Then('User is navigating to the "Reports" page', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.verifyPageOpened('Reports');
 });
 
-When('User clicks Reports item from More', async ({}) => {
-  // Write code here that turns the phrase above into concrete actions
-})
+// Knowledge Base
+When('User clicks "Knowledge Base" item from More', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.openMoreMenu();
+  await morePage.clickMoreItem('Knowledge Base');
+});
+Then('User is navigating to the "Knowledge Base" page', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.verifyPageOpened('Knowledge Base');
+});
 
-Then('User is navigating to the Reports page', async ({}) => {
-  // Write code here that turns the phrase above into concrete actions
-})
+// KB - Categories
+When('User clicks "KB - Categories" item from More', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.openMoreMenu();
+  await morePage.clickMoreItem('KB - Categories');
+});
+Then('User is navigating to the "KB - Categories" page', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.verifyPageOpened('KB - Categories');
+});
 
-When('User clicks Knowledge Base item from More', async ({}) => {
-  // Write code here that turns the phrase above into concrete actions
-})
+// Email - Templates
+When('User clicks "Email - Templates" item from More', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.openMoreMenu();
+  await morePage.clickMoreItem('Email - Templates');
+});
+Then('User is navigating to the "Email - Templates" page', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.verifyPageOpened('Email - Templates');
+});
 
-Then('User is navigating to the Knowledge Base page', async ({}) => {
-  // Write code here that turns the phrase above into concrete actions
-})
-
-When('User clicks KB-Categories item from More', async ({}) => {
-  // Write code here that turns the phrase above into concrete actions
-})
-
-Then('User is navigating to the KB-Categories page', async ({}) => {
-  // Write code here that turns the phrase above into concrete actions
-})
-When('User clicks Email-Templates item from More', async ({}) => {
-  // Write code here that turns the phrase above into concrete actions
-})
-
-Then('User is navigating to the Email-Templates page', async ({}) => {
-  // Write code here that turns the phrase above into concrete actions
-})
-When('User clicks Surveys item from More', async ({}) => {
-  // Write code here that turns the phrase above into concrete actions
-})
-
-Then('User is navigating to the Surveys page', async ({}) => {
-  // Write code here that turns the phrase above into concrete actions
-})
-
-
-
+// Surveys
+When('User clicks "Surveys" item from More', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.openMoreMenu();
+  await morePage.clickMoreItem('Surveys');
+});
+Then('User is navigating to the "Surveys" page', async ({ page }) => {
+  const morePage = new More4Page(page);
+  await morePage.verifyPageOpened('Surveys');
+});

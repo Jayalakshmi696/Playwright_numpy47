@@ -11,7 +11,7 @@ When('the user hovers over the {string} button in the top navigation bar', async
   // Step: When the user hovers over the "Documents" button in the top navigation bar
   // From: features/Document.feature:11:5
    const documentPage = new DocumentPage(page);
-    await documentPage .documentHoverIcon();
+    await documentPage.documentHoverIcon();
 });
 
 Then('user should see the {string} and {string} options in the dropdown menu', async ({page}, opt1, opt2) => {
