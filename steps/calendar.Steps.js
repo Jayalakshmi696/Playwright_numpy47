@@ -1,167 +1,277 @@
-const { createBdd } = require('playwright-bdd');
-const { expect } = require('@playwright/test');
-const { Given, When, Then, Before } = createBdd();
+import { createBdd } from 'playwright-bdd';
+import { expect } from '@playwright/test';
+import { CalendarPage } from '../pages/CalendarPage.js';
+import { test} from '../fixtures/suite8Fixtures.js';
+import calendarData from '../test-data/calendarData.json' with { type: 'json' };
+
+const { Given, When, Then } = createBdd();
 
 
-Given('the user is logged into the SuitCRM', async ({}) => {
-  // Step: Given the user is logged into the SuitCRM
-  // From: features/Calendar.feature:5:5
+// --- Background ---
+
+let currentFormType;// 
+
+
+Given('the user is logged into the SuitCRM', async ({ page }) => {
+  await page.goto('https://suite8demo.suiteondemand.com/#/home');
 });
 
-Given('the user navigates to the {string} module in the menu', async ({}, arg) => {
-  // Step: And the user navigates to the "Calendar" module in the menu
-  // From: features/Calendar.feature:6:5
+Given('the user navigates to the {string} module in the menu', async ({ page }, moduleName) => {
+  //await page.getByRole('link', { name: 'More' }).click();
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.getTopNavLink(moduleName).click();
+  await expect(page).toHaveURL(new RegExp(moduleName, 'i'));
+  //await expect(calendarPage.calendarLink).toBeVisible();
+
 });
 
-Given('the user is on the Calendar page', async ({}) => {
-  // Step: Given the user is on the Calendar page
-  // From: features/Calendar.feature:11:5
+// --- Scenario: Verify the Calendar top navigation menu is displayed ---
+
+//Given('the user is on the Calendar page', async ({ page }) => {
+  //await expect(page).toHaveURL(/.*Calendar/);
+//});
+
+//When('the user views the top navigation bar', async ({}) => {
+  // No action needed - the Then step checks visibility directly.
+//});
+
+//Then('the menu items {string}, {string}, {string}, {string}, {string}, {string}, {string} and {string} are displayed',
+ // async ({ page }, item1, item2, item3, item4, item5, item6, item7, item8) => {
+  //  const calendarPage = new CalendarPage(page);
+  //  for (const item of [item1, item2, item3, item4, item5, item6, item7, item8]) {
+   //   await expect(calendarPage.getTopNavLink(item)).toBeVisible();
+   // }
+  //});
+
+// --- Scenario: Verify the "calendar" icon ---
+
+When('the user hovers over the {string} icon in the top navigation bar', async ({ page }, iconName) => {
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.hoverCalendarIcon();
 });
 
-When('the user views the top navigation bar', async ({}) => {
-  // Step: When the user views the top navigation bar
-  // From: features/Calendar.feature:12:5
+Then('user should see the {string}, {string}, {string} and {string} options in the dropdown menu',
+  async ({ page }, opt1, opt2, opt3, opt4) => {
+    const calendarPage = new CalendarPage(page);
+    for (const opt of [opt1, opt2, opt3, opt4]) {
+      await expect(calendarPage.getDropdownOption(opt)).toBeVisible();
+    }
+  });
+
+// --- Scenario: Verify the calendar items ---
+
+When('the user clicks the {string} icon', async ({ page }, iconName) => {
+   const calendarPage = new CalendarPage(page);
+    await calendarPage.clickCalendarIcon();
 });
 
-Then('the menu items {string}, {string}, {string}, {string}, {string}, {string}, {string} and {string} are displayed', async ({}, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7) => {
-  // Step: Then the menu items "Calendar", "Accounts", "Contacts", "Opportunities", "Leads", "Quotes", "Documents" and "More" are displayed
-  // From: features/Calendar.feature:13:5
+Then('the user should be navigated to {string} Dashboard page and should see the buttons.',
+  async ({ page }, dashboardName, dataTable) => {
+    const calendarPage = new CalendarPage(page);
+    const buttonNames = dataTable.raw().map(row => row[0].trim());
+    for (const name of buttonNames) {
+      await expect(calendarPage.getItem(name)).toBeVisible();
+    }
+  });
+
+// --- Scenarios: Verify selecting Schedule Meeting / Schedule Call / Create Task opens the form ---
+
+Given('the user has opened the {string} dropdown menu', async ({ page }, menuName) => {
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.openCalendarDropdown();
 });
 
-When('the user hovers over the {string} icon in the top navigation bar', async ({}, arg) => {
-  // Step: When the user hovers over the "calendar" icon in the top navigation bar
-  // From: features/Calendar.feature:19:5
+When('the user clicks {string}', async ({ page }, optionName) => {
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.clickDropdownOption(optionName);
 });
 
-Then('user should see the {string}, {string}, {string} and {string} options in the dropdown menu', async ({}, arg, arg1, arg2, arg3) => {
-  // Step: Then user should see the "Schedule Meeting", "Schedule Call", "Create Task" and "Today" options in the dropdown menu
-  // From: features/Calendar.feature:20:5
+async function verifyFormComponents(page, formName, dataTable) {
+  const calendarPage = new CalendarPage(page);
+  const rows = dataTable.raw().slice(1); // drop header row
+
+  for (const [component, expectedValue] of rows) {
+    if (component.trim() === 'Page Title') {
+      if (formName === 'Schedule Meeting') {
+        await calendarPage.verifyPageTitleVisible();
+      } else if (formName === 'Schedule Call') {
+        await calendarPage.verifyCallPageTitleVisible();
+      } else if (formName === 'Create Task') {
+        await calendarPage.verifyTaskPageTitleVisible();
+      }
+    } else if (component.trim() === 'Buttons') {
+      const buttonNames = expectedValue.split(',').map(b => b.trim());
+        for (const buttonName of buttonNames) {
+          let locator;
+            if (formName === 'Create Task') {
+                locator = calendarPage.getTaskFormButton(buttonName);
+                } else {
+                locator = calendarPage.getFormButton(buttonName);
+                     }
+               await expect(locator).toBeVisible();
+}
+
+    }
+  }
+}
+
+Then('User should see the {string} component.', async ({ page }, formName, dataTable) => {
+  await verifyFormComponents(page, formName, dataTable);
 });
 
-When('the user clicks the {string} icon', async ({}, arg) => {
-  // Step: When the user clicks the "calendar" icon
-  // From: features/Calendar.feature:23:5
+Then('the {string} form is displayed with components', async ({ page }, formName, dataTable) => {
+  await verifyFormComponents(page, formName, dataTable);
 });
 
-Then('the user should be navigated to {string} Dashboard page and should see the buttons.', async ({}, arg, dataTable) => {
-  // Step: Then the user should be navigated to "Calendar" Dashboard page and should see the buttons.
-  // From: features/Calendar.feature:24:5
+Then('a new {string} form is displayed with components', async ({ page }, formName, dataTable) => {
+  await verifyFormComponents(page, formName, dataTable);
 });
 
-Given('the user has opened the {string} dropdown menu', async ({}, arg) => {
-  // Step: Given the user has opened the "Calendar" dropdown menu
-  // From: features/Calendar.feature:38:5
-});
-When('the user clicks {string}', async ({}, arg) => {
-  // Step: When the user clicks "Schedule Meeting"
-  // From: features/Calendar.feature:39:5
+
+// --- Negative: mandatory field left blank (shared across Meeting/Call/Task) ---
+
+Given('the user is on the {string} page', async ({ page }, pageName) => {
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.openCalendarDropdown();
+  await calendarPage.clickDropdownOption(pageName);
+
+  await expect(page).toHaveURL(/edit/);
+
+  if (pageName === 'Schedule Meeting') currentFormType = 'meeting';
+  else if (pageName === 'Schedule Call') currentFormType = 'call';
+  else if (pageName === 'Create Task') currentFormType = 'task';
+
+   if (currentFormType === 'meeting' || currentFormType === 'call') {
+    await expect(page.locator('iframe')).toHaveCount(1);
+    await expect(calendarPage.pageTitleCreate).toBeVisible();
+  }
+  })
+
+
+When('the user leaves the {string} field blank and clicks {string}', async ({ page }, fieldName, buttonName) => {
+  const calendarPage = new CalendarPage(page);
+
+  if (currentFormType === 'meeting') {
+    await calendarPage.clearField(fieldName);
+    await calendarPage.clickSave();
+
+  } else if (currentFormType === 'call') {
+    await calendarPage.clearCallField(fieldName);
+    await calendarPage.clickSave();
+
+  } else if (currentFormType === 'task') {
+    // Priority is a <select> with no default selection - nothing to clear,
+    // and .clear() would throw  .
+    if (fieldName !== 'Priority') {
+      await calendarPage.clearTaskField(fieldName);
+    }
+    await calendarPage.clickTaskSave();
+  }
 });
 
-Then('User should see the {string} component.', async ({}, arg, dataTable) => {
-  // Step: Then User should see the "Schedule Meeting"  component .
-  // From: features/Calendar.feature:40:5
+Then('a validation message is displayed {string}', async ({ page }, message) => {
+  const calendarPage = new CalendarPage(page);
+  
+    if (currentFormType === 'meeting') {
+    await expect(calendarPage.getValidationMessage(message)).toBeVisible({ timeout: 15000 });
+
+  } else if (currentFormType === 'call') {
+    await expect(calendarPage.getValidationMessage(message)).toBeVisible({ timeout: 15000 });
+  } else if (currentFormType === 'task') {
+    await expect(calendarPage.getTaskValidationMessage(message)).toBeVisible({ timeout: 15000 });
+  }
 });
 
-Given('the user is on the {string} page', async ({}, arg) => {
-  // Step: Given the user is on the "Schedule Meeting" page
-  // From: features/Calendar.feature:51:3
+Then('the meeting is not saved', async ({ page }) => {
+  const calendarPage = new CalendarPage(page);
+  // Form stays open with the validation message shown, rather than being
+  // redirected away to a saved record.
+  if (currentFormType === 'task') {
+    await expect(calendarPage.taskSaveBotton).toBeVisible();
+  } else {
+    await expect(calendarPage.saveButton).toBeVisible();
+  }
 });
 
-When('the user leaves the {string} field blank and clicks {string}', async ({}, arg, arg1) => {
-  // Step: When the user leaves the "Subject" field blank and clicks "Save"
-  // From: features/Calendar.feature:52:3
+// --- Scenario: Verify Today page open and buttons are visible ---
+
+When('the user opens the {string} dropdown menu and clicks {string}', async ({ page }, menuName, optionName) => {
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.openCalendarDropdown();
+  await calendarPage.clickDropdownOption(optionName);
 });
 
-Then('a validation message is displayed {string}', async ({}, arg) => {
-  // Step: Then a validation message is displayed "Missing required field: Subject"
-  // From: features/Calendar.feature:53:3
-});
+Then('the calendar refreshes to display the  current date activities with buttons {string}, {string}, {string}, {string}, {string}, {string} and {string} are displayed',
+  async ({ page }, name1, name2, name3, name4, name5, name6, name7) => {
+    const calendarPage = new CalendarPage(page);
+    for (const name of [name1, name2, name3, name4, name5, name6, name7]) {
+      await expect(calendarPage.getItem(name)).toBeVisible();
+    }
+  });
 
-Then('the meeting is not saved', async ({}) => {
-  // Step: And the survey is not saved
-  // From: features/Calendar.feature:54:3
-});
+// --- Scenario: Verify the assigned user name is displayed above the calendar grid ---
 
-Then('the {string} form is displayed with components', async ({}, arg, dataTable) => {
-  // Step: Then the "Schedule Call" form is displayed with components
-  // From: features/Calendar.feature:67:5
-});
-
-Then('a new {string} form is displayed with components', async ({}, arg, dataTable) => {
-  // Step: Then a new "Create Task" form is displayed with components
-  // From: features/Calendar.feature:93:5
-});
-
-When('the user opens the {string} dropdown menu and clicks {string}', async ({}, arg, arg1) => {
-  // Step: When the user opens the "Calendar" dropdown menu and clicks "Today"
-  // From: features/Calendar.feature:120:5
-});
-
-Then('the calendar refreshes to display the  current date activities with buttons {string}, {string}, {string}, {string}, {string}, {string} and {string} are displayed', async ({}, arg, arg1, arg2, arg3, arg4, arg5, arg6) => {
-  // Step: Then the calendar refreshes to display the  current date activities with buttons "Day", "Week", "Month", "Shared Month", "Shared Week", "Settings" and "Calendar icon" are displayed
-  // From: features/Calendar.feature:121:5
-});
-Given('the calendar is loaded in {string} view', async ({}, arg) => {
-  // Step: Given the calendar is loaded in "Today" view
-  // From: features/Calendar.feature:125:5
+Given('the calendar is loaded in {string} view', async ({ page }, viewName) => {
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.openCalendarDropdown();
+  await calendarPage.clickDropdownOption(viewName);
+  await expect(page).toHaveURL(/agendaDay/);
 });
 
 When('the user views the row directly above the day column headers', async ({}) => {
-  // Step: When the user views the row directly above the day column headers
-  // From: features/Calendar.feature:126:5
+  // No action needed - the Then step checks visibility directly.
 });
 
-Then('the assigned user\'s name is displayed', async ({}) => {
-  // Step: Then the assigned user's name is displayed
-  // From: features/Calendar.feature:127:5
+Then('the assigned user\'s name is displayed', async ({ page }) => {
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.verifyAssignedUserNameVisible();
 });
 
-When('the user click the cell corresponding to a specific time slot in the calendar grid', async ({}) => {
-  // Step: When the user clicks the cell corresponding to a specific time slot in the calendar grid
-  // From: features/Calendar.feature:132:5
+
+
+// --- Scenario: checking CREATE ACTIVITY popup window shows ---
+
+When('the user click the cell corresponding to a specific time slot in the calendar grid', async ({ page }) => {
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.clickCalendarTimeSlot();
 });
 
-Then('a popup window appears with options to create a new activity, including fields for {string}, {string}, {string}',async ({}, arg, arg1, arg2) => {
-  // Step: Then a popup window appears with options to create a new activity, including fields for "Subject", "Start Date", "End Date"
-  // From: features/Calendar.feature:133:5
+Then('a popup window appears with options to create a new activity, including fields for {string}, {string}, {string}',
+  async ({ page }, field1, field2, field3) => {
+    const calendarPage = new CalendarPage(page);
+    await expect(calendarPage.createActivityPopupTitle).toBeVisible();
+    for (const field of [field1, field2, field3]) {
+      await expect(calendarPage.getField(field)).toBeVisible();
+    }
+  });
+// --- Scenario: Saved activity appears on the calendar grid in its time slot ---
+
+const savedActivitySubject = `${calendarData.savedActivity.Subject} ${Date.now()}`;
+
+When('the user enters a valid value in the {string}, {string}, {string}', async ({ page }, field1, field2, field3) => {
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.fillSubject(savedActivitySubject);
+  // Start Date / End Date are pre-filled by SuiteCRM based on the clicked time slot.
 });
 
-When('the user enters a valid value in the {string}, {string}, {string}',async ({}, arg, arg1, arg2) => {
-  // Step: And the user enters a valid value in the "Subject" field
-  // From: features/Calendar.feature:139:3
+When('the user clicks the {string} button', async ({ page }, buttonName) => {
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.clickPopupSave();
 });
 
-When('the user clicks the {string} button', async ({}, arg) => {
-  // Step: And the user clicks the "Save" button
-  // From: features/Calendar.feature:140:3
+Then('the popup closes', async ({ page }) => {
+  const calendarPage = new CalendarPage(page);
+  await calendarPage.verifyPopupClosed();
 });
 
-Then('the popup closes', async ({}) => {
-  // Step: Then the popup closes
-  // From: features/Calendar.feature:141:3
+Then('the activity appears in the calendar cell at the corresponding time slot', async ({ page }) => {
+  const calendarPage = new CalendarPage(page);
+  await expect(calendarPage.getSavedActivityEvent(savedActivitySubject)).toBeVisible();
 });
 
-Then('the activity appears in the calendar cell at the corresponding time slot', async ({}) => {
-  // Step: And the activity appears in the calendar cell at the corresponding time slot
-  // From: features/Calendar.feature:142:3
+Then('the cell displays the start time and the assigned user\'s name', async ({ page }) => {
+  const calendarPage = new CalendarPage(page);
+  await expect(calendarPage.getSavedActivityStartTime(savedActivitySubject)).toBeVisible();
+  await calendarPage.verifyAssignedUserNameVisible();
 });
 
-Then('the cell displays the start time and the assigned user\'s name', async ({}) => {
-  // Step: And the cell displays the start time and the assigned user's name
-  // From: features/Calendar.feature:143:3
-});
-
-Given('the user navigates to the Calendar module', async ({}) => {
-  // Step: Given the user navigates to the Calendar module
-  // From: features/Calendar.feature:147:5
-});
-
-When('the calendar page is requested', async ({}) => {
-  // Step: When the calendar page is requested
-  // From: features/Calendar.feature:148:5
-});
-
-Then('the full week grid, including all day columns and hourly rows, renders within {int} to {int} seconds', async ({},arg, arg1) => {
-  // Step: Then the full week grid, including all day columns and hourly rows, renders within 2 to 5 seconds
-  // From: features/Calendar.feature:149:5
-});

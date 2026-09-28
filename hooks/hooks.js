@@ -1,4 +1,22 @@
-import { Before, After } from '@cucumber/cucumber';
+import { createBdd } from 'playwright-bdd';
+import { test } from '../fixtures/suite8Fixtures.js';
+
+const { Before, After } = createBdd(test);
+
+Before(async ({ page }) => {
+    console.log('===== BEFORE HOOK STARTED =====');
+
+await page.goto('https://suite8demo.suiteondemand.com/#/home', {
+    waitUntil: 'domcontentloaded'
+});
+
+console.log('Current URL:', page.url());
+});
+
+After(async ({ page }) => {
+ console.log('===== AFTER HOOK STARTED =====');
+ 
+})/*import { Before, After } from '@cucumber/cucumber';
 import { chromium } from '@playwright/test';
 
 Before(async function () {
@@ -22,4 +40,4 @@ After(async function () {
 
     // Close browser
     await this.browser.close();
-});
+});*/
