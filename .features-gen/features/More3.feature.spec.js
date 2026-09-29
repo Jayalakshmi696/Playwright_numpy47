@@ -1,5 +1,5 @@
 // Generated from: features\More3.feature
-import { test } from "playwright-bdd";
+import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Testing 3rd section of modules listed on More menu in SuiteCRM application', () => {
 
@@ -52,6 +52,9 @@ test.describe('Testing 3rd section of modules listed on More menu in SuiteCRM ap
 });
 
 // == technical section ==
+
+test.beforeEach('BeforeEach Hooks', ({ $runScenarioHooks, page }) => $runScenarioHooks('before', { page }));
+test.afterEach('AfterEach Hooks', ({ $runScenarioHooks, page }) => $runScenarioHooks('after', { page }));
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],

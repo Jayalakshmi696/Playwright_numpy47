@@ -2,123 +2,215 @@ import { createBdd } from 'playwright-bdd';
 import { test} from '../fixtures/suite8Fixtures.js';
 import { expect } from '@playwright/test';
 const { Given, When, Then } = createBdd();
+import { OpportunitiesPage } from '../pages/OpportunitiesPage.js';
+import opportunitiesData from '../test-data/opportunitiesData.json'
+  with { type: 'json' };
 
-Then('User should see Opportunities menu in the menu bar', async ({}) => {
+Then('User should see Opportunities menu in the menu bar', async ({opportunitiesPage}) => {
   // Step: Then User should see Opportunities menu in the menu bar
   // From: features\opportunities.feature:10:5
+
+ 
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.assertMenuVisible();
 });
 
-When('User hovers over the Opportunities Menu', async ({}) => {
+
+When('User hovers over the Opportunities Menu', async ({opportunitiesPage}) => {
   // Step: When User hovers over the Opportunities Menu
   // From: features\opportunities.feature:15:7
+
+ 
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.hoverOpportunitiesMenu();
 });
 
-Then('Opportunities menu drop down list is displayed', async ({}) => {
+
+Then('Opportunities menu drop down list is displayed', async ({opportunitiesPage}) => {
   // Step: Then Opportunities menu drop down list is displayed
   // From: features\opportunities.feature:16:7
+  // const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.assertDropdownVisible();
 });
 
-Given('Opportunities menu drop-down list is displayed', async ({}) => {
+Given('Opportunities menu drop-down list is displayed', async ({opportunitiesPage}) => {
   // Step: Given Opportunities menu drop-down list is displayed
   // From: features\opportunities.feature:20:9
+ // const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.hoverOpportunitiesMenu();
+  await opportunitiesPage.assertDropdownVisible();
 });
 
-When('User clicks on the Create Opportunities option in the Opportunities Menu', async ({}) => {
+When('User clicks on the Create Opportunities option in the Opportunities Menu', async ({opportunitiesPage}) => {
   // Step: When User clicks on the Create Opportunities option in the Opportunities Menu
   // From: features\opportunities.feature:21:9
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.clickCreateOpportunities();
+
 });
 
-Then('User should see the correct components on the Create Opportunities page', async ({}, dataTable) => {
+Then('User should see the correct components on the Create Opportunities page', async ({opportunitiesPage}, dataTable) => {
   // Step: Then User should see the correct components on the Create Opportunities page
   // From: features\opportunities.feature:22:9
+   //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.assertCreatePageComponents(dataTable);
+
+ 
 });
 
-Given('User is on the Create Opportunities page', async ({}) => {
+Given('User is on the Create Opportunities page', async ({opportunitiesPage}) => {
   // Step: Given User is on the Create Opportunities page
   // From: features\opportunities.feature:30:11
-});
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.hoverOpportunitiesMenu();
+  await opportunitiesPage.clickCreateOpportunities();
 
-When('User enters Opportunities Valid Data and clicks the Save button', async ({}) => {
+  });
+
+When('User enters Opportunities Valid Data and clicks the Save button', async ({opportunitiesPage}) => {
   // Step: When User enters Opportunities Valid Data and clicks the Save button
   // From: features\opportunities.feature:31:11
+  //const opportunitiesPage = new OpportunitiesPage(page);
+   //const contactsPage = new ContactsPage(page);
+  await opportunitiesPage.fillOpportunityForm('Valid Data');
+  await opportunitiesPage.clickFormAction('Save');
 });
 
-Then('User should see create Opportunities Detailed view page of new Opportunity', async ({}) => {
+Then('User should see create Opportunities Detailed view page of new Opportunity', async ({opportunitiesPage}) => {
   // Step: Then User should see create Opportunities Detailed view page of new Opportunity
   // From: features\opportunities.feature:32:11
+  //const opportunitiesPage = new OpportunitiesPage(page);
+
+   await opportunitiesPage.assertDetailViewVisible();
 });
 
-When('User enters Opportunities No Data and clicks the Save button', async ({}) => {
+When('User enters Opportunities No Data and clicks the Save button', async ({opportunitiesPage}) => {
   // Step: When User enters Opportunities No Data and clicks the Save button
   // From: features\opportunities.feature:31:11
+
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.fillOpportunityForm('No Data');
+  await opportunitiesPage.clickFormAction('Save');
 });
 
-Then('User should see create Opportunities Required field error messages', async ({}) => {
+Then('User should see create Opportunities Required field error messages', async ({opportunitiesPage}) => {
   // Step: Then User should see create Opportunities Required field error messages
   // From: features\opportunities.feature:32:11
+  //const opportunitiesPage = new OpportunitiesPage(page)
+
+  await opportunitiesPage.assertRequiredFieldErrorsVisible();
 });
-When('User enters Opportunities Valid Data and clicks the Cancel button', async ({}) => {
+When('User enters Opportunities Valid Data and clicks the Cancel button', async ({opportunitiesPage}) => {
   // Step: When User enters Opportunities Valid Data and clicks the Cancel button
   // From: features\opportunities.feature:31:11
+  //const opportunitiesPage = new OpportunitiesPage(page);
+
+  await opportunitiesPage.fillOpportunityForm('Valid Data');
+  await opportunitiesPage.clickFormAction('Cancel');
+  
 });
 
-Then('User should see create Opportunities Confirmation dialog appears', async ({}) => {
+Then('User should see create Opportunities Confirmation dialog appears', async ({opportunitiesPage}) => {
   // Step: Then User should see create Opportunities Confirmation dialog appears
   // From: features\opportunities.feature:32:11
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.assertConfirmationDialogVisible();
 });
 
-When('User clicks on the {string} option in the Opportunities Menu', async ({}, arg) => {
+When('User clicks on the {string} option in the Opportunities Menu', async ({opportunitiesPage}, datatable) => {
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  //await opportunitiesPage.clickOpportunitiesMenuOption(arg);
+   /*async ({ opportunities }, dataTable) => {
+    await opportunities.assertDashboardComponents(dataTable);
+  }*/
+
+    async ({ opportunitiesPage }, optionName) => {
+    await opportunitiesPage.clickMenuOption(optionName);
+  }
+});
+ // await opportunitiesPage.assertDashboardComponents(datatable);
   // Step: When User clicks on the "View Opportunities" option in the Opportunities Menu
   // From: features\opportunities.feature:42:9
-});
+//});
 
-Then('User should see the correct components on the Opportunities dashboard page', async ({}, dataTable) => {
+Then('User should see the correct components on the Opportunities dashboard page', async ({opportunitiesPage}, dataTable) => {
   // Step: Then User should see the correct components on the Opportunities dashboard page
   // From: features\opportunities.feature:43:9
+  //const opportunitiesPage = new OpportunitiesPage(page);
+
+   async ({ opportunitiesPage }, dataTable) => {
+    await opportunitiesPage.assertDashboardComponents(dataTable);
+  }
+  //await opportunitiesPage.assertDashboardComponents(dataTable);
 });
 
-Given('User has opened Opportunities menu', async ({}) => {
+Given('User has opened Opportunities menu', async ({opportunitiesPage}) => {
   // Step: Given User has opened Opportunities menu
   // From: features\opportunities.feature:53:9
+  //const opportunitiesPage = new OpportunitiesPage(page);
+   await opportunitiesPage.hoverOpportunitiesMenu();
 });
 
-When('User clicks the Import Opportunities option', async ({}) => {
+When('User clicks the Import Opportunities option', async ({opportunitiesPage}) => {
   // Step: When User clicks the Import Opportunities option
   // From: features\opportunities.feature:54:9
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.clickImportOpportunities();
 });
 
-Then('User should see the import Opportunities page with correct components', async ({}, dataTable) => {
+Then('User should see the import Opportunities page with correct components', async ({opportunitiesPage}, dataTable) => {
   // Step: Then User should see the import Opportunities page with correct components
   // From: features\opportunities.feature:55:9
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.assertImportPageComponents(dataTable);
+  
 });
 
-When('User uploads OpportunitiesValid File and clicks Next button', async ({}) => {
+When('User uploads OpportunitiesValid File and clicks Next button', async ({opportunitiesPage,fileType}) => {
   // Step: When User uploads OpportunitiesValid File and clicks Next button
   // From: features\opportunities.feature:66:11
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.uploadFile(fileType);
+  await opportunitiesPage.clickNext();
+  
 });
 
-Then('User should see Import Opportunities Detailed view page of new Opportunity', async ({}) => {
+Then('User should see Import Opportunities Detailed view page of new Opportunity', async ({opportunitiesPage ,result}) => {
   // Step: Then User should see Import Opportunities Detailed view page of new Opportunity
   // From: features\opportunities.feature:67:11
+  //const opportunitiesPage = new OpportunitiesPage(page);
+ await opportunitiesPage.assertImportResult(result);
 });
-
-When('User uploads OpportunitiesNo File and clicks Next button', async ({}) => {
+When('User uploads OpportunitiesNo File and clicks Next button', async ({opportunitiesPage}) => {
   // Step: When User uploads OpportunitiesNo File and clicks Next button
   // From: features\opportunities.feature:66:11
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.uploadFile('No File');
+  await opportunitiesPage.clickNext();
 });
+ 
 
-Then('User should see Import Opportunities Select a Vcard file Alert appears', async ({}) => {
+Then('User should see Import Opportunities Select a Vcard file Alert appears', async ({opportunitiesPage}) => {
   // Step: Then User should see Import Opportunities Select a Vcard file Alert appears
   // From: features\opportunities.feature:67:11
+  //const opportunitiesPage = new OpportunitiesPage(page);
+  await opportunitiesPage.assertNoFileAlertVisible();
 });
 
-When('User uploads OpportunitiesInValid File and clicks Next button', async ({}) => {
   // Step: When User uploads OpportunitiesInValid File and clicks Next button
   // From: features\opportunities.feature:66:11
+ 
+When('User uploads OpportunitiesInValid File and clicks Next button', async ({opportunitiesPage}) => {
+  // Step: When User uploads OpportunitiesInValid File and clicks Next button
+  // From: features\opportunities.feature:66:11
+  //const opportunitiesPage = new OpportunitiesPage(page); 
+  await opportunitiesPage.uploadFile('InValid File');
+  await opportunitiesPage.clickNext();
 });
 
-Then('User should see Import Opportunities Required field error messages', async ({}) => {
+Then('User should see Import Opportunities Required field error messages', async ({opportunitiesPage}) => { 
   // Step: Then User should see Import Opportunities Required field error messages
   // From: features\opportunities.feature:67:11
+  await opportunitiesPage.assertRequiredFieldErrorsVisible();
 });
 

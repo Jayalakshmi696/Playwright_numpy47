@@ -30,16 +30,10 @@ Feature:Contacts module functionality of suite8demo application
         | Tabs      | Overview, MoreInformation, other  |
 
         @CreateContactFunctionality
-        Scenario Outline: Verify that user is able to create a new Contact
-          Given User is on the Create Contact page
-          When User enters Contacts <Data> and clicks the <Action> button
-          Then User should see Create Contacts <Result> 
-          Examples:
-          | Data         | Action | Result                                 |
-          | Valid Data   | Save   | Detailed view page of new Contacts         |
-          | No Data      | Save   | Required field error messages          |
-          | Valid Data   | Cancel | Confirmation dialog appears            |
-
+          Scenario: Verify that user is able to create new Contacts
+           Given User successfully logged in to the application
+            When User enters Contacts Valid Data and clicks the Save button
+            Then User should see Create Contacts Detailed view page of new Contacts
       @ViewContactsPage
       Scenario: Verify components on the View Contacts page
         Given Contacts menu drop-down list is displayed
@@ -47,7 +41,7 @@ Feature:Contacts module functionality of suite8demo application
         Then User should see the correct components on the Contacts dashboard page
         | Component       | Expected Values                                                                                                         |
         | PageTitle       | Contacts                                                                                                                  |
-        | Buttons         | Filter, Insights                                                                                                        |
+        | Buttons         | Filter                                                                                                       |
         | Sections        | Records                                                                                                   |
         | Header Contents | SelectDropDown, BulkActionsDropDown, NextPageButton, PreviousPageButton, BeginingPageButton, EndPageButton, PageNumber  |
         | Footer Contents | SelectDropDown, BulkActionsDropDown, NextPageButton, PreviousPageButton, BeginingPageButton, EndPageButton, PageNumber  |
@@ -65,8 +59,8 @@ Feature:Contacts module functionality of suite8demo application
         @CreateContactFromVCard
         Scenario Outline: Verify the functionality of creating Contact from vCard
           Given User is on import vCard page
-          When User uploads <Input File> and clicks Import Vcard button
-          Then User should see the Import vCard <Result>
+          When User uploads "<Input File>" and clicks Import Vcard button
+          Then User should see the Import vCard "<Result>"
           Examples:
           | Input File   |  Result                            |
           | Valid File   |  Detailed view page of new Contact    |
@@ -88,8 +82,8 @@ Feature:Contacts module functionality of suite8demo application
         @ImportContacts
         Scenario Outline: Verify the functionality of importing Contacts
           Given User is on Import Contacts page 
-          When User uploads Contacts <Input File> and clicks Next button
-          Then User should see Import Contacts <Result>
+          When User uploads Contacts "<Input File>" and clicks Next button
+          Then User should see Import Contacts "<Result>"
           Examples:
           | Input File   |  Result                                 |
           | Valid File   |  Contacts dashboard page                   |

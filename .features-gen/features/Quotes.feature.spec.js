@@ -1,5 +1,5 @@
 // Generated from: features\Quotes.feature
-import { test } from "playwright-bdd";
+import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Testing Quotes module in SuiteCRM application', () => {
 
@@ -112,6 +112,9 @@ test.describe('Testing Quotes module in SuiteCRM application', () => {
 });
 
 // == technical section ==
+
+test.beforeEach('BeforeEach Hooks', ({ $runScenarioHooks, page }) => $runScenarioHooks('before', { page }));
+test.afterEach('AfterEach Hooks', ({ $runScenarioHooks, page }) => $runScenarioHooks('after', { page }));
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],

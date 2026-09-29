@@ -1,0 +1,21 @@
+
+ {
+  "contact1": {
+    "firstName": "Johns",
+    "lastName": "Samuel",
+    "email": "johns.samuel@example.com"
+   
+  },
+
+"vCard": {
+    "validFile": "C:\\Users\\HP\\Downloads\\Contacts.vcf",
+    "invalidFile": "C:\\Users\\HP\\Downloads\\invalid-contact.txt"
+  },
+  "importContacts": {
+    "validFile": "C:\\Users\\HP\\Downloads\\Contacts.csv",
+    "invalidFile": "C:\\Users\\HP\\Downloads\\invalid-contacts-import.docx"
+  }
+
+  }
+
+  

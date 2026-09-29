@@ -79,4 +79,3 @@ Feature: Opportunities module functionality of suite8demo application
           | InValid File |  Required field error messages     |
       
       
-        

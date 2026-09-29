@@ -1,5 +1,5 @@
 // Generated from: features\More1.feature
-import { test } from "playwright-bdd";
+import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('More module dropdown list functionality of suite8demo application', () => {
 
@@ -40,6 +40,9 @@ test.describe('More module dropdown list functionality of suite8demo application
 });
 
 // == technical section ==
+
+test.beforeEach('BeforeEach Hooks', ({ $runScenarioHooks, page }) => $runScenarioHooks('before', { page }));
+test.afterEach('AfterEach Hooks', ({ $runScenarioHooks, page }) => $runScenarioHooks('after', { page }));
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],

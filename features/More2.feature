@@ -11,6 +11,7 @@ Given User successfully logged into the suite8demo application
         
         Then User should see More menu in the menu bar
         
+        
         @ViewLTargetListPage
         Scenario: Verify that View Tasks page
             Given More menu drop down list is displayed
