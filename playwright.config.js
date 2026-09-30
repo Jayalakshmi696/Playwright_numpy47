@@ -6,7 +6,7 @@ const testDir = defineBddConfig({
   steps: [
      'steps/**/*.js',
     'fixtures/**/*.js',
-    'hooks/**/*.js'
+   
     
     ],
    // importTestFrom: './fixtures/loginFixture.js',

@@ -130,5 +130,6 @@ Scenario: Saved activity appears on the calendar grid in its time slot
   Then the popup closes
   And the activity appears in the calendar cell at the corresponding time slot
   And the cell displays the start time and the assigned user's name
+  And the user deletes the saved activity
  
 

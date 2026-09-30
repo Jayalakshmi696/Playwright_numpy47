@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+import { logger } from '../utils/logger.js';
 
 export class More4Page {
   constructor(page) {
@@ -43,6 +44,9 @@ export class More4Page {
 
   // Click an item in the More dropdown by its name
   async clickMoreItem(name) {
+
+    logger.info(`Clicking "${name}" in the More menu`);
+    
     const item = this.more4Items[name];
     await expect(item).toBeVisible();   // wait for the dropdown to show it
     await item.click();

@@ -3,133 +3,134 @@ import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Calendar Module - View, Navigate and  Activities', () => {
 
-  test.beforeEach('Background', async ({ Given, And, page }, testInfo) => { if (testInfo.error) return;
+  test.beforeEach('Background', async ({ Given, And, calendarPage, page }, testInfo) => { if (testInfo.error) return;
     await Given('the user is logged into the SuitCRM', null, { page }); 
-    await And('the user navigates to the "Calendar" module in the menu', null, { page }); 
+    await And('the user navigates to the "Calendar" module in the menu', null, { calendarPage, page }); 
   });
   
-  test('Verify the "calendar" icon.', { tag: ['@calendar', '@functional', '@calendarIcon'] }, async ({ When, Then, page }) => { 
-    await When('the user hovers over the "calendar" icon in the top navigation bar', null, { page }); 
-    await Then('user should see the "Schedule Meeting", "Schedule Call", "Create Task" and "Today" options in the dropdown menu', null, { page }); 
+  test('Verify the "calendar" icon.', { tag: ['@calendar', '@functional', '@calendarIcon'] }, async ({ When, Then, calendarPage }) => { 
+    await When('the user hovers over the "calendar" icon in the top navigation bar', null, { calendarPage }); 
+    await Then('user should see the "Schedule Meeting", "Schedule Call", "Create Task" and "Today" options in the dropdown menu', null, { calendarPage }); 
   });
 
-  test('Verify the calendar  items.', { tag: ['@calendar', '@functional', '@calendarItem'] }, async ({ When, Then, page }) => { 
-    await When('the user clicks the "calendar" icon', null, { page }); 
-    await Then('the user should be navigated to "Calendar" Dashboard page and should see the buttons.', {"dataTable":{"rows":[{"cells":[{"value":"Day"}]},{"cells":[{"value":"Week"}]},{"cells":[{"value":"Month"}]},{"cells":[{"value":"Shared Month"}]},{"cells":[{"value":"Shared Week"}]},{"cells":[{"value":"Settings"}]},{"cells":[{"value":"Calendar icon"}]}]}}, { page }); 
+  test('Verify the calendar  items.', { tag: ['@calendar', '@functional', '@calendarItem'] }, async ({ When, Then, calendarPage }) => { 
+    await When('the user clicks the "calendar" icon', null, { calendarPage }); 
+    await Then('the user should be navigated to "Calendar" Dashboard page and should see the buttons.', {"dataTable":{"rows":[{"cells":[{"value":"Day"}]},{"cells":[{"value":"Week"}]},{"cells":[{"value":"Month"}]},{"cells":[{"value":"Shared Month"}]},{"cells":[{"value":"Shared Week"}]},{"cells":[{"value":"Settings"}]},{"cells":[{"value":"Calendar icon"}]}]}}, { calendarPage }); 
   });
 
-  test('Verify selecting Schedule Meeting opens the meeting creation form', { tag: ['@calendar', '@functional', '@scheduledMeeting'] }, async ({ Given, When, Then, page }) => { 
-    await Given('the user has opened the "Calendar" dropdown menu', null, { page }); 
-    await When('the user clicks "Schedule Meeting"', null, { page }); 
-    await Then('User should see the "Schedule Meeting" component.', {"dataTable":{"rows":[{"cells":[{"value":"component"},{"value":"expected value"}]},{"cells":[{"value":"Page Title"},{"value":"MEETINGS CREATE"}]},{"cells":[{"value":"Buttons"},{"value":"Save, Cancel,Save & Send Invites, Close and Create New,Search"}]}]}}, { page }); 
+  test('Verify selecting Schedule Meeting opens the meeting creation form', { tag: ['@calendar', '@functional', '@scheduledMeeting'] }, async ({ Given, When, Then, calendarPage }) => { 
+    await Given('the user has opened the "Calendar" dropdown menu', null, { calendarPage }); 
+    await When('the user clicks "Schedule Meeting"', null, { calendarPage }); 
+    await Then('User should see the "Schedule Meeting" component.', {"dataTable":{"rows":[{"cells":[{"value":"component"},{"value":"expected value"}]},{"cells":[{"value":"Page Title"},{"value":"MEETINGS CREATE"}]},{"cells":[{"value":"Buttons"},{"value":"Save, Cancel,Save & Send Invites, Close and Create New,Search"}]}]}}, { calendarPage }); 
   });
 
   test.describe('Validate error on saving Schedule Meeting Page with a mandatory field left blank', () => {
 
-    test('Example #1', { tag: ['@calendar', '@negative', '@scheduledMeetingnegative'] }, async ({ Given, When, Then, And, page }) => { 
-      await Given('the user is on the "Schedule Meeting" page', null, { page }); 
-      await When('the user leaves the "Subject" field blank and clicks "Save"', null, { page }); 
-      await Then('a validation message is displayed "Missing required field: Subject"', null, { page }); 
-      await And('the meeting is not saved', null, { page }); 
+    test('Example #1', { tag: ['@calendar', '@negative', '@scheduledMeetingnegative'] }, async ({ Given, When, Then, And, calendarPage, page }) => { 
+      await Given('the user is on the "Schedule Meeting" page', null, { calendarPage, page }); 
+      await When('the user leaves the "Subject" field blank and clicks "Save"', null, { calendarPage }); 
+      await Then('a validation message is displayed "Missing required field: Subject"', null, { calendarPage }); 
+      await And('the meeting is not saved', null, { calendarPage }); 
     });
 
-    test('Example #2', { tag: ['@calendar', '@negative', '@scheduledMeetingnegative'] }, async ({ Given, When, Then, And, page }) => { 
-      await Given('the user is on the "Schedule Meeting" page', null, { page }); 
-      await When('the user leaves the "Start Date" field blank and clicks "Save"', null, { page }); 
-      await Then('a validation message is displayed "Missing required field: Start Date"', null, { page }); 
-      await And('the meeting is not saved', null, { page }); 
+    test('Example #2', { tag: ['@calendar', '@negative', '@scheduledMeetingnegative'] }, async ({ Given, When, Then, And, calendarPage, page }) => { 
+      await Given('the user is on the "Schedule Meeting" page', null, { calendarPage, page }); 
+      await When('the user leaves the "Start Date" field blank and clicks "Save"', null, { calendarPage }); 
+      await Then('a validation message is displayed "Missing required field: Start Date"', null, { calendarPage }); 
+      await And('the meeting is not saved', null, { calendarPage }); 
     });
 
-    test('Example #3', { tag: ['@calendar', '@negative', '@scheduledMeetingnegative'] }, async ({ Given, When, Then, And, page }) => { 
-      await Given('the user is on the "Schedule Meeting" page', null, { page }); 
-      await When('the user leaves the "End Date" field blank and clicks "Save"', null, { page }); 
-      await Then('a validation message is displayed "Missing required field: End Date"', null, { page }); 
-      await And('the meeting is not saved', null, { page }); 
+    test('Example #3', { tag: ['@calendar', '@negative', '@scheduledMeetingnegative'] }, async ({ Given, When, Then, And, calendarPage, page }) => { 
+      await Given('the user is on the "Schedule Meeting" page', null, { calendarPage, page }); 
+      await When('the user leaves the "End Date" field blank and clicks "Save"', null, { calendarPage }); 
+      await Then('a validation message is displayed "Missing required field: End Date"', null, { calendarPage }); 
+      await And('the meeting is not saved', null, { calendarPage }); 
     });
 
   });
 
-  test('Verify selecting Schedule Call opens the call creation form', { tag: ['@calendar', '@functional', '@scheduledCall'] }, async ({ Given, When, Then, page }) => { 
-    await Given('the user has opened the "Calendar" dropdown menu', null, { page }); 
-    await When('the user clicks "Schedule Call"', null, { page }); 
-    await Then('the "Schedule Call" form is displayed with components', {"dataTable":{"rows":[{"cells":[{"value":"component"},{"value":"expected value"}]},{"cells":[{"value":"Page Title"},{"value":"CALL CREATE"}]},{"cells":[{"value":"Buttons"},{"value":"Save, Cancel,Save & Send Invites, Close and Create New,Search"}]}]}}, { page }); 
+  test('Verify selecting Schedule Call opens the call creation form', { tag: ['@calendar', '@functional', '@scheduledCall'] }, async ({ Given, When, Then, calendarPage }) => { 
+    await Given('the user has opened the "Calendar" dropdown menu', null, { calendarPage }); 
+    await When('the user clicks "Schedule Call"', null, { calendarPage }); 
+    await Then('the "Schedule Call" form is displayed with components', {"dataTable":{"rows":[{"cells":[{"value":"component"},{"value":"expected value"}]},{"cells":[{"value":"Page Title"},{"value":"CALL CREATE"}]},{"cells":[{"value":"Buttons"},{"value":"Save, Cancel,Save & Send Invites, Close and Create New,Search"}]}]}}, { calendarPage }); 
   });
 
   test.describe('Validate error on saving Shedule Call Page with a mandatory field left blank', () => {
 
-    test('Example #1', { tag: ['@calendar', '@negative', '@scheduledCallNegative'] }, async ({ Given, When, Then, And, page }) => { 
-      await Given('the user is on the "Schedule Call" page', null, { page }); 
-      await When('the user leaves the "Subject" field blank and clicks "Save"', null, { page }); 
-      await Then('a validation message is displayed "Missing required field: Subject"', null, { page }); 
-      await And('the meeting is not saved', null, { page }); 
+    test('Example #1', { tag: ['@calendar', '@negative', '@scheduledCallNegative'] }, async ({ Given, When, Then, And, calendarPage, page }) => { 
+      await Given('the user is on the "Schedule Call" page', null, { calendarPage, page }); 
+      await When('the user leaves the "Subject" field blank and clicks "Save"', null, { calendarPage }); 
+      await Then('a validation message is displayed "Missing required field: Subject"', null, { calendarPage }); 
+      await And('the meeting is not saved', null, { calendarPage }); 
     });
 
-    test('Example #2', { tag: ['@calendar', '@negative', '@scheduledCallNegative'] }, async ({ Given, When, Then, And, page }) => { 
-      await Given('the user is on the "Schedule Call" page', null, { page }); 
-      await When('the user leaves the "Start Date & Time" field blank and clicks "Save"', null, { page }); 
-      await Then('a validation message is displayed "Missing required field: Start Date"', null, { page }); 
-      await And('the meeting is not saved', null, { page }); 
+    test('Example #2', { tag: ['@calendar', '@negative', '@scheduledCallNegative'] }, async ({ Given, When, Then, And, calendarPage, page }) => { 
+      await Given('the user is on the "Schedule Call" page', null, { calendarPage, page }); 
+      await When('the user leaves the "Start Date & Time" field blank and clicks "Save"', null, { calendarPage }); 
+      await Then('a validation message is displayed "Missing required field: Start Date"', null, { calendarPage }); 
+      await And('the meeting is not saved', null, { calendarPage }); 
     });
 
-    test('Example #3', { tag: ['@calendar', '@negative', '@scheduledCallNegative'] }, async ({ Given, When, Then, And, page }) => { 
-      await Given('the user is on the "Schedule Call" page', null, { page }); 
-      await When('the user leaves the "Duration" field blank and clicks "Save"', null, { page }); 
-      await Then('a validation message is displayed "Missing required field: Duration"', null, { page }); 
-      await And('the meeting is not saved', null, { page }); 
+    test('Example #3', { tag: ['@calendar', '@negative', '@scheduledCallNegative'] }, async ({ Given, When, Then, And, calendarPage, page }) => { 
+      await Given('the user is on the "Schedule Call" page', null, { calendarPage, page }); 
+      await When('the user leaves the "Duration" field blank and clicks "Save"', null, { calendarPage }); 
+      await Then('a validation message is displayed "Missing required field: Duration"', null, { calendarPage }); 
+      await And('the meeting is not saved', null, { calendarPage }); 
     });
 
   });
 
-  test('Verify selecting Create Task components', { tag: ['@calendar', '@functional', '@creatTask'] }, async ({ Given, When, Then, page }) => { 
-    await Given('the user has opened the "Calendar" dropdown menu', null, { page }); 
-    await When('the user clicks "Create Task"', null, { page }); 
-    await Then('a new "Create Task" form is displayed with components', {"dataTable":{"rows":[{"cells":[{"value":"component"},{"value":"expected value"}]},{"cells":[{"value":"Page Title"},{"value":"CREATE"}]},{"cells":[{"value":"Buttons"},{"value":"Save, Cancel"}]}]}}, { page }); 
+  test('Verify selecting Create Task components', { tag: ['@calendar', '@functional', '@creatTask'] }, async ({ Given, When, Then, calendarPage }) => { 
+    await Given('the user has opened the "Calendar" dropdown menu', null, { calendarPage }); 
+    await When('the user clicks "Create Task"', null, { calendarPage }); 
+    await Then('a new "Create Task" form is displayed with components', {"dataTable":{"rows":[{"cells":[{"value":"component"},{"value":"expected value"}]},{"cells":[{"value":"Page Title"},{"value":"CREATE"}]},{"cells":[{"value":"Buttons"},{"value":"Save, Cancel"}]}]}}, { calendarPage }); 
   });
 
   test.describe('Validate error on saving Create Task Page with a mandatory field left blank', () => {
 
-    test('Example #1', { tag: ['@calendar', '@negative', '@createTaskNegative'] }, async ({ Given, When, Then, And, page }) => { 
-      await Given('the user is on the "Create Task" page', null, { page }); 
-      await When('the user leaves the "Subject" field blank and clicks "Save"', null, { page }); 
-      await Then('a validation message is displayed "Missing required field: Subject"', null, { page }); 
-      await And('the meeting is not saved', null, { page }); 
+    test('Example #1', { tag: ['@calendar', '@negative', '@createTaskNegative'] }, async ({ Given, When, Then, And, calendarPage, page }) => { 
+      await Given('the user is on the "Create Task" page', null, { calendarPage, page }); 
+      await When('the user leaves the "Subject" field blank and clicks "Save"', null, { calendarPage }); 
+      await Then('a validation message is displayed "Missing required field: Subject"', null, { calendarPage }); 
+      await And('the meeting is not saved', null, { calendarPage }); 
     });
 
-    test('Example #2', { tag: ['@calendar', '@negative', '@createTaskNegative'] }, async ({ Given, When, Then, And, page }) => { 
-      await Given('the user is on the "Create Task" page', null, { page }); 
-      await When('the user leaves the "Priority" field blank and clicks "Save"', null, { page }); 
-      await Then('a validation message is displayed "Missing required field: Priority"', null, { page }); 
-      await And('the meeting is not saved', null, { page }); 
+    test('Example #2', { tag: ['@calendar', '@negative', '@createTaskNegative'] }, async ({ Given, When, Then, And, calendarPage, page }) => { 
+      await Given('the user is on the "Create Task" page', null, { calendarPage, page }); 
+      await When('the user leaves the "Priority" field blank and clicks "Save"', null, { calendarPage }); 
+      await Then('a validation message is displayed "Missing required field: Priority"', null, { calendarPage }); 
+      await And('the meeting is not saved', null, { calendarPage }); 
     });
 
   });
 
-  test('Verify  "Today" page open and buttons are vissible', { tag: ['@calendar', '@functional', '@todayView'] }, async ({ Given, When, Then, page }) => { 
-    await Given('the user has opened the "Calendar" dropdown menu', null, { page }); 
-    await When('the user opens the "Calendar" dropdown menu and clicks "Today"', null, { page }); 
-    await Then('the calendar refreshes to display the  current date activities with buttons "Day", "Week", "Month", "Shared Month", "Shared Week", "Settings" and "Calendar icon" are displayed', null, { page }); 
+  test('Verify  "Today" page open and buttons are vissible', { tag: ['@calendar', '@functional', '@todayView'] }, async ({ Given, When, Then, calendarPage }) => { 
+    await Given('the user has opened the "Calendar" dropdown menu', null, { calendarPage }); 
+    await When('the user opens the "Calendar" dropdown menu and clicks "Today"', null, { calendarPage }); 
+    await Then('the calendar refreshes to display the  current date activities with buttons "Day", "Week", "Month", "Shared Month", "Shared Week", "Settings" and "Calendar icon" are displayed', null, { calendarPage }); 
   });
 
-  test('Verify the assigned user name is displayed above the calendar grid', { tag: ['@calendar', '@functional', '@assignedUser'] }, async ({ Given, When, Then, page }) => { 
-    await Given('the calendar is loaded in "Today" view', null, { page }); 
+  test('Verify the assigned user name is displayed above the calendar grid', { tag: ['@calendar', '@functional', '@assignedUser'] }, async ({ Given, When, Then, calendarPage, page }) => { 
+    await Given('the calendar is loaded in "Today" view', null, { calendarPage, page }); 
     await When('the user views the row directly above the day column headers'); 
-    await Then('the assigned user\'s name is displayed', null, { page }); 
+    await Then('the assigned user\'s name is displayed', null, { calendarPage }); 
   });
 
-  test('checking CREATE ACTIVITY popup window shows.', { tag: ['@calendar', '@functional', '@createActivityPopup'] }, async ({ Given, When, Then, page }) => { 
-    await Given('the calendar is loaded in "Today" view', null, { page }); 
-    await When('the user click the cell corresponding to a specific time slot in the calendar grid', null, { page }); 
-    await Then('a popup window appears with options to create a new activity, including fields for "Subject", "Start Date", "End Date"', null, { page }); 
+  test('checking CREATE ACTIVITY popup window shows.', { tag: ['@calendar', '@functional', '@createActivityPopup'] }, async ({ Given, When, Then, calendarPage, page }) => { 
+    await Given('the calendar is loaded in "Today" view', null, { calendarPage, page }); 
+    await When('the user click the cell corresponding to a specific time slot in the calendar grid', null, { calendarPage }); 
+    await Then('a popup window appears with options to create a new activity, including fields for "Subject", "Start Date", "End Date"', null, { calendarPage }); 
   });
 
-  test('Saved activity appears on the calendar grid in its time slot', { tag: ['@calendar', '@functional', '@savedActivity'] }, async ({ Given, When, Then, And, page }) => { 
-    await Given('the calendar is loaded in "Today" view', null, { page }); 
-    await When('the user click the cell corresponding to a specific time slot in the calendar grid', null, { page }); 
-    await And('the user enters a valid value in the "Subject", "Start Date", "End Date"', null, { page }); 
-    await And('the user clicks the "Save" button', null, { page }); 
-    await Then('the popup closes', null, { page }); 
-    await And('the activity appears in the calendar cell at the corresponding time slot', null, { page }); 
-    await And('the cell displays the start time and the assigned user\'s name', null, { page }); 
+  test('Saved activity appears on the calendar grid in its time slot', { tag: ['@calendar', '@functional', '@savedActivity'] }, async ({ Given, When, Then, And, calendarPage, page }) => { 
+    await Given('the calendar is loaded in "Today" view', null, { calendarPage, page }); 
+    await When('the user click the cell corresponding to a specific time slot in the calendar grid', null, { calendarPage }); 
+    await And('the user enters a valid value in the "Subject", "Start Date", "End Date"', null, { calendarPage }); 
+    await And('the user clicks the "Save" button', null, { calendarPage }); 
+    await Then('the popup closes', null, { calendarPage }); 
+    await And('the activity appears in the calendar cell at the corresponding time slot', null, { calendarPage }); 
+    await And('the cell displays the start time and the assigned user\'s name', null, { calendarPage }); 
+    await And('the user deletes the saved activity', null, { calendarPage }); 
   });
 
 });
@@ -162,5 +163,5 @@ const bddFileData = [ // bdd-data-start
   {"pwTestLine":107,"pickleLine":107,"tags":["@calendar","@functional","@todayView"],"steps":[{"pwStepLine":7,"gherkinStepLine":5,"keywordType":"Context","textWithKeyword":"Given the user is logged into the SuitCRM","isBg":true,"stepMatchArguments":[]},{"pwStepLine":8,"gherkinStepLine":6,"keywordType":"Context","textWithKeyword":"And the user navigates to the \"Calendar\" module in the menu","isBg":true,"stepMatchArguments":[{"group":{"start":26,"value":"\"Calendar\"","children":[{"start":27,"value":"Calendar","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":108,"gherkinStepLine":108,"keywordType":"Context","textWithKeyword":"Given the user has opened the \"Calendar\" dropdown menu","stepMatchArguments":[{"group":{"start":24,"value":"\"Calendar\"","children":[{"start":25,"value":"Calendar","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":109,"gherkinStepLine":109,"keywordType":"Action","textWithKeyword":"When the user opens the \"Calendar\" dropdown menu and clicks \"Today\"","stepMatchArguments":[{"group":{"start":19,"value":"\"Calendar\"","children":[{"start":20,"value":"Calendar","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":55,"value":"\"Today\"","children":[{"start":56,"value":"Today","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":110,"gherkinStepLine":110,"keywordType":"Outcome","textWithKeyword":"Then the calendar refreshes to display the  current date activities with buttons \"Day\", \"Week\", \"Month\", \"Shared Month\", \"Shared Week\", \"Settings\" and \"Calendar icon\" are displayed","stepMatchArguments":[{"group":{"start":76,"value":"\"Day\"","children":[{"start":77,"value":"Day","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":83,"value":"\"Week\"","children":[{"start":84,"value":"Week","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":91,"value":"\"Month\"","children":[{"start":92,"value":"Month","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":100,"value":"\"Shared Month\"","children":[{"start":101,"value":"Shared Month","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":116,"value":"\"Shared Week\"","children":[{"start":117,"value":"Shared Week","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":131,"value":"\"Settings\"","children":[{"start":132,"value":"Settings","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":146,"value":"\"Calendar icon\"","children":[{"start":147,"value":"Calendar icon","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
   {"pwTestLine":113,"pickleLine":113,"tags":["@calendar","@functional","@assignedUser"],"steps":[{"pwStepLine":7,"gherkinStepLine":5,"keywordType":"Context","textWithKeyword":"Given the user is logged into the SuitCRM","isBg":true,"stepMatchArguments":[]},{"pwStepLine":8,"gherkinStepLine":6,"keywordType":"Context","textWithKeyword":"And the user navigates to the \"Calendar\" module in the menu","isBg":true,"stepMatchArguments":[{"group":{"start":26,"value":"\"Calendar\"","children":[{"start":27,"value":"Calendar","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":114,"gherkinStepLine":114,"keywordType":"Context","textWithKeyword":"Given the calendar is loaded in \"Today\" view","stepMatchArguments":[{"group":{"start":26,"value":"\"Today\"","children":[{"start":27,"value":"Today","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":115,"gherkinStepLine":115,"keywordType":"Action","textWithKeyword":"When the user views the row directly above the day column headers","stepMatchArguments":[]},{"pwStepLine":116,"gherkinStepLine":116,"keywordType":"Outcome","textWithKeyword":"Then the assigned user's name is displayed","stepMatchArguments":[]}]},
   {"pwTestLine":119,"pickleLine":119,"tags":["@calendar","@functional","@createActivityPopup"],"steps":[{"pwStepLine":7,"gherkinStepLine":5,"keywordType":"Context","textWithKeyword":"Given the user is logged into the SuitCRM","isBg":true,"stepMatchArguments":[]},{"pwStepLine":8,"gherkinStepLine":6,"keywordType":"Context","textWithKeyword":"And the user navigates to the \"Calendar\" module in the menu","isBg":true,"stepMatchArguments":[{"group":{"start":26,"value":"\"Calendar\"","children":[{"start":27,"value":"Calendar","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":120,"gherkinStepLine":120,"keywordType":"Context","textWithKeyword":"Given the calendar is loaded in \"Today\" view","stepMatchArguments":[{"group":{"start":26,"value":"\"Today\"","children":[{"start":27,"value":"Today","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":121,"gherkinStepLine":121,"keywordType":"Action","textWithKeyword":"When the user click the cell corresponding to a specific time slot in the calendar grid","stepMatchArguments":[]},{"pwStepLine":122,"gherkinStepLine":122,"keywordType":"Outcome","textWithKeyword":"Then a popup window appears with options to create a new activity, including fields for \"Subject\", \"Start Date\", \"End Date\"","stepMatchArguments":[{"group":{"start":83,"value":"\"Subject\"","children":[{"start":84,"value":"Subject","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":94,"value":"\"Start Date\"","children":[{"start":95,"value":"Start Date","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":108,"value":"\"End Date\"","children":[{"start":109,"value":"End Date","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
-  {"pwTestLine":125,"pickleLine":125,"tags":["@calendar","@functional","@savedActivity"],"steps":[{"pwStepLine":7,"gherkinStepLine":5,"keywordType":"Context","textWithKeyword":"Given the user is logged into the SuitCRM","isBg":true,"stepMatchArguments":[]},{"pwStepLine":8,"gherkinStepLine":6,"keywordType":"Context","textWithKeyword":"And the user navigates to the \"Calendar\" module in the menu","isBg":true,"stepMatchArguments":[{"group":{"start":26,"value":"\"Calendar\"","children":[{"start":27,"value":"Calendar","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":126,"gherkinStepLine":126,"keywordType":"Context","textWithKeyword":"Given the calendar is loaded in \"Today\" view","stepMatchArguments":[{"group":{"start":26,"value":"\"Today\"","children":[{"start":27,"value":"Today","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":127,"gherkinStepLine":127,"keywordType":"Action","textWithKeyword":"When the user click the cell corresponding to a specific time slot in the calendar grid","stepMatchArguments":[]},{"pwStepLine":128,"gherkinStepLine":128,"keywordType":"Action","textWithKeyword":"And the user enters a valid value in the \"Subject\", \"Start Date\", \"End Date\"","stepMatchArguments":[{"group":{"start":37,"value":"\"Subject\"","children":[{"start":38,"value":"Subject","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":48,"value":"\"Start Date\"","children":[{"start":49,"value":"Start Date","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":62,"value":"\"End Date\"","children":[{"start":63,"value":"End Date","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":129,"gherkinStepLine":129,"keywordType":"Action","textWithKeyword":"And the user clicks the \"Save\" button","stepMatchArguments":[{"group":{"start":20,"value":"\"Save\"","children":[{"start":21,"value":"Save","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":130,"gherkinStepLine":130,"keywordType":"Outcome","textWithKeyword":"Then the popup closes","stepMatchArguments":[]},{"pwStepLine":131,"gherkinStepLine":131,"keywordType":"Outcome","textWithKeyword":"And the activity appears in the calendar cell at the corresponding time slot","stepMatchArguments":[]},{"pwStepLine":132,"gherkinStepLine":132,"keywordType":"Outcome","textWithKeyword":"And the cell displays the start time and the assigned user's name","stepMatchArguments":[]}]},
+  {"pwTestLine":125,"pickleLine":125,"tags":["@calendar","@functional","@savedActivity"],"steps":[{"pwStepLine":7,"gherkinStepLine":5,"keywordType":"Context","textWithKeyword":"Given the user is logged into the SuitCRM","isBg":true,"stepMatchArguments":[]},{"pwStepLine":8,"gherkinStepLine":6,"keywordType":"Context","textWithKeyword":"And the user navigates to the \"Calendar\" module in the menu","isBg":true,"stepMatchArguments":[{"group":{"start":26,"value":"\"Calendar\"","children":[{"start":27,"value":"Calendar","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":126,"gherkinStepLine":126,"keywordType":"Context","textWithKeyword":"Given the calendar is loaded in \"Today\" view","stepMatchArguments":[{"group":{"start":26,"value":"\"Today\"","children":[{"start":27,"value":"Today","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":127,"gherkinStepLine":127,"keywordType":"Action","textWithKeyword":"When the user click the cell corresponding to a specific time slot in the calendar grid","stepMatchArguments":[]},{"pwStepLine":128,"gherkinStepLine":128,"keywordType":"Action","textWithKeyword":"And the user enters a valid value in the \"Subject\", \"Start Date\", \"End Date\"","stepMatchArguments":[{"group":{"start":37,"value":"\"Subject\"","children":[{"start":38,"value":"Subject","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":48,"value":"\"Start Date\"","children":[{"start":49,"value":"Start Date","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":62,"value":"\"End Date\"","children":[{"start":63,"value":"End Date","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":129,"gherkinStepLine":129,"keywordType":"Action","textWithKeyword":"And the user clicks the \"Save\" button","stepMatchArguments":[{"group":{"start":20,"value":"\"Save\"","children":[{"start":21,"value":"Save","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":130,"gherkinStepLine":130,"keywordType":"Outcome","textWithKeyword":"Then the popup closes","stepMatchArguments":[]},{"pwStepLine":131,"gherkinStepLine":131,"keywordType":"Outcome","textWithKeyword":"And the activity appears in the calendar cell at the corresponding time slot","stepMatchArguments":[]},{"pwStepLine":132,"gherkinStepLine":132,"keywordType":"Outcome","textWithKeyword":"And the cell displays the start time and the assigned user's name","stepMatchArguments":[]},{"pwStepLine":133,"gherkinStepLine":133,"keywordType":"Outcome","textWithKeyword":"And the user deletes the saved activity","stepMatchArguments":[]}]},
 ]; // bdd-data-end
