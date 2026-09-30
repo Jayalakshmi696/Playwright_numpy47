@@ -1,0 +1,6 @@
+After Accounts click: https://suite8demo.suiteondemand.com/#/home
+Name input count: 1
+2026-09-30 11:25:52 | info|  input name field
+URL after Save: https://suite8demo.suiteondemand.com/#/accounts/record/b056daaa-6b04-47e9-b6cd-0038a7d40a39
+2026-09-30 11:25:57 | info|  input name field
+URL after Save: https://suite8demo.suiteondemand.com/#/accounts/record/9772ead1-8f9f-4c7d-9848-e9cdc9975a40

@@ -1,0 +1,3 @@
+After Accounts click: https://suite8demo.suiteondemand.com/#/home
+Name input count: 1
+User navigated back to Accounts Dashboard
