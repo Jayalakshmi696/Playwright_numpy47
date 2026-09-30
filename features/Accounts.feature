@@ -25,7 +25,8 @@ Feature:Accounts module functionality of suite8demo application
    Scenario: Verify Create Account page validation
     Given User is on Create Account page
     When User clicks the save button without entering mandatory fields
-    Then User should see the error message "Missing required field: Name"
+    Then User should see the createName error message "Missing required field: Name"
+    
 @validDataCreateAccount
     Scenario: Verify Create Account page with valid data
     Given User is on Create Account page
@@ -46,6 +47,27 @@ Feature:Accounts module functionality of suite8demo application
     Scenario: Verify Recently Viewed page navigation
     When the user clicks on Recently Viewed from dropdown
     Then the user should be navigated to Recently Viewed page
+
+    @RecentlyViewedofexisitingAccount
+    Scenario:verify existing Account appears in Recently viewed
+    Given User opens the exisiting aacount
+    When User clicks the Recently viewed
+    Then existing account should be displayed in recently viewed
+
+    @CreateAccountCancelbuttonValidation
+    Scenario:Verify cancel button validation in createAccount page with data
+    Given User in Create Page of Account
+    When User clicks cancel button inside accountpage having data
+    Then User will get popup with message
+
+    @CreateCancelbutton
+    Scenario:verify create page cancel button 
+    Given User is in create account page
+    When User clicks cancel button without entering data
+    Then User is navigating back to the Accounts Dashboard
+
+    
+
 
 
 
