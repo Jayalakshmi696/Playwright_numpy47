@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@cucumber/cucumber": "^13.2.1",
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "winston": "^3.19.0"
   }
 }

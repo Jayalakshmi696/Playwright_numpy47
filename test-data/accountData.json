@@ -1,0 +1,29 @@
+{
+  "validData1": {
+    "name": "4D Investments",
+    "id": "12e0700e-8e85-4dca-957a-de2c7ff3d611",
+    "website": "www.devsugar.us",
+    "emailAddress": "sugar30@example.net",
+    "nonPrimaryEmails": "sales.kid@example.biz",
+    "officePhone": "(404) 043-0225",
+    "alternatePhone": "",
+    "fax": "1715 Scott Dr",
+    "billingStreet": "Los Angeles",
+    "billingCity": "NY",
+    "billingState": ""
+  },
+
+  "validData2": {
+    "name": "International violen Inc",
+    "id": "1ce4df83-86d0-40f9-b3c6-07f6096d8e35",
+    "website": "www.vegandev.de",
+    "emailAddress": "vegan.phone@example.com",
+    "nonPrimaryEmails": "support42@example.us",
+    "officePhone": "(339) 768-6749",
+    "alternatePhone": "",
+    "fax": "777 West Filmore Ln",
+    "billingStreet": "Santa Fe",
+    "billingCity": "NY",
+    "billingState": ""
+  }
+}
