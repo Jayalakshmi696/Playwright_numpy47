@@ -70,10 +70,10 @@ Feature: Opportunities module functionality of suite8demo application
         @ImportFunctionality
         Scenario Outline: Verify the functionality of importing Opportunities
           Given User is on Upload Import File page
-          When User uploads Opportunities<Input File> and clicks Next button
+          When User uploads Opportunities <Input File> and clicks Next button 
           Then User should see Import Opportunities <Result>
           Examples:
-          | Input File   |  Result                            |
+          | Input File | Result |
           | Valid File   |  Detailed view page of new Opportunity   |
           | No File      |  Select a Vcard file Alert appears     |
           | InValid File |  Required field error messages     |

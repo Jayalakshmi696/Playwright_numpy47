@@ -1,7 +1,8 @@
+
 {
-  "downloadsFolder": "",
+  "downloadsFolder": "C:\\Users\\HP\\Downloads",
   "files": {
-    "Valid File": "Opportunities.csv",
-    "Invalid File": "Contracts.csv"
+    "validFile": "Opportunities.csv",
+    "invalidFile": "invalid import file.md"
   }
 }

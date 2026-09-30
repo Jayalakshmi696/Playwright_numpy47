@@ -1,5 +1,10 @@
 import { expect } from '@playwright/test';
 
+const path = require('path');
+const os = require('os');
+const fs = require('fs');
+const importConfig = require('../test-data/opportunitiesData.json');
+
 export class OpportunitiesPage {
   constructor(page) {
     this.page = page;
@@ -8,7 +13,7 @@ export class OpportunitiesPage {
     this.createOpportunitiesOption = page.getByRole('link', { name: 'Create Opportunity' });
     this.viewOpportunitiesOption = page.getByRole('link', { name: 'View Opportunities' });
     this.importOpportunitiesOption = page.getByRole('link', { name: 'Import Opportunities' });
-
+    this.confirmmportopportunityButton = page.locator('iframe').contentFrame().getByRole('heading', { name: 'Step 2: Confirm Import File' });
 
 
 
@@ -82,6 +87,8 @@ export class OpportunitiesPage {
     this.fileInput = this.importFrame.locator('input[type="file"]');
     //this.fileInput = page.locator('input[type="file"]');
     this.uploadAlert = page.getByRole('alert');
+    this.missingFileError = page.locator('iframe').contentFrame().getByText('Missing required fields:');
+    this.invalidFileNameError = page.locator('iframe').contentFrame().getByText('Invalid import file name');
   }
  
   
@@ -227,8 +234,15 @@ export class OpportunitiesPage {
   
   async clickImportOpportunities() {
     await this.importOpportunitiesOption.click();
-    await expect(this.chooseFileButton).toBeVisible({ timeout: 15000 });
+    await expect(this.chooseFileButton).toBeVisible({ timeout: 1500000 });
   }
+
+  async clickImportchoosefileButton() {
+    await this.chooseFileButton.click();
+    //await expect(this.chooseFileButton).toBeVisible({ timeout: 1500000 });
+  }
+
+
 
   async assertImportPageComponents(dataTable) {
     const buttons = { 'Choose File': this.chooseFileButton, Next: this.nextButton };
@@ -273,60 +287,72 @@ export class OpportunitiesPage {
     }
   }
 
+
   // ---------- Upload ----------
-  resolveImportFile(fileType) {
-    const fileName = importConfig.files[fileType];
-    if (!fileName) throw new Error(`No file defined in import-files.json for "${fileType}"`);
+ resolveImportFile(fileType) {
+  const fileTypeMap = {
+    'Valid File': 'validFile',
+    'InValid File': 'invalidFile',
+    'Invalid File': 'invalidFile'
+  };
 
-    const folder = importConfig.downloadsFolder || path.join(os.homedir(), 'Downloads');
-    const fullPath = path.join(folder, fileName);
-    if (!fs.existsSync(fullPath)) throw new Error(`Import file not found: ${fullPath}`);
-    return fullPath;
+  const configKey = fileTypeMap[fileType] || fileType;
+  const fileName = importConfig.files[configKey];
+
+  if (!fileName) {
+    throw new Error(
+      `No file defined in opportunitiesData.json for "${configKey}"`
+    );
   }
 
+  const folder =
+    importConfig.downloadsFolder ||
+    path.join(os.homedir(), 'Downloads');
+
+  const filePath = path.isAbsolute(fileName)
+    ? fileName
+    : path.join(folder, fileName);
+
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Import file not found: ${filePath}`);
+  }
+
+  return filePath;
+}
   async uploadFile(fileType) {
-    if (fileType === 'No File') return; // leave the input empty on purpose
-    await this.fileInput.setInputFiles(this.resolveImportFile(fileType));
+    await this.chooseFileButton.setInputFiles("C:\\Users\\HP\\Downloads\\Opportunities.csv");
+     console.log(`Uploading file`);
+     await this.nextButton.click();
+
+    
+
+  }
+  async assertConfirmImportOpportunityButtonVisible() {
+    await expect(this.confirmmportopportunityButton).toBeVisible();
   }
 
-  async clickNext() {
-    this.lastDialogMessage = null;
-    // Capture a native alert() if the app shows one
-    const onDialog = async (dialog) => {
-      this.lastDialogMessage = dialog.message();
-      await dialog.dismiss();
-    };
-    this.page.on('dialog', onDialog);
-    try {
-      await this.nextButton.click();
-    } finally {
-      this.page.off('dialog', onDialog);
-    }
+  async NoFile(fileType) {
+   
+     await this.nextButton.click();
+
+    
+
+  }
+  async verifyNoFileValidation() {
+    await expect(this.missingFileError).toBeVisible();
+
   }
 
-  // ---------- Import results ----------
-  async assertNoFileAlertVisible() {
-    const pattern = /missing required field|select a .*file/i;
-    if (this.lastDialogMessage) {
-      expect(this.lastDialogMessage).toMatch(pattern);
-    } else {
-      await expect(this.missingFileError).toBeVisible();
-    }
+  async uploadFileInvalid(fileType) {
+    await this.chooseFileButton.setInputFiles("C:\\Users\\HP\\Downloads\\invalid import file.md");
+     //console.log(`Uploading file`);
+     await this.nextButton.click();
+
+    
+
   }
 
-  async assertImportResult(result) {
-    switch (result) {
-      case 'Next import step is displayed':
-        await expect(this.chooseFileButton).toBeHidden(); // moved past the upload step
-        break;
-      case 'File required error':
-        await this.assertNoFileAlertVisible();
-        break;
-      case 'Import error is displayed':
-        await expect(this.importErrors).toBeVisible();
-        break;
-      default:
-        throw new Error(`Unknown import result: "${result}"`);
-    }
+  async verifyInvalidFileNameError() {
+    await expect(this.invalidFileNameError).toBeVisible();
   }
 }

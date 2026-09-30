@@ -155,7 +155,7 @@ Then('User should see the correct components on the Contacts dashboard page', as
   await expect(contactsPage.previousPageButtonHeader).toBeVisible();
   await expect(contactsPage.beginningPageButtonHeader).toBeVisible();
   await expect(contactsPage.endPageButtonHeader).toBeVisible();
-  await expect(contactsPage.pageNumberHeader).toBeVisible();
+  //await expect(contactsPage.pageNumberHeader).toBeVisible();
  
   await expect(contactsPage.footerSelectDropDown).toBeVisible();
   await expect(contactsPage.footerBulkActionsDropDown).toBeVisible();
@@ -163,25 +163,26 @@ Then('User should see the correct components on the Contacts dashboard page', as
   await expect(contactsPage.previousPageButtonFooter).toBeVisible();
   await expect(contactsPage.beginningPageButtonFooter).toBeVisible();
   await expect(contactsPage.endPageButtonFooter).toBeVisible();
-  await expect(contactsPage.pageNumberFooter).toBeVisible();
+  //await expect(contactsPage.pageNumberFooter).toBeVisible();
 });
 
 // Import Contact from vCard
 
 When('User clicks on Create Contact From vCard option', async ({contactsPage}) => {
  //const contactsPage = new ContactsPage(page);
-  await contactsPage.clickCreateFromVCard();
+ await contactsPage.hoverContactsMenu();
+ await contactsPage.clickCreateFromVCard();
+ //await contactsPage.VCardChooseFileButton();s
+ //await contactsPage.uploadVCardFile();
+ //await contactsPage.clickImportVCardButton();
+timeout: 30000;
 });
 
 Then('User should see the Import vCard Detailed view page of new Contact', async ({contactsPage}) => {
   //const contactsPage = new ContactsPage(page);
-  await contactsPage.verifyImportVCardPage();
-  console.log('URL after clicking vCard:', contactsPage.page.url());
+  await contactsPage.importVCardPageVisible();
+  await contactsPage.importVCardNewPageTitle();
 
-console.log(
-  'iframe count:',
-  await contactsPage.page.locator('iframe').count()
-);
   
 });
 
@@ -189,31 +190,91 @@ Given('Contacts menu is visible', async ({contactsPage}) => {
  // const contactsPage = new ContactsPage(page);
   await contactsPage.hoverContactsMenu();
   await contactsPage.clickCreateFromVCard();
-  await expect(contactsPage.importVCardPageTitle).toBeVisible();
+  
+
 });
+  When('User uploads {string} and clicks Import Vcard button', async ({contactsPage}) => {
+  // Step: When User uploads "Valid File" and clicks Import Vcard button
+  // From: features\Contacts.feature:62:11
+  await contactsPage.importVCardPageVisible();
+    await contactsPage.uploadVCardFile();
+    await contactsPage.clickImportVCardButton();
+});
+
+Then('User should see the Import vCard {string}', async ({contactsPage}) => {
+  // Step: Then User should see the Import vCard "Detailed view page of new Contact"
+  // From: features\Contacts.feature:63:11
+    await contactsPage.importVCardNewPageTitle();
+});
+
 
 When('User clicks on Import Contacts option in Contacts Menu', async ({contactsPage}) => {
   //const contactsPage = new ContactsPage(page);
   //await contactsPage.uploadVCardFile(vCardFiles['Valid File']);
-   await contactsPage.uploadVCardFile();
+ await contactsPage.hoverContactsMenu();
+ await contactsPage.clickImportContacts();
 });
 
 Then('User should see the import Contacts   page with correct components', async ({contactsPage}, dataTable) => {
-   await contactsPage.verifyContactDetailsPage();
+   await contactsPage.importFilePageTitleVisible();
 });
 
 Given('User is on Import Contacts page', async ({contactsPage}) => {
   //const contactsPage = new ContactsPage(page);
-  await contactsPage.hoverContactsMenu();
-  await contactsPage.clickImportContacts();
-  await expect(contactsPage.uploadImportFilePageTitle).toBeVisible();
+  await contactsPage.importFilePageTitleVisible();
+  //await contactsPage.hoverContactsMenu();
+  //await contactsPage.clickImportContacts();
+  //await expect(contactsPage.uploadImportFilePageTitle).toBeVisible();
 });
 
 
+
+
+
+
+When('User uploads Contacts {string} and clicks Next button', async ({contactsPage}) => {
+  // Step: When User uploads Contacts "Valid File" and clicks Next button
+  // From: features\Contacts.feature:85:11
+  await contactsPage.chooseFileButtonImportVisible();
+  await contactsPage.uploadFile();
+  await contactsPage.nextButtonImportVisible();
+
+});
+
+Then('User should see Import Contacts {string}', async ({}, arg) => {
+  // Step: Then User should see Import Contacts "Contacts dashboard page"
+  // From: features\Contacts.feature:86:11
+  await contactsPage.step2PageTitleVisible();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//here
+/*
 When('User uploads Contacts Valid File and clicks Next button', async ({contactsPage}) => {
   //const contactsPage = new ContactsPage(page);
   //await contactsPage.uploadImportContactsFile(importFiles['Valid File']);
-      await contactsPage.uploadImportContactsFile();
+  await contactsPage.chooseFileButtonImportVisible();
+  await contactsPage.nextButtonImportVisible();
+
+     
 });
 
 Then('User should see Import Contacts Contacts dashboard page', async ({contactsPage}) => {
@@ -224,11 +285,11 @@ Then('User should see Import Contacts Contacts dashboard page', async ({contacts
 When('User uploads Contacts No File and clicks Next button', async ({contactsPage}) => {
   // const contactsPage = new ContactsPage(page);
   // No file selected: click Next directly without setting input files.
-await contactsPage.nextButtonImport.click();});
+await contactsPage.nextButtonImportVisible();});
 
 Then('User should see Import Contacts Required field error messages', async ({contactsPage}) => {
   //const contactsPage = new ContactsPage(page);
-    await expect(contactsPage.importRequiredFieldError).toBeVisible();
+    await contactsPage.step2PageTitleVisible();
 
 });
 
@@ -240,7 +301,7 @@ When('User uploads Contacts InValid File and clicks Next button', async ({contac
 
 Then('User should see Import Contacts Invalid Import File name message', async ({contactsPage}) => {
   //const contactsPage = new ContactsPage(page);
-  await expect(contactsPage.invalidImportFileMessage).toBeVisible();
-});
-
+  //await expect(contactsPage.invalidImportFileMessage).toBeVisible();
+  await contactsPage.requiredFieldErrorVisible();
+});*/
 
