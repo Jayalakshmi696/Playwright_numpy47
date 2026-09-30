@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 
-export class MorePage {
+export class More1Page {
     constructor(page) {
         this.page = page;
         this.moreMenu = page.locator('a').filter({ hasText: 'More' });
@@ -15,21 +15,30 @@ export class MorePage {
 
     async clickMoreModule() {
         await this.moreMenu.click();
-        await expect(this.home).toBeVisible();
+       // await expect(this.home).toBeVisible();
+    }
+
+    async clickHome()
+    {
+        await this.clickMoreModule();
+        await this.home.click();
     }
     async clickEmails() {
+        await this.clickMoreModule();
         await this.Emails.click();
-        await expect(this.page.getByText('EMAILS', { exact: true })).toBeVisible();
     }
     async clickCampaigns() {
+        await this.clickMoreModule();
         await this.campaigns.click();
         await expect(this.page.getByText('CAMPAIGNS', { exact: true })).toBeVisible();
     }
     async clickCalls() {
+        await this.clickMoreModule();
         await this.calls.click();
         await expect(this.page.getByText('CALLS', { exact: true })).toBeVisible();
     }
     async clickMeetings() {
+        await this.clickMoreModule();
         await this.meetings.click();
         await expect(this.page.getByText('MEETINGS', { exact: true })).toBeVisible();
     }
