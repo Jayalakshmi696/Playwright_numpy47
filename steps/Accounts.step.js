@@ -5,6 +5,7 @@ import { expect } from '@playwright/test';
 const { Given, When, Then } = createBdd(test);
 import { AccountsPage } from '../pages/AccountsPage.js';
 import accountData from '../test-data/accountData.json' with { type: 'json' };
+import { logger } from "../utils/logger.js";
 
 
 
@@ -12,7 +13,7 @@ When('the user clicks on Accounts module from left navigation', async ({page,acc
   // Step: When the user clicks on Accounts module from left navigation
   // From: features\Accounts.feature:13:5
     //await page.goto('https://suite8demo.suiteondemand.com/#/home');
-     console.log('Current URL before Accounts:', page.url());
+    // console.log('Current URL before Accounts:', `${page.url()}`);
 
    
     await accountsPage.clickAccountsModule();
@@ -21,7 +22,8 @@ When('the user clicks on Accounts module from left navigation', async ({page,acc
     // accountsPage.accountsDashboard
     //  ).toBeVisible({ timeout: 10000 });
 
-     console.log('Current URL after load:', page.url());
+     logger.info(`current url of account page,${page.url()}`);
+     //console.log('Current URL after load:', page.url());
     
 });
 
