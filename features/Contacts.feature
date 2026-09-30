@@ -59,13 +59,13 @@ Feature:Contacts module functionality of suite8demo application
         @CreateContactFromVCard
         Scenario Outline: Verify the functionality of creating Contact from vCard
           Given User is on import vCard page
-          When User uploads "<Input File>" and clicks Import Vcard button
+          When User uploads "<InputFile>" and clicks Import Vcard button
           Then User should see the Import vCard "<Result>"
           Examples:
-          | Input File   |  Result                            |
-          | Valid File   |  Detailed view page of new Contact    |
-          | No File      |  Select a Vcard file Alert appears |
-          | InValid File |  Required field error messages     |
+          | InputFile   |  Result                            |
+          | ValidFile   |  Detailed view page of new Contact    |
+          | NoFile      |  Select a Vcard file Alert appears |
+          | InValidFile |  Required field error messages     |
       
       @ImportContactsPage 
       Scenario: Verify that user is on Import Contacts Page
@@ -82,11 +82,11 @@ Feature:Contacts module functionality of suite8demo application
         @ImportContacts
         Scenario Outline: Verify the functionality of importing Contacts
           Given User is on Import Contacts page 
-          When User uploads Contacts "<Input File>" and clicks Next button
+          When User uploads Contacts "<InputFile>" and clicks Next button
           Then User should see Import Contacts "<Result>"
           Examples:
-          | Input File   |  Result                                 |
-          | Valid File   |  Contacts dashboard page                   |
-          | No File      |  Required field error messages          |
-          | InValid File |  Invalid Import File name message       |  
+          | InputFile   |  Result                                 |
+          | ValidFile   |  Contacts dashboard page                   |
+          | NoFile      |  Required field error messages          |
+          | InValidFile |  Invalid Import File name message       |  
        

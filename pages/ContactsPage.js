@@ -1,4 +1,6 @@
 import { expect } from '@playwright/test';
+import { logger } from "../utils/logger.js";
+
 export class ContactsPage {
   constructor(page) {
     this.page = page;
@@ -57,7 +59,7 @@ export class ContactsPage {
     //this.noFileChosenLabelVCard = page.locator('iframe').contentFrame().getByText('No File Chosen').first();
     this.selectVCardAlert = page.locator('iframe').contentFrame().getByText(/select a vcard file/i).first();
     this.vCardRequiredFieldError = page.locator('.error-message, .field-error, [role="alert"]').first();
-    this.importVCardPageTitlelabel = page.locator('scrm-dynamic-label').getByText('John Doe')
+    this.importVCardPageTitlelabel = page.locator('scrm-dynamic-label').getByText('Test User1');
 
     
 
@@ -233,16 +235,20 @@ console.log('Contact received:', contact);
       console.log('Choose file button for vCard clicked');
     }
   // ----- vCard actions -----
-  async uploadVCardFile() {
-      console.log(`Uploading vCard file: ${filePath}`);
-   const fileInput = this.page
-    .locator('iframe')
-    .contentFrame()
-    .locator('input[type="file"]');
-  await fileInput.setInputFiles(filePath);
+ async uploadVCardFile() {
+    const filePath = "Playwright_numpy47/test-data/Vcard.vcf";
 
-  console.log('vCard file uploaded successfully');
-  }
+    console.log(`Uploading vCard file: ${filePath}`);
+
+    const fileInput = this.page
+        .locator('iframe')
+        .contentFrame()
+        .locator('input[type="file"]');
+
+    await fileInput.setInputFiles(filePath);
+
+    console.log('vCard file uploaded successfully');
+}
 
 async clickImportVCardButton() {
   console.log('Clicking Import vCard button');
@@ -265,155 +271,12 @@ async importVCardNewPageTitle() {
 }
 
 
-  async uploadFile(fileType) {
-    await this.chooseFileButtonImport.setInputFiles("C:\\Users\\HP\\Downloads\\Contacts.csv");
+  async uploadFile() {
+    await this.chooseFileButtonImport.setInputFiles("Playwright_numpy47/test-data/Contacts.csv");
      console.log(`Uploading file`);
      await this.nextButtonImport.click();
 
     
 
   }
-
-
-
-/*
-async verifyVCardCreatedContact() {
-
-  console.log('Verifying Contact created from vCard');
-
-  await expect(this.page).toHaveURL(
-    /contacts/i,
-    { timeout: 30000 }
-  );
-
-  console.log(
-    'Contact created from vCard successfully'
-  );
-}
-
-
-
-async verifyImportVCardPage() {
-
-  console.log('Checking Import vCard page...');
-
-
-  await expect(this.importVCardPageTitle).toBeVisible({
-    timeout: 15000
-  });
-
-  await expect(this.chooseFileButtonVCard).toBeVisible({
-    timeout: 15000
-  });
-
-  await expect(this.importVCardButton).toBeVisible({
-    timeout: 15000
-  });
-
-  console.log('Import vCard page displayed successfully');
-}
-
-async uploadImportContactsFile(filePath) {
-
-  console.log(
-    `Uploading Contacts import file: ${filePath}`
-  );
-
-  await this.chooseFileButtonImport.setInputFiles(
-    filePath
-  );
-
-  await this.nextButtonImport.click();
-}
-
-
-
-
-async clickImportContactsNextWithoutFile() {
-
-  console.log(
-    'Clicking Next without selecting an import file'
-  );
-
-  await this.nextButtonImport.click();
-}
-
-async verifyImportContactsPage() {
-
-  console.log('Checking Import Contacts page...');
-
-  await expect(
-    this.uploadImportFilePageTitle
-  ).toBeVisible({ timeout: 15000 });
-
-  await expect(
-    this.chooseFileButtonImport
-  ).toBeVisible({ timeout: 15000 });
-
-  await expect(
-    this.nextButtonImport
-  ).toBeVisible({ timeout: 15000 });
-
-  await expect(
-    this.downloadTemplateLink
-  ).toBeVisible({ timeout: 15000 });
-
-  await expect(
-    this.createNewOnlyRadio
-  ).toBeVisible({ timeout: 15000 });
-
-  await expect(
-    this.createNewAndUpdateRadio
-  ).toBeVisible({ timeout: 15000 });
-
-  console.log(
-    'Import Contacts page displayed successfully'
-  );
-}
-
-async verifyImportContactsDashboard() {
-
-  console.log(
-    'Verifying Contacts dashboard after import'
-  );
-
-  await expect(
-    this.contactsDashboardTitle
-  ).toBeVisible({ timeout: 30000 });
-
-  console.log(
-    'Contacts dashboard displayed successfully'
-  );
-}
-  async uploadInvalidImportContactsFile() {
-
-  const filePath = contactsData.importContacts.invalidFile;
-
-  console.log(`Uploading invalid Contact Import file: ${filePath}`);
-
-  await this.chooseFileButtonImport.setInputFiles(filePath);
-
-  await this.nextButtonImport.click();
-}
-async verifyContactDetailsPage() {
-
-  await expect(this.page).toHaveURL(/contact.*(view|detail)/i);
-
-}
-
-  // ----- Import Contacts actions -----
-  async uploadImportContactsFile(filePath) {
-
-  console.log(
-    `Uploading Contacts import file: ${filePath}`
-  );
-
-  await this.chooseFileButtonImport.setInputFiles(
-    filePath
-  );
-
-  await this.nextButtonImport.click();
-}*/
-
-
 }

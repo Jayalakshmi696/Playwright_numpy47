@@ -1,8 +1,26 @@
 
 {
-  "downloadsFolder": "C:\\Users\\HP\\Downloads",
-  "files": {
-    "validFile": "Opportunities.csv",
-    "invalidFile": "invalid import file.md"
-  }
+"ValidVcardFile": {
+    "filepath": "Playwright_numpy47/test-data/Vcard.vcf"
+  },
+"InValidFile":{
+  "filepath": "Playwright_numpy47/test-data/invalid_contacts.vcf"
+},
+"NoFile":{
+  "filepath": ""
+},
+  "ValidContactsCSVFile": {
+    "filepath": "Playwright_numpy47/test-data/Contacts.csv"
+  },
+
+"OpportunitiesCSVFile": {
+    "filepath": "Playwright_numpy47/test-data/Opportunities.csv"
+  },
+  "InvalidOpportunitiesCSVFile":{
+    "filepath": "Playwright_numpy47/test-data/invalid opportunities file.md"
+  },
+
+  "NoOpportunitiesFile":{
+  "filepath": ""
+}
 }

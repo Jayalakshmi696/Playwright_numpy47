@@ -77,34 +77,9 @@ for (const contact of Object.values(contactsData)) {
     await contactsPage.createContact(contact);
 
 }
-
-       });
+});
   
-    /*for (const contact of Object.values(contactsData)) {
-
-      await contactsPage.hoverContactsMenu();
-
-      await contactsPage.createContact(contact);
-
-    */
-  
-
-  
-  
-
-
-  //const contactsPage = new ContactsPage(page);
- /* await contactsPage.fillContactForm({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: `john.doe.${Date.now()}@example.com`
-  });
-  console.log('User Entered Valid Data');
-  await contactsPage.save();
-  */
-
-
-Then('User should see Create Contacts Detailed view page of new Contacts', async ({contactsPage}) => {
+   Then('User should see Create Contacts Detailed view page of new Contacts', async ({contactsPage}) => {
    //await expect(contactsPage).toHaveURL(/contacts.*(view|detail)/i);
    await contactsPage.verifyCreatedContact();
 
@@ -181,7 +156,7 @@ timeout: 30000;
 Then('User should see the Import vCard Detailed view page of new Contact', async ({contactsPage}) => {
   //const contactsPage = new ContactsPage(page);
   await contactsPage.importVCardPageVisible();
-  await contactsPage.importVCardNewPageTitle();
+  
 
   
 });
@@ -193,7 +168,7 @@ Given('Contacts menu is visible', async ({contactsPage}) => {
   
 
 });
-  When('User uploads {string} and clicks Import Vcard button', async ({contactsPage}) => {
+When('User uploads {string} and clicks Import Vcard button', async ({contactsPage}, InputFile) => {
   // Step: When User uploads "Valid File" and clicks Import Vcard button
   // From: features\Contacts.feature:62:11
   await contactsPage.importVCardPageVisible();
@@ -201,54 +176,65 @@ Given('Contacts menu is visible', async ({contactsPage}) => {
     await contactsPage.clickImportVCardButton();
 });
 
-Then('User should see the Import vCard {string}', async ({contactsPage}) => {
+Then('User should see the Import vCard {string}', async ({contactsPage}, Result) => {
   // Step: Then User should see the Import vCard "Detailed view page of new Contact"
   // From: features\Contacts.feature:63:11
     await contactsPage.importVCardNewPageTitle();
 });
 
-
 When('User clicks on Import Contacts option in Contacts Menu', async ({contactsPage}) => {
-  //const contactsPage = new ContactsPage(page);
-  //await contactsPage.uploadVCardFile(vCardFiles['Valid File']);
- await contactsPage.hoverContactsMenu();
+  // Step: When User clicks on Import Contacts option in Contacts Menu
+  // From: features\Contacts.feature:73:9
+   await contactsPage.hoverContactsMenu();
  await contactsPage.clickImportContacts();
 });
 
 Then('User should see the import Contacts   page with correct components', async ({contactsPage}, dataTable) => {
-   await contactsPage.importFilePageTitleVisible();
+  // Step: Then User should see the import Contacts   page with correct components
+  // From: features\Contacts.feature:74:9
+  await contactsPage.importFilePageTitleVisible();
 });
 
 Given('User is on Import Contacts page', async ({contactsPage}) => {
-  //const contactsPage = new ContactsPage(page);
+  // Step: Given User is on Import Contacts page
+  // From: features\Contacts.feature:84:11
   await contactsPage.importFilePageTitleVisible();
-  //await contactsPage.hoverContactsMenu();
-  //await contactsPage.clickImportContacts();
-  //await expect(contactsPage.uploadImportFilePageTitle).toBeVisible();
 });
 
-
-
-
-
-
-When('User uploads Contacts {string} and clicks Next button', async ({contactsPage}) => {
+When('User uploads Contacts {string} and clicks Next button', async ({contactsPage}, InputFile) => {
   // Step: When User uploads Contacts "Valid File" and clicks Next button
   // From: features\Contacts.feature:85:11
-  await contactsPage.chooseFileButtonImportVisible();
+   await contactsPage.chooseFileButtonImportVisible();
   await contactsPage.uploadFile();
   await contactsPage.nextButtonImportVisible();
-
 });
 
-Then('User should see Import Contacts {string}', async ({}, arg) => {
+Then('User should see Import Contacts {string}', async ({contactsPage}, Result) => {
   // Step: Then User should see Import Contacts "Contacts dashboard page"
   // From: features\Contacts.feature:86:11
-  await contactsPage.step2PageTitleVisible();
+   await contactsPage.step2PageTitleVisible();
 });
 
 
 
+/*
+When('User uploads Opportunities Valid File and clicks Next button', async ({contactsPage}) => {
+  // Step: When User uploads Opportunities Valid File and clicks Next button
+  // From: features\opportunities.feature:73:11
+});
+
+
+When('User uploads Opportunities No File and clicks Next button', async ({contactsPage}) => {
+  // Step: When User uploads Opportunities No File and clicks Next button
+  // From: features\opportunities.feature:73:11
+});
+
+When('User uploads Opportunities InValid File and clicks Next button', async ({contactsPage}) => {
+  // Step: When User uploads Opportunities InValid File and clicks Next button
+  // From: features\opportunities.feature:73:11
+});*/
+
+ 
 
 
 

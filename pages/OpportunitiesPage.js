@@ -1,4 +1,6 @@
 import { expect } from '@playwright/test';
+import { logger } from "../utils/logger.js";
+
 
 const path = require('path');
 const os = require('os');
@@ -320,7 +322,7 @@ export class OpportunitiesPage {
   return filePath;
 }
   async uploadFile(fileType) {
-    await this.chooseFileButton.setInputFiles("C:\\Users\\HP\\Downloads\\Opportunities.csv");
+    await this.chooseFileButton.setInputFiles("Playwright_numpy47/test-data/Opportunities.csv");
      console.log(`Uploading file`);
      await this.nextButton.click();
 
@@ -344,7 +346,7 @@ export class OpportunitiesPage {
   }
 
   async uploadFileInvalid(fileType) {
-    await this.chooseFileButton.setInputFiles("C:\\Users\\HP\\Downloads\\invalid import file.md");
+    await this.chooseFileButton.setInputFiles("Playwright_numpy47/test-data/invalid opportunities file.md");
      //console.log(`Uploading file`);
      await this.nextButton.click();
 
