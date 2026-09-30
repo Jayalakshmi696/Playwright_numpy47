@@ -1,4 +1,4 @@
-// Generated from: features/Calendar.feature
+// Generated from: features\Calendar.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Calendar Module - View, Navigate and  Activities', () => {
@@ -137,12 +137,9 @@ test.describe('Calendar Module - View, Navigate and  Activities', () => {
 
 // == technical section ==
 
-test.beforeEach('BeforeEach Hooks', ({ $runScenarioHooks, page }) => $runScenarioHooks('before', { page }));
-test.afterEach('AfterEach Hooks', ({ $runScenarioHooks, page }) => $runScenarioHooks('after', { page }));
-
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/Calendar.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\Calendar.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 
