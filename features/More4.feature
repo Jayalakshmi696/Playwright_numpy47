@@ -30,6 +30,7 @@ Feature: more Module - View, Navigate and  Activities
      Scenario:Verify Surveys page navigation 
      When User clicks "Surveys" item from More
      Then User is navigating to the "Surveys" page
+     
 
 
 
