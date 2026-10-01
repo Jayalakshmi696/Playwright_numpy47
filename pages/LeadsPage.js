@@ -1,6 +1,7 @@
 import {expect} from '@playwright/test';
 import leadDetails from '../test-data/createLeadData.json' with { type: 'json'};
 import inputFileDetails from '../test-data/importVcard.json' with {type: 'json'};
+import { logger } from "../utils/logger.js";
 
 export class LeadsPage {
   constructor(page) {
@@ -90,10 +91,10 @@ export class LeadsPage {
     this.topLeadRecord = page.locator('td.cdk-column-name a.field-link');
     //this.leadRecentViewMenu = this. page.locator('scrm-sub-menu-recently-viewed'); 
     //this.leadRecentViewMenu = page.locator('scrm-menu-item-link').filter({has: this.page.locator('a.top-nav-link.dropdown-toggle').filter({hasText: /^Leads$/})}).locator('scrm-label[labelkey="LBL_LAST_VIEWED"]');
-    this.leadRecentViewMenu = page.locator('scrm-sub-menu-recently-viewed').locator('a.sub-nav-link.dropdown-toggle');
+    this.leadRecentViewMenu = page.locator('scrm-sub-menu-recently-viewed').locator('a.sub-nav-link.dropdown-toggle').first();
     //this.leadRecentViewMenu = this.leadsMenu.locator('xpath=ancestor::li[1]').getByRole('link', {name: 'Recently Viewed',exact: true});
       //this.recentlyViewedLeadsSubMenu = page.locator('ul.dropdown-menu.submenu:visible').filter({has: this.page.locator('a.submenu-nav-link[href*="#/leads/record/"]')});
-      this.recentlyViewedLeadSubMenu = page.locator('scrm-sub-menu-recently-viewed ul.dropdown-menu.submenu a.submenu-nav-link[href*="#/leads/record/"]');
+      this.recentlyViewedLeadSubMenu = page.locator('scrm-sub-menu-recently-viewed ul.dropdown-menu.submenu a.submenu-nav-link[href*="#/leads/record/"]').first();
       //this.recentlyViewedLeadsSubMenu = this.page.locator('xpath=ancestor::li[1]').locator('ul.dropdown-menu.submenu');
       //this.recentViewLead = (leadName) => page.getByRole('link', {name: leadName, exact: true });    
   }
@@ -103,9 +104,12 @@ export class LeadsPage {
     const topLeadNameCell = this.topLeadRecord.first();
     await expect(topLeadNameCell).toBeVisible({timeout: 10000});
     const firstLeadName = (await topLeadNameCell.innerText()).trim();
-    console.log('Top Lead Name:', firstLeadName);
+    //console.log('Top Lead Name:', firstLeadName);
+    logger.info(`Top Lead Name "${firstLeadName}"`);
     await topLeadNameCell.click();
     await this.page.waitForURL(url => url.toString().includes('/#/leads/record/'), { timeout: 30000 });
+    logger.info(`Opened the top Lead Record from the Leads dash board`);
+    logger.info(` The URL is ${this.page.url()}`); 
   }
 
   async checkRecentViewInLeads()
@@ -113,16 +117,26 @@ export class LeadsPage {
    await expect(this.leadRecentViewMenu).toBeVisible({timeout: 10000}); 
   }
 
-  async checkRecentViewLeadsSubMenu()
+  async openRecentViewLeadsSubMenuInLeads()
   {
     await this.leadRecentViewMenu.hover();
+  }
+
+  async checkRecentViewLeadsSubMenu()
+  {
     await expect(this.recentlyViewedLeadSubMenu).toBeVisible({timeout: 10000});
   }
 
   async openRecentViewedLead()
   {
     await this.recentlyViewedLeadSubMenu.click();
+  }
+
+  async checkOpeningRecentViewedLeadRecord()
+  {
     await this.page.waitForURL(url => url.toString().includes('/#/leads/record/'), { timeout: 30000 });
+    logger.info(`Opened recently viewed Lead Record via Recently viewed option`);
+    logger.info(`The URL is ${this.page.url()}`); 
   }
 
   async openLeadsDropDown()
@@ -144,11 +158,15 @@ export class LeadsPage {
     await expect(this.createLead).toBeVisible();
     await this.createLead.click();
     await this.page.waitForURL(url => url.toString().includes('/#/leads/edit'));
+    logger.info(`Opened Create Lead page`);
+    logger.info(`The URL is ${this.page.url()}`); 
   }
 
   async fillCreateLeadPage(dataKey)
   {
-     const lDetail = leadDetails[dataKey];
+    logger.info(`Opened Create Leads page`);
+    logger.info(`The URL is ${this.page.url()}`); 
+    const lDetail = leadDetails[dataKey];
 
     if (!leadDetails) 
       throw new Error(`Lead data not found for key: ${dataKey}`);
@@ -170,28 +188,6 @@ export class LeadsPage {
     }
   }
 
-  async verifyCreateLeadResult(result) {
-    switch (result) {
-      case 'Detailed view page of new Lead':{
-        await expect(this.leadDetailedViewTitle).toBeVisible();
-        console.log (await this.leadDetailedViewTitle.textContent());
-      }
-        break;
-      case 'Required field error messages':{
-        await expect(this.leadFieldErrMsg.first()).toBeVisible();
-        console.log (await this.leadFieldErrMsg.textContent());
-      }
-        break;
-      case 'Confirmation dialog appears':{
-        await expect(this.leadCancelPopup).toBeVisible();
-        console.log (await this.leadCancelPopup.textContent());
-      }
-        break;
-      default:
-        throw new Error(`Unknown expected result: ${result}`);
-    }
-  }
-
     async clickViewLead()
     {
       await expect(this.viewLead).toBeVisible();
@@ -204,23 +200,8 @@ export class LeadsPage {
     await expect(this.createLeadFromVcard).toBeVisible();
     await this.createLeadFromVcard.click();
     await this.page.waitForURL(url => url.toString().includes('/#/leads/importvcard'));
-  }
-
-  async verifyVCardResult(expectedResult) {
-    if (expectedResult === 'Detailed view page of new Lead') {
-      await this.page.waitForURL(url => url.toString().includes('/#/leads/importvcard'), { timeout: 30000 });
-      await expect(this.leadDetailedViewTitle).toBeVisible();
-      console.log (await this.leadDetailedViewTitle.textContent());
-    } 
-    else if (expectedResult === 'Select a Vcard file Alert appears') {
-      await expect(this.vCardAlertPopup).toBeVisible();
-      await expect(this.vCardAlertPopupTxt).toContainText('Please select a vCard file');
-      console.log (await this.vCardAlertPopupTxt.textContent());      
-    } 
-    else if (expectedResult === 'Required field error messages') {
-      await expect(this.vCardFieldErrMsg.first()).toBeVisible();
-      console.log (await this.vCardFieldErrMsg.textContent());
-    }
+    logger.info(`Importing Vcard`);
+    logger.info(`URL is ${this.page.url()}`); 
   }
 
    async clickCreateLeadFromImport()
@@ -228,24 +209,6 @@ export class LeadsPage {
     await expect(this.importLeads).toBeVisible();
     await this.importLeads.click();
     await this.page.waitForURL(url => url.toString().includes('/#/import/step1'),{ timeout: 30000 });
-  }
-
-  async verifyLeadResult(expectedResult) {
-    if (expectedResult === 'Detailed view page of new Lead') {
-      await expect(this.importLeadCnfrmLbl).toBeVisible();
-      console.log (await this.importLeadCnfrmLbl.textContent());
-      await this.importLeadExtBtn.click();
-      await this.page.waitForURL(url => url.toString().includes('/#/leads/index'));
-    } 
-    else if (expectedResult === 'Import Lead Error Popup alert appears ') {
-      await expect(this.importLeadAlertPopup).toBeVisible();
-      await expect(this.importLeadAlertPopupTxt).toContainText('The selected file does not');
-      console.log (await this.importLeadAlertPopupTxt.textContent());      
-    } 
-    else if (expectedResult === 'Required field error messages') {
-      await expect(this.importLeadFieldErrMsg.first()).toBeVisible();
-      console.log (await this.importLeadFieldErrMsg.textContent());
-    }
   }
 
  //All page Components
@@ -265,7 +228,8 @@ export class LeadsPage {
             const element = pageTitleMap[item];
             if (element) {
               await expect(element).toBeVisible({timeout: 10000});
-              console.log('Page Title:',(await element.innerText()).trim());
+              //console.log('Page Title:',(await element.innerText()).trim());
+              logger.info (`Page Title is "${(await element.innerText()).trim()}"`);
             }
           }
           break;
@@ -285,7 +249,8 @@ export class LeadsPage {
             const element = buttonMap[item];
             if (element) {
               await expect(element).toBeVisible({timeout: 10000});
-              console.log(`${item}:`,(await element.textContent()).trim());
+              //console.log(`${item}:`,(await element.textContent()).trim());
+              logger.info (`Button name is "${(await element.textContent()).trim()}"`);
             }
           }
           break;
@@ -299,7 +264,8 @@ export class LeadsPage {
             const element = labelMap[item];
             if (element) {
               await expect(element).toBeVisible({timeout: 10000});
-              console.log(`${item}:`,(await element.innerText()).trim());
+              //console.log(`${item}:`,(await element.innerText()).trim());
+              logger.info (`Info label in the page is "${(await element.innerText()).trim()}"`);
             }
           }
           break;
@@ -310,7 +276,8 @@ export class LeadsPage {
             const element = linkMap[item];
             if (element) {
               await expect(element).toBeVisible({timeout: 10000});
-              console.log(`${item}:`,(await element.innerText()).trim());
+              //console.log(`${item}:`,(await element.innerText()).trim());
+              logger.info (`Hyper link available in the page is "${(await element.innerText()).trim()}"`);
             }
           }
           break;
@@ -324,7 +291,8 @@ export class LeadsPage {
             const element = radioMap[item];
             if (element) {
               await expect(element).toBeVisible({timeout: 10000});
-              console.log(`${item}:`,(await element.innerText()).trim());
+              //console.log(`${item}:`,(await element.innerText()).trim());
+              logger.info (`Radio button name is "${(await element.innerText()).trim()}"`);
             }
           }
           break;
@@ -336,7 +304,10 @@ export class LeadsPage {
           };
           for (const text of expectedItems) {
             let element = sectionMap[text];
-            if (element) await expect(element).toBeVisible();
+            if (element) {
+              await expect(element).toBeVisible();
+              logger.info (`The page has the section ${text}`);
+            }
           }
           break;
         }
@@ -356,7 +327,8 @@ export class LeadsPage {
             let element = headerMap[text];
             if (element) {
               await expect(element).toBeVisible();
-              console.log (`Header ${text} is visible`);
+              //console.log (`Header ${text} is visible`);
+              logger.info (`Leads Header ${text} is visible`);
             }
           }
           break;
@@ -377,7 +349,8 @@ export class LeadsPage {
             let element = footerMap[text];
             if (element){
               await expect(element).toBeVisible();
-              console.log (`Footer ${text} is visible`);
+              //console.log (`Footer ${text} is visible`);
+              logger.info (`Leads Footer ${text} is visible`);
             }
           }
           break;
@@ -393,7 +366,8 @@ export class LeadsPage {
               if (tabElement) 
               {
                 await expect(tabElement).toBeVisible();
-                console.log (await tabElement.textContent());
+                //console.log (await tabElement.textContent());
+                logger.info (`The page has the tab "${await tabElement.textContent()}"`);  
               }
             }
           break;
@@ -403,6 +377,7 @@ export class LeadsPage {
   }
 
   async uploadAndImportAllLeadFiles(fileType, importType) {
+    logger.info(`Step 1 URL: ${this.page.url()}`); 
     const lFileDetail = inputFileDetails[fileType];
     if (!lFileDetail) {
       throw new Error(`File data not found for key: ${fileType}`);
@@ -419,332 +394,158 @@ export class LeadsPage {
     await this.importLeadNxtBtn.click();
     if (fileType === 'ValidLeadFile') {
       await expect(this.importLeadPageTitle2).toBeVisible({timeout: 10000});
-      console.log('Step 2 URL:', this.page.url());
+      //console.log('Step 2 URL:', this.page.url());
+      logger.info(`Step 2 URL: ${this.page.url()}`); 
       await this.importLeadStp2NxtBtn.click();
       await expect(this.importLeadPageTitle3).toBeVisible({timeout: 10000});
-      console.log('Step 3 URL:', this.page.url());
+      //console.log('Step 3 URL:', this.page.url());
+      logger.info(`Step 3 URL: ${this.page.url()}`); 
       await this.importLeadStp3NxtBtn.click();
       await this.page.waitForTimeout(1000);
       await this.page.mouse.wheel(0, -2500);
       await expect(this.importLeadPageTitle4).toBeVisible({timeout: 10000});
-      console.log('Step 4 URL:', this.page.url());
+      //console.log('Step 4 URL:', this.page.url());
+      logger.info(`Step 4 URL: ${this.page.url()}`); 
       await this.importLeadStp4ImpNwBtn.click();
       await expect(this.importLeadPageTitle5).toBeVisible({timeout: 10000});
-      console.log('Step 5 URL:', this.page.url());
+      //console.log('Step 5 URL:', this.page.url());
+      logger.info(`Step 5 URL: ${this.page.url()}`); 
+    }
+  }
+
+  async verifyAllLeadResults(result) {
+    switch (result) {
+      case 'Detailed view page of creating Leads':{
+        //await expect(this.leadDetailedViewTitle).toBeVisible();
+        //console.log (await this.leadDetailedViewTitle.textContent());
+        await this.page.waitForURL(url => url.toString().includes('/#/leads/record/'));
+        logger.info(`New Lead is Created`);
+      }
+        break;
+      case 'Create Lead Required field error messages':{
+        await expect(this.leadFieldErrMsg.first()).toBeVisible();
+        //console.log (await this.leadFieldErrMsg.textContent());
+          logger.info (`Field error message appeared when trying to click save button without entering the required details - Create Leads`);
+          logger.info(`The message is "${await this.leadFieldErrMsg.textContent()}"`);
+      }
+        break;
+      case 'Create Lead Confirmation dialog appears':{
+        await expect(this.leadCancelPopup).toBeVisible();
+        //console.log (await this.leadCancelPopup.textContent());
+        logger.info (`Canceled create lead`);
+      }
+        break;
+      case 'Detailed view page after importing Leads': {
+        //await expect(this.importLeadCnfrmLbl).toBeVisible();
+        //console.log (await this.importLeadCnfrmLbl.textContent());
+        await this.importLeadExtBtn.click();
+        await this.page.waitForURL(url => url.toString().includes('/#/leads/index'));
+        logger.info (`Succesful Import Leads`);
+      } 
+        break;
+      case 'Import Lead Error Popup alert appears': {
+        await expect(this.importLeadAlertPopup).toBeVisible();
+        await expect(this.importLeadAlertPopupTxt).toContainText('The selected file does not');
+        //console.log (await this.importLeadAlertPopupTxt.textContent());
+        logger.info (`Import Lead Alert Popup message`);
+        logger.info (`The message is "${await this.importLeadAlertPopupTxt.textContent()}"`);      
+      } 
+        break;
+      case 'Import Lead Required field error messages': {
+        await expect(this.importLeadFieldErrMsg.first()).toBeVisible();
+        //console.log (await this.importLeadFieldErrMsg.textContent());
+        logger.info (`Field error message appeared when trying to click next button without uploading any File - Import Leads`);
+        logger.info (`The message is "${await this.importLeadFieldErrMsg.textContent()}"`);
+      }
+        break;
+      case 'Detailed view page of new Lead via Vcard': {
+        await this.page.waitForURL(url => url.toString().includes('/#/leads/importvcard'), { timeout: 30000 });
+        await expect(this.leadDetailedViewTitle).toBeVisible();
+        //console.log (await this.leadDetailedViewTitle.textContent());
+        logger.info (`Succesful import Vcard`);
+      } 
+        break;
+      case 'Select a Vcard file Alert appears': {
+        await expect(this.vCardAlertPopup).toBeVisible();
+        await expect(this.vCardAlertPopupTxt).toContainText('Please select a vCard file');
+        //console.log (await this.vCardAlertPopupTxt.textContent());   
+        logger.info (`Alert popup with a message appeared when trying to import Vcard without uploading any File`);
+        logger.info (`The message is "${await this.vCardAlertPopupTxt.textContent()}"`);   
+      } 
+        break;
+      case 'Vcard Required field error messages': {
+        await expect(this.vCardFieldErrMsg.first()).toBeVisible();
+        //console.log (await this.vCardFieldErrMsg.textContent());
+        logger.info (`Field error message appeared when trying to import a invalid Vcard`);
+        logger.info (`The message is "${await this.vCardFieldErrMsg.textContent()}"`);
+      }
+        break;
+    default:
+      throw new Error(`Unknown expected result: ${result}`);
     }
   }
 };
 
-  /*//Import Lead Page Components
-  async verifyImportLeadsComponents(componentsList) {
-  for (const row of componentsList) {
-    const componentType = row.Component;
-    const expectedItems = row.ExpectedValues.split(',').map(item => item.trim());
-    switch (componentType) {
-      case 'PageTitle': {
-        const pageTitleMap = {
-          'UploadImportFile': this.importLeadPageTitle
-        };
-        for (const item of expectedItems) {
-          const element = pageTitleMap[item];
-          if (element) {
-            await expect(element).toBeVisible({timeout: 10000});
-            console.log('Import Leads Page Title:',(await element.innerText()).trim());
-          }
-        }
-        break;
-      }
-      case 'Buttons': {
-        const buttonMap = {
-          'ChooseFile': this.importLeadChooseFileBtn,
-          'Next': this.importLeadNxtBtn
-        };
-        for (const item of expectedItems) {
-          const element = buttonMap[item];
-          if (element) {
-            await expect(element).toBeVisible({timeout: 10000});
-            console.log(`${item}:`,(await element.innerText()).trim());
-          }
-        }
-        break;
-      }
-      case 'Label': {
-        const labelMap = {
-          'InformationText': this.importLeadLabl
-        };
-        for (const item of expectedItems) {
-          const element = labelMap[item];
-          if (element) {
-            await expect(element).toBeVisible({timeout: 10000});
-            console.log(`${item}:`,(await element.innerText()).trim());
-          }
-        }
-        break;
-      }
-      case 'HyperLink': {
-        const linkMap = {'DownloadImportFileTemplate': this.importLeadHypLink};
-        for (const item of expectedItems) {
-          const element = linkMap[item];
-          if (element) {
-            await expect(element).toBeVisible({timeout: 10000});
-            console.log(`${item}:`,(await element.innerText()).trim());
-          }
-        }
-        break;
-      }
-      case 'Radiobuttons': {
-        const radioMap = {
-                            'RadioButton1':this.importLeadRadBtn1,
-                            'RadioButton2':this.importLeadRadBtn2
-                          };
-        for (const item of expectedItems) {
-          const element = radioMap[item];
-          if (element) {
-            await expect(element).toBeVisible({timeout: 10000});
-            console.log(`${item}:`,(await element.innerText()).trim());
-          }
-        }
-        break;
-      }
-    }
-  }
-}
+/*
 
-//VCardPageComponents
-  async verifyImportVCardComponents(componentsList) 
-  {
-    for (const row of componentsList) {
-      const componentType = row.Component;
-      const expectedItems = row.ExpectedValues.split(',').map(item => item.trim());
-      switch (componentType) 
-      {
-        case 'PageTitle': 
-        {
-          const pageTitleMap = {'ImportVCard': this.leadVcardPgTitle};
-          for (const titleText of expectedItems) {
-            const element = pageTitleMap[titleText];
-            if (element) {
-              await expect(element).toBeVisible({ timeout: 10000 });
-              console.log('Import vCard Page Title:', await element.innerText());
-            }
-          }
-          break;
-        }
-        case 'Buttons': 
-        {
-          const buttonMap = {
-            'ChooseFile': this.leadChooseFileBtn,
-            'ImportVCard': this.leadImptVcardBtn
-          };
-          for (const buttonText of expectedItems) 
-          {
-            const element = buttonMap[buttonText];
-            if (element) {
-              await expect(element).toBeVisible({ timeout: 10000 });
-              console.log(`${buttonText}:`, await element.innerText());
-            }
-          }
-          break;
-        }
-        case 'Label': 
-        {
-          const labelMap = {'InformationText': this.leadInfoTxt};
-          for (const labelText of expectedItems) 
-          {
-            const element = labelMap[labelText];
-            if (element) 
-            {
-              await expect(element).toBeVisible({ timeout: 10000 });
-              console.log(`${labelText}:`,await element.innerText());
-            }
-          }
-          break;
-        }
-      }
+  async verifyLeadResult(expectedResult) {
+    if (expectedResult === 'Detailed view page of new Lead') {
+      await expect(this.importLeadCnfrmLbl).toBeVisible();
+      console.log (await this.importLeadCnfrmLbl.textContent());
+      await this.importLeadExtBtn.click();
+      await this.page.waitForURL(url => url.toString().includes('/#/leads/index'));
     } 
+    else if (expectedResult === 'Import Lead Error Popup alert appears ') {
+      await expect(this.importLeadAlertPopup).toBeVisible();
+      await expect(this.importLeadAlertPopupTxt).toContainText('The selected file does not');
+      console.log (await this.importLeadAlertPopupTxt.textContent());      
+    } 
+    else if (expectedResult === 'Required field error messages') {
+      await expect(this.importLeadFieldErrMsg.first()).toBeVisible();
+      console.log (await this.importLeadFieldErrMsg.textContent());
+    }
   }
 
+    async verifyVCardResult(expectedResult) {
+    if (expectedResult === 'Detailed view page of new Lead') {
+      await this.page.waitForURL(url => url.toString().includes('/#/leads/importvcard'), { timeout: 30000 });
+      await expect(this.leadDetailedViewTitle).toBeVisible();
+      console.log (await this.leadDetailedViewTitle.textContent());
+    } 
+    else if (expectedResult === 'Select a Vcard file Alert appears') {
+      await expect(this.vCardAlertPopup).toBeVisible();
+      await expect(this.vCardAlertPopupTxt).toContainText('Please select a vCard file');
+      console.log (await this.vCardAlertPopupTxt.textContent());      
+    } 
+    else if (expectedResult === 'Required field error messages') {
+      await expect(this.vCardFieldErrMsg.first()).toBeVisible();
+      console.log (await this.vCardFieldErrMsg.textContent());
+    }
+  }
 
-  //View Lead Page Components
-    async verifyViewLeadsComponents(componentsList) {
-    for (const row of componentsList) {
-      const componentType = row.Component;
-      const expectedItems = row.ExpectedValues.split(',').map(item => item.trim());
-
-     switch (componentType) {
-      case 'PageTitle':
-        await expect(this.viewLeadPgTitle).toBeVisible();
-        console.log (await this.viewLeadPgTitle.textContent());
-        break;
-
-      case 'Buttons': {
-        const buttonMap = {
-         'Filter': this.leadFilterBtn,
-         'Insights': this.leadInsightsBtn
-        };
-        for (const text of expectedItems) {
-          let element = buttonMap[text];
-          if (element) await expect(element).toBeVisible();
-          console.log (await element.textContent());
-        }
-        break;
+    async verifyCreateLeadResult(result) {
+    switch (result) {
+      case 'Detailed view page of new Lead':{
+        await expect(this.leadDetailedViewTitle).toBeVisible();
+        console.log (await this.leadDetailedViewTitle.textContent());
       }
-
-      case 'Sections': {
-        const sectionMap = {
-         'Records': this.leadRecords,
-         'QuickCharts': this.leadQuickCharts
-        };
-        for (const text of expectedItems) {
-          let element = sectionMap[text];
-          if (element) await expect(element).toBeVisible();
-        }
         break;
+      case 'Required field error messages':{
+        await expect(this.leadFieldErrMsg.first()).toBeVisible();
+        console.log (await this.leadFieldErrMsg.textContent());
       }
-
-      case 'Header Contents': {
-        const headerMap = {
-          'SelectDropDown': this.leadHdrSelectDropDown,
-          'BulkActionsDropDown': this.leadHdrBulkDropDown,
-          'ColumnButton': this.leadHdrColumnBtn,
-          'NextPageButton': this.leadHdrNxtPgBtn,
-          'PreviousPageButton': this.leadHdrPrePgBtn,
-          'EndPageButton': this.leadHdrLastPgBtn,
-          'BeginingPageButton': this.leadHdrBeginPgBtn,
-          'PageNumber': this.leadHdrCurrentPgNo
-        };
-        for (const text of expectedItems) {
-          let element = headerMap[text];
-          if (element) {
-            await expect(element).toBeVisible();
-            console.log (`Header ${text} is visible`);
-          }
-        }
         break;
+      case 'Confirmation dialog appears':{
+        await expect(this.leadCancelPopup).toBeVisible();
+        console.log (await this.leadCancelPopup.textContent());
       }
-
-      case 'Footer Contents': {
-        const footerMap = {
-          'SelectDropDown': this.leadFtrSelectDropDown,
-          'BulkActionsDropDown': this.leadFtrBulkDropDown,
-          'columnButton': this.leadFtrColumnBtn,
-          'NextPageButton': this.leadFtrNxtPgBtn,
-          'PreviousPageButton': this.leadFtrPrePgBtn,
-          'EndPageButton': this.leadFtrLastPgBtn,          
-          'BeginingPageButton': this.leadFtrBeginPgBtn,
-          'PageNumber': this.leadFtrCurrentPgNo
-        };
-        for (const text of expectedItems) {
-          let element = footerMap[text];
-          if (element){
-            await expect(element).toBeVisible();
-            console.log (`Footer ${text} is visible`);
-          }
-        }
         break;
-      }
-
       default:
-        throw new Error(`❌ Unhandled component group in code configuration: ${componentType}`);
-      }
+        throw new Error(`Unknown expected result: ${result}`);
     }
   }
-
-//Create Lead Page Components
-async verifyCreateLeadPageComponents(componentsList) {
-    for (const row of componentsList) {
-      const componentType = row.Component;
-      const expectedItems = row.ExpectedValues.split(',').map(item => item.trim());
-
-      switch (componentType) {
-        case 'PageTitle':
-          {
-            await expect(this.createLeadPageTitle).toBeVisible();
-            console.log ('Create Page Components:');
-            console.log (await this.createLeadPageTitle.textContent());
-          }
-        break;
-
-        case 'Buttons':
-          {
-            const buttonMap = {
-            'Save': this.leadSaveButton,
-            'Cancel': this.leadCancelButton 
-            };
-            for (const buttonText of expectedItems) {
-              const buttonElement = buttonMap[buttonText]; 
-              if (buttonElement) 
-              await expect(buttonElement).toBeVisible();
-              console.log (await buttonElement.textContent());
-            }
-          }
-        break;
-
-        case 'Tabs':
-          {
-            const tabMap = {
-            'Overview': this.overViewTab,
-            'MoreInformation': this.moreInformationTab,
-            'other': this.otherTab
-            };
-            for (const tabText of expectedItems) {
-              const tabElement = tabMap[tabText]; 
-              if (tabElement) 
-              {
-                await expect(tabElement).toBeVisible();
-                console.log (await tabElement.textContent());
-              }
-            }
-          }
-        break;
-
-        default:
-        throw new Error(`❌ Unknown Component type specified in Gherkin DataTable: ${componentType}`);
-      }
-    }
-  }
-
-  //Create Lead using Vcard
-  async uploadAndImportVCardFiles(fileType) {
-    const lFileDetail = inputFileDetails[fileType];
-    if (!inputFileDetails) 
-      throw new Error(`File data not found for key: ${fileType}`);
-    let importLeadfilePath = lFileDetail.filePath;
-    if (fileType !== 'NoFile' && importLeadfilePath) {
-      await this.leadChooseFileBtn.setInputFiles(importLeadfilePath);
-    }
-    await this.leadImptVcardBtn.click(); 
-  }  
-  //Create Lead using Import
-async uploadAndImportLeadFiles(fileType) {
-    const lFileDetail = inputFileDetails[fileType];
-    if (!inputFileDetails) 
-      throw new Error(`File data not found for key: ${fileType}`);
-    let importLeadfilePath = lFileDetail.filePath;
-    if (fileType !== 'NoFile' && importLeadfilePath) {
-      await this.importLeadChooseFileBtn.setInputFiles(importLeadfilePath);
-    }
-    await this.importLeadNxtBtn.click(); 
-    if (fileType == 'ValidLeadFile')
-    {
-      await expect(this.importLeadPageTitle2).toBeVisible({timeout: 10000});
-      console.log('Current URL:', this.page.url());
-      await this.importLeadStp2NxtBtn.click();
-      await expect(this.importLeadPageTitle3).toBeVisible({timeout: 10000});
-      console.log('Current URL:', this.page.url());
-      await this.importLeadStp3NxtBtn.click();
-      await this.page.waitForTimeout(1000);
-      await this.page.mouse.wheel(0, -2500);
-      await expect(this.importLeadPageTitle4).toBeVisible({timeout: 10000});
-      await this.importLeadStp4ImpNwBtn.click();
-      await expect(this.importLeadPageTitle5).toBeVisible({timeout: 10000});
-    }    
-  }
-
-  //Import all Lead Files
   
 */
-
 
 
 

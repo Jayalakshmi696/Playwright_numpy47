@@ -1,4 +1,5 @@
 import {expect} from '@playwright/test';
+import { logger } from "../utils/logger.js";
 
 export class More3Page {
   constructor(page) {
@@ -47,6 +48,8 @@ export class More3Page {
     async verifyTargetListPageOpen()
     {
         await this.page.waitForURL(url => url.toString().includes('/#/prospect-lists'));
+        logger.info(`Opened the Target List Page`);
+        logger.info(` The URL is ${this.page.url()}`); 
     }
 
     async clickProjects()
@@ -59,6 +62,8 @@ export class More3Page {
     async verifyProjectsPageOpen()
     {
         await this.page.waitForURL(url => url.toString().includes('/#/project'));
+        logger.info(`Opened the Projects Page`);
+        logger.info(` The URL is ${this.page.url()}`); 
     }
 
     async clickProjectTemplates()
@@ -71,18 +76,21 @@ export class More3Page {
     async verifyProjectTemplatesPageOpen()
     {
         await this.page.waitForURL(url => url.toString().includes('/#/project-templates'));
+        logger.info(`Opened the Project Templates Page`);
+        logger.info(` The URL is ${this.page.url()}`); 
     }
 
     async clickEvents()
     {
         await expect(this.events).toBeVisible();
         await this.events.click();
-
     }
 
     async verifyEventsPageOpen()
     {
         await this.page.waitForURL(url => url.toString().includes('/#/events'));
+        logger.info(`Opened the Events Page`);
+        logger.info(` The URL is ${this.page.url()}`); 
     }
 
     async clickLocations()
@@ -95,6 +103,8 @@ export class More3Page {
     async verifyLocationsPageOpen()
     {
         await this.page.waitForURL(url => url.toString().includes('/#/event-locations'));
+        logger.info(`Opened the Locations Page`);
+        logger.info(` The URL is ${this.page.url()}`); 
     }
 
     async clickProducts()
@@ -107,6 +117,8 @@ export class More3Page {
     async verifyProductsPageOpen()
     {
         await this.page.waitForURL(url => url.toString().includes('/#/products'));
+        logger.info(`Opened the Products Page`);
+        logger.info(` The URL is ${this.page.url()}`); 
     }
   
 };

@@ -6,12 +6,15 @@ import { expect } from '@playwright/test';
 
 //import { expect } from '@playwright/test';
 
+import { logger } from "../utils/logger.js";
+
 import { More3Page } from '../pages/More3Page.js';
 const { Given, When, Then } = createBdd(test);
 
 When('User hovers over the More Menu', async ({more3Page}) => {
   // Step: When User hovers over the More Menu
   // From: features\More3.feature:13:9
+  logger.info (`More3 module Tests`);
   await more3Page.openMore3DropDown();
 });
 

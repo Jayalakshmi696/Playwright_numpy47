@@ -58,7 +58,7 @@ Feature: Quotes module functionality of suite8demo application
         |HyperLink        | DownloadImportFileTemplateQuotes               |
         |Radiobuttons     | RadioButtonQuotes1, RadioButtonQuotes2         |
 
-        @ImportAndCreateQuotes
+        @sequential @ImportAndCreateQuotes
         Scenario Outline: Verify importing Quotes using <InputFile>
           Given User is on Upload Import File page
           When User uploads Quotes "<InputFile>" and clicks Next button
@@ -92,19 +92,19 @@ Feature: Quotes module functionality of suite8demo application
           | NoFile              |  Required field error messages for Line Items  |
           | InValidFile         |  Import Line Items Error Popup alert appears   |
 
-        @RecentlyViewedMenuInQuotes
+        @sequential
         Scenario: Verify the availability recently viewed item in Quotes menu
           Given User created a quote
           When User hovers over the Quotes menu
           Then User should see the option Recently viewed in the Quotes menu
 
-          @RecentlyViewedRecordInQuotes
+          @sequential
           Scenario: Verify the availability recently viewed Quotes record 
             Given User created a quote
             When User hovers over the Recently viewed option in the quotes menu
             Then User should see the name of the recently viewed Quote record in its drop down 
 
-            @OpenRecentlyViewedRecordInQuotes
+            @sequential
             Scenario: Verify opening recently viewed Quotes record 
               Given User created a quote
               When User clicks and opens the recently viewed Quotes record from the Quotes menu

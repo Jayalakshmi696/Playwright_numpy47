@@ -30,10 +30,10 @@ Feature: Leads module functionality of suite8demo application
           When User enters Leads "<Data>" and clicks the "<Action>" button
           Then User should see Create Leads "<Result>"
           Examples:
-          | Data        | Action     | Result                                 |
-          | leadData1   | LeadSave   | Detailed view page of new Lead         |
-          | noData      | LeadSave   | Required field error messages          |
-          | leadData2   | LeadCancel | Confirmation dialog appears            |
+          | Data        | Action     | Result                                       |
+          | leadData1   | LeadSave   | Detailed view page of creating Leads         |
+          | noData      | LeadSave   | Create Lead Required field error messages    |
+          | leadData2   | LeadCancel | Create Lead Confirmation dialog appears      |
 
       @ViewLeadsPage
       Scenario: Verify components on the View Leads page
@@ -63,10 +63,10 @@ Feature: Leads module functionality of suite8demo application
           When User uploads "<InputFile>" and clicks Import Vcard button
           Then User should see the Import vCard "<Result>"
           Examples:
-          | InputFile        |  Result                            |
-          | ValidVcardFile   |  Detailed view page of new Lead    |
-          | NoFile           |  Select a Vcard file Alert appears |
-          | InValidFile      |  Required field error messages     |
+          | InputFile        |  Result                                    |
+          | ValidVcardFile   |  Detailed view page of new Lead via Vcard  |
+          | NoFile           |  Select a Vcard file Alert appears         |
+          | InValidFile      |  Vcard Required field error messages       |
       
       @ImportLeadsPageComponents 
       Scenario: Verify that user is on Import Leads Page
@@ -86,10 +86,10 @@ Feature: Leads module functionality of suite8demo application
           When User uploads Leads "<InputFile>" and clicks Next button
           Then User should see Import Leads "<Result>"
           Examples:
-          | InputFile     |  Result                                 |
-          | ValidLeadFile |  Leads dashboard page                   |
-          | NoFile        |  Required field error messages          |
-          | InValidFile   |  Invalid Import File name message       |
+          | InputFile     |  Result                                     |
+          | ValidLeadFile |  Detailed view page after importing Leads   |
+          | NoFile        |  Import Lead Required field error messages  |
+          | InValidFile   |  Import Lead Error Popup alert appears      |
 
       @RecentlyViewedMenuInLeads
       Scenario: Verify the availability recently viewed item in Leads menu

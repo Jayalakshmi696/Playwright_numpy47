@@ -6,6 +6,7 @@ import { expect } from '@playwright/test';
 
 //import { expect } from '@playwright/test';
 
+import { logger } from "../utils/logger.js";
 import { LeadsPage } from '../pages/LeadsPage.js';
 const { Given, When, Then } = createBdd(test);
 
@@ -17,6 +18,7 @@ const { Given, When, Then } = createBdd(test);
 When('User hovers over the Leads Menu', async ({leadsPage}) => {
   // Step: When User hovers over the Leads Menu
   // From: features\Leads.feature:14:7
+  logger.info (`Leads module Tests`);
   await leadsPage.openLeadsDropDown();
 });
 
@@ -63,7 +65,7 @@ When('User enters Leads {string} and clicks the {string} button', async ({leadsP
 Then('User should see Create Leads {string}', async ({leadsPage}, Result) => {
   // Step: Then User should see Create Leads Detailed view page of new Lead
   // From: features\Leads.feature:31:11
-  await leadsPage.verifyCreateLeadResult(Result);
+  await leadsPage.verifyAllLeadResults(Result);
 });
 
 When('User clicks on the View Leads option in the Leads Menu', async ({leadsPage}) => {
@@ -75,6 +77,7 @@ When('User clicks on the View Leads option in the Leads Menu', async ({leadsPage
 Then('User should see the correct components on the Leads dashboard page', async ({leadsPage}, dataTable) => {
   // Step: Then User should see the correct components on the Leads dashboard page
   // From: features\Leads.feature:42:9
+  logger.info(`Opened the Leads Dashboard Page`);
   const componentsList = dataTable.hashes();
   //await leadsPage.verifyViewLeadsComponents(componentsList);
   await leadsPage.verifyLeadsPageComponents(componentsList);
@@ -111,7 +114,7 @@ When('User uploads {string} and clicks Import Vcard button', async ({leadsPage},
 Then('User should see the Import vCard {string}', async ({leadsPage}, Result) => {
   // Step: Then User should see the Import vCard "Detailed view page of new Lead"
   // From: features\Leads.feature:64:11
-  await leadsPage.verifyVCardResult(Result);
+  await leadsPage.verifyAllLeadResults(Result);
 });
 
 When('User clicks on Import Leads option in Leads Menu', async ({leadsPage}) => {
@@ -119,6 +122,7 @@ When('User clicks on Import Leads option in Leads Menu', async ({leadsPage}) => 
   // From: features\Leads.feature:74:9
   await leadsPage.openLeadsDropDown();
   await leadsPage.clickCreateLeadFromImport();
+  logger.info(`Importing Leads`);
 });
 
 Then('User should see the import Leads page with correct components', async ({leadsPage}, dataTable)=> {
@@ -147,7 +151,7 @@ When('User uploads Leads {string} and clicks Next button', async ({leadsPage}, I
 Then('User should see Import Leads {string}', async ({leadsPage}, Result) => {
   // Step: Then User should see Import Leads "Leads dashboard page"
   // From: features\Leads.feature:87:11
-  await leadsPage.verifyLeadResult(Result);
+  await leadsPage.verifyAllLeadResults(Result);
 });
 
 /*When('User uploads Leads No File and clicks Next button', async ({}) => {
@@ -176,6 +180,8 @@ Given('User opened and viewed a lead record', async ({leadsPage}) => {
   await leadsPage.openLeadsDropDown();
   await leadsPage.clickViewLead();
   await leadsPage.openTopLeadRecord();
+  await leadsPage.openLeadsDropDown();
+  await leadsPage.clickCreateLead();
 });
 
 When('User hovers over the Leads menu', async ({leadsPage}) => {
@@ -195,6 +201,7 @@ When('User hovers over the Recently viewed option', async ({leadsPage}) => {
   // From: features\Leads.feature:103:11
   await leadsPage.openLeadsDropDown();
   await leadsPage.checkRecentViewInLeads();
+  await leadsPage.openRecentViewLeadsSubMenuInLeads();
 
 });
 
@@ -208,12 +215,13 @@ When('User clicks and opens the recently viewed Lead record from the Leads menu'
   // From: features\Leads.feature:107:13
   await leadsPage.openLeadsDropDown();
   await leadsPage.checkRecentViewInLeads();
+  await leadsPage.openRecentViewLeadsSubMenuInLeads();
   await leadsPage.checkRecentViewLeadsSubMenu();
-
+  await leadsPage.openRecentViewedLead();
 });
 
 Then('User should see detailed view page of the recently viewed Lead record', async ({leadsPage}) => {
   // Step: Then User should see detailed view page of the recently viewed Lead record
   // From: features\Leads.feature:108:13
-  await leadsPage.openRecentViewedLead();
+  await leadsPage.checkOpeningRecentViewedLeadRecord();
 });

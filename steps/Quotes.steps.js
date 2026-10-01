@@ -6,12 +6,15 @@ import { expect } from '@playwright/test';
 
 //import { expect } from '@playwright/test';
 
+import { logger } from "../utils/logger.js";
+
 import { QuotesPage } from '../pages/QuotesPage.js';
 const { Given, When, Then } = createBdd(test);
 
 When('User hovers over the Quotes Menu', async ({quotesPage}) => {
   // Step: When User hovers over the Quotes Menu
   // From: features\Quotes.feature:13:7
+  logger.info (`Quotes module Tests`);
   await quotesPage.openQuotesDropDown();
 });
 
@@ -89,6 +92,7 @@ When('User clicks on the View Quotes option in the Quotes Menu', async ({quotesP
 Then('User should see the correct components on the Quotes dashboard page', async ({quotesPage}, dataTable) => {
   // Step: Then User should see the correct components on the Quotes dashboard page
   // From: features\Quotes.feature:41:9
+  logger.info(`Opened the Quotes Dashboard Page`);
   const componentsList = dataTable.hashes();
   await quotesPage.verifyQuotesPageComponents(componentsList);
 });
@@ -98,6 +102,7 @@ When('User clicks on Import option in Quotes Menu', async ({quotesPage}) => {
   // From: features\Quotes.feature:52:9
   await quotesPage.openQuotesDropDown();
   await quotesPage.clickCreateQuoteFromImport();
+  logger.info(`Importing Quotes`);
 });
 
 Then('User should see the import Quotes page with correct components', async ({quotesPage}, dataTable) => {
@@ -248,5 +253,5 @@ When('User clicks and opens the recently viewed Quotes record from the Quotes me
 Then('User should see detailed view page of the recently viewed Quotes record', async ({quotesPage}) => {
   // Step: Then User should see detailed view page of the recently viewed Quotes record
   // From: features\Quotes.feature:110:15
-  await quotesPage.chekcOpeningRecentViewedQuoterecord();
+  await quotesPage.checkOpeningRecentViewedQuoterecord();
 });
