@@ -115,21 +115,16 @@ Feature: Calendar Module - View, Navigate and  Activities
     When the user views the row directly above the day column headers
     Then the assigned user's name is displayed
 
- @functional @createActivityPopup
-  Scenario: checking CREATE ACTIVITY popup window shows.
+  @functional @savedActivity
+  Scenario: Create an activity from the calendar grid and see it in its time slot
     Given the calendar is loaded in "Today" view
     When the user click the cell corresponding to a specific time slot in the calendar grid
     Then a popup window appears with options to create a new activity, including fields for "Subject", "Start Date", "End Date"
-
- @functional @savedActivity 
-Scenario: Saved activity appears on the calendar grid in its time slot
-  Given the calendar is loaded in "Today" view
-  When the user click the cell corresponding to a specific time slot in the calendar grid
-  And the user enters a valid value in the "Subject", "Start Date", "End Date"
-  And the user clicks the "Save" button
-  Then the popup closes
-  And the activity appears in the calendar cell at the corresponding time slot
-  And the cell displays the start time and the assigned user's name
-  And the user deletes the saved activity
+    When the user enters a valid value in the "Subject", "Start Date", "End Date"
+    And the user clicks the "Save" button
+    Then the popup closes
+    And the activity appears in the calendar cell at the corresponding time slot
+    And the cell displays the start time and the assigned user's name
+  
  
 

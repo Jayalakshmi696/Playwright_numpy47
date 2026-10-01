@@ -64,7 +64,9 @@ export const test = base.extend({
     const more4Page = new More4Page(page);
     await use(more4Page);
   },
-});
+
+  });
+
 
 // 2. Pass your extended test to createBdd
 //export const { Given, When, Then } = createBdd(test);

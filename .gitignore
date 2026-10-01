@@ -8,3 +8,7 @@ node_modules/
 /playwright/.auth/
 /.features-gen/
 /logs/
+/allure-report/
+/allure-results/
+.DS_Store
+/.DS_Store/

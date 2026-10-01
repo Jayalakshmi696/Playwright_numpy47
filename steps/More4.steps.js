@@ -3,8 +3,9 @@ import { createBdd } from 'playwright-bdd';
 import { expect } from '@playwright/test';
 import { More4Page } from '../pages/More4Page.js';
 import { test} from '../fixtures/suite8Fixtures.js';
+import { logger } from "../utils/logger.js";
 
-const { When, Then } = createBdd();
+const { Given,When, Then } = createBdd(test);
 
 // PDF - Templates
 When('User clicks "PDF - Templates" item from More', async ({ page }) => {
