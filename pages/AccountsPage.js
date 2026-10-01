@@ -1,4 +1,6 @@
 import { expect } from '@playwright/test';
+import { logger } from "../utils/logger.js";
+
 
 export class AccountsPage {
   constructor(page) {
@@ -61,6 +63,7 @@ export class AccountsPage {
   async enterMandatoryFields(accountData) {
     await this.inputNameField.fill(accountData.name);
     await this.inputEmail.fill(accountData.emailAddress);
+    logger.info("input name field");
   }
 
   async clickSave() {
