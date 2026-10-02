@@ -7,8 +7,7 @@ const testDir = defineBddConfig({
   steps: [
      'steps/**/*.js',
     'fixtures/**/*.js'
-        
-    ],
+        ],
    // importTestFrom: './fixtures/loginFixture.js',
   //tags: '@Login1 or @Accounts1'
   // importTestFrom: './fixtures/accountfixture.js'
@@ -42,11 +41,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 2: undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
- // reporter: 'html',
-  reporter: [
-    ['html'],
-    ['allure-playwright']
-  ],
+  reporter: [['html'], ['allure-playwright']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */

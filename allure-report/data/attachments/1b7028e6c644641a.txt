@@ -1,2 +1,0 @@
-After Accounts click: https://suite8demo.suiteondemand.com/#/home
-2026-09-30 11:22:49 | info|  current url of account page,https://suite8demo.suiteondemand.com/#/home
