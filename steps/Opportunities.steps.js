@@ -5,7 +5,7 @@ const { Given, When, Then } = createBdd();
 import { OpportunitiesPage } from '../pages/OpportunitiesPage.js';
 import opportunitiesData from '../test-data/opportunitiesData.json'
   with { type: 'json' };
-  import { logger } from "../utils/logger.js";clear
+  import { logger } from "../utils/logger.js";
 
 Then('User should see Opportunities menu in the menu bar', async ({opportunitiesPage}) => {
   // Step: Then User should see Opportunities menu in the menu bar
