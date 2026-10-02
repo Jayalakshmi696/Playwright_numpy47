@@ -5,8 +5,9 @@ Feature:Contacts module functionality of suite8demo application
   As a user I want to verify the Contacts module functionality of 
   suite8demo application 
 
-  Background:
+   Background:
     Given User successfully logged into the suite8demo application
+
 
    @ContactsMenu
 

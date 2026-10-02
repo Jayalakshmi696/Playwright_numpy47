@@ -1,4 +1,6 @@
 import { expect } from '@playwright/test';
+import { logger } from "../utils/logger.js";
+import { info } from 'node:console';
 
 export class More2Page {
   constructor(page) {
@@ -45,6 +47,7 @@ export class More2Page {
   }
 
   async clickViewTasks() {
+    
     await this.openMoreMenu();
     await expect(this.viewTasksOption).toBeVisible();
     await this.viewTasksOption.click();

@@ -5,6 +5,7 @@ const { Given, When, Then } = createBdd();
 import { OpportunitiesPage } from '../pages/OpportunitiesPage.js';
 import opportunitiesData from '../test-data/opportunitiesData.json'
   with { type: 'json' };
+  import { logger } from "../utils/logger.js";clear
 
 Then('User should see Opportunities menu in the menu bar', async ({opportunitiesPage}) => {
   // Step: Then User should see Opportunities menu in the menu bar
@@ -169,35 +170,55 @@ Then('User should see the import Opportunities page with correct components', as
 
 //Testing the import functionality for Opportunities
 
-When('User uploads OpportunitiesValid File and clicks Next button', async ({opportunitiesPage},fileType) => {
-  // Step: When User uploads OpportunitiesValid File and clicks Next button
-  // From: features\opportunities.feature:66:11
-  //const opportunitiesPage = new OpportunitiesPage(page);
-  await opportunitiesPage.hoverOpportunitiesMenu();
+
+When(
+  'User uploads Opportunities {word} {word} and clicks Next button',
+  async ({ opportunitiesPage }, firstWord, secondWord) => {
+    const inputFileType = `${firstWord} ${secondWord}`;
+
+    await opportunitiesPage.hoverOpportunitiesMenu();
+    await opportunitiesPage.clickImportOpportunities();
+
+    await opportunitiesPage.uploadOpportunitiesFile(inputFileType);
+  }
+);
+
+
+
+
+
+
+/*
+When('User uploads Opportunities Valid File and clicks Next button', async ({opportunitiesPage}) => {
+  // Step: When User uploads Opportunities Valid File and clicks Next button
+  // From: features\opportunities.feature:73:11
+   await opportunitiesPage.hoverOpportunitiesMenu();
   await opportunitiesPage.clickImportOpportunities();
   await opportunitiesPage.clickImportchoosefileButton();
-  await opportunitiesPage.uploadFile(fileType);
+  await opportunitiesPage.uploadFile(OpportunitiesCSVFile);
+   //const opportunitiesPage = new OpportunitiesPage(page);
   //await opportunitiesPage.clickNext();
  // await opportunitiesPage.uploadFile(fileType);
 });
 
+*/
 Then('User should see Import Opportunities Detailed view page of new Opportunity', async ({opportunitiesPage}) => {
   // Step: Then User should see Import Opportunities Detailed view page of new Opportunity
   // From: features\opportunities.feature:67:11
   //const opportunitiesPage = new OpportunitiesPage(page);
  await opportunitiesPage.assertConfirmImportOpportunityButtonVisible();
 });
-When('User uploads OpportunitiesNo File and clicks Next button', async ({opportunitiesPage}) => {
- 
- 
-  // Step: When User uploads OpportunitiesNo File and clicks Next button
-  // From: features\opportunities.feature:66:11
+/*
+When('User uploads Opportunities No File and clicks Next button', async ({opportunitiesPage}) => {
+  // Step: When User uploads Opportunities No File and clicks Next button
+  // From: features\opportunities.feature:73:11
   //const opportunitiesPage = new OpportunitiesPage(page);
    await opportunitiesPage.hoverOpportunitiesMenu();
   await opportunitiesPage.clickImportOpportunities();
    await opportunitiesPage.NoFile();
-    });
- 
+});
+
+ */
 
 Then('User should see Import Opportunities Select a Vcard file Alert appears', async ({opportunitiesPage}) => {
   // Step: Then User should see Import Opportunities Select a Vcard file Alert appears
@@ -206,23 +227,25 @@ Then('User should see Import Opportunities Select a Vcard file Alert appears', a
  
   await opportunitiesPage.verifyNoFileValidation();
 });
-
-  // Step: When User uploads OpportunitiesInValid File and clicks Next button
-  // From: features\opportunities.feature:66:11
- 
-When('User uploads OpportunitiesInValid File and clicks Next button', async ({opportunitiesPage,fileType}) => {
-  // Step: When User uploads OpportunitiesInValid File and clicks Next button
-  // From: features\opportunities.feature:66:11
+/*
+ When('User uploads Opportunities InValid File and clicks Next button', async ({opportunitiesPage}) => {
+  // Step: When User uploads Opportunities InValid File and clicks Next button
+  // From: features\opportunities.feature:73:11
   //const opportunitiesPage = new OpportunitiesPage(page);
   await opportunitiesPage.hoverOpportunitiesMenu();
   await opportunitiesPage.clickImportOpportunities();
   await opportunitiesPage.clickImportchoosefileButton();
-  await opportunitiesPage.uploadFileInvalid(fileType);
- });
+  await opportunitiesPage.uploadFileInvalid();
+});
+ 
 
+*/
 Then('User should see Import Opportunities Required field error messages', async ({opportunitiesPage}) => { 
   // Step: Then User should see Import Opportunities Required field error messages
   // From: features\opportunities.feature:67:11
   await opportunitiesPage.verifyInvalidFileNameError();
 });
+
+
+
 

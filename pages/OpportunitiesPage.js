@@ -1,11 +1,13 @@
 import { expect } from '@playwright/test';
 import { logger } from "../utils/logger.js";
+import opportunitiesData from '../test-data/opportunitiesData.json' with {
+  type: 'json'
+};
 
-
-const path = require('path');
-const os = require('os');
-const fs = require('fs');
-const importConfig = require('../test-data/opportunitiesData.json');
+//const path = require('path');
+//const os = require('os');
+//const fs = require('fs');
+//const importConfig = require('../test-data/opportunitiesData.json');
 
 export class OpportunitiesPage {
   constructor(page) {
@@ -96,13 +98,16 @@ export class OpportunitiesPage {
   
   
      async assertMenuVisible() {
+    logger.info('Checking if Opportunities menu is visible');
     await expect(this.opportunitiesMenu).toBeVisible();
   }
   async hoverOpportunitiesMenu() {
+    logger.info('Hovering over Opportunities menu');
         await this.opportunitiesMenu.hover();
     }
 
      async assertDropdownVisible() {
+    logger.info('Checking if Opportunities menu dropdown is visible');
     await expect(this.opportunitiesMenuDropdown).toBeVisible();
   }
  
@@ -115,6 +120,7 @@ export class OpportunitiesPage {
   }
  
   async assertCreatePageComponents(dataTable) {
+    logger.info('Asserting Create Opportunities page components are visible');
     const rows = dataTable.hashes(); // [{ Component, Expected Values }]
     for (const row of rows) {
       const component = row.Component.trim();
@@ -145,6 +151,7 @@ export class OpportunitiesPage {
   
   
   async fillOpportunityForm(dataType) {
+    logger.info(`Filling Opportunity form with ${dataType}`);
     if (dataType === 'Valid Data') {
       await this.opportunityNameField.fill(this.opportunityName);
       await this.closeDateField.fill('2026-12-31');
@@ -235,8 +242,8 @@ export class OpportunitiesPage {
   }
   
   async clickImportOpportunities() {
-    await this.importOpportunitiesOption.click();
-    await expect(this.chooseFileButton).toBeVisible({ timeout: 1500000 });
+    await this.importOpportunitiesOption.click({ timeout: 1500000 });
+    await expect(this.chooseFileButton).toBeVisible({timeout: 10000});
   }
 
   async clickImportchoosefileButton() {
@@ -247,6 +254,7 @@ export class OpportunitiesPage {
 
 
   async assertImportPageComponents(dataTable) {
+    logger.info('Asserting Import Opportunities page components are visible');
     const buttons = { 'Choose File': this.chooseFileButton, Next: this.nextButton };
     const radios = {
       'Create New Records only': this.createNewRecordsRadio,
@@ -289,7 +297,7 @@ export class OpportunitiesPage {
     }
   }
 
-
+/*
   // ---------- Upload ----------
  resolveImportFile(fileType) {
   const fileTypeMap = {
@@ -320,22 +328,49 @@ export class OpportunitiesPage {
   }
 
   return filePath;
-}
-  async uploadFile(fileType) {
-    await this.chooseFileButton.setInputFiles("Playwright_numpy47/test-data/Opportunities.csv");
-     console.log(`Uploading file`);
-     await this.nextButton.click();
+}*/
 
-    
+ //---------- Upload Opportunities File ----------
+async uploadOpportunitiesFile(inputFileType) {
+  const fileMap = {
+    'Valid File': 'OpportunitiesCSVFile',
+    'InValid File': 'InvalidOpportunitiesCSVFile',
+    'No File': 'NoOpportunitiesFile'
+  };
 
+  const fileKey = fileMap[inputFileType];
+
+  if (!fileKey) {
+    throw new Error(`Unknown Opportunities file type: ${inputFileType}`);
   }
+
+  const filePath = opportunitiesData[fileKey]?.filepath;
+
+  if (inputFileType === 'No File') {
+    await this.nextButton.click();
+    return;
+  }
+
+  if (!filePath) {
+    throw new Error(`File path is missing for: ${fileKey}`);
+  }
+
+  console.log(`Uploading Opportunities file: ${filePath}`);
+
+  await this.fileInput.setInputFiles(filePath);
+
+  console.log('Opportunities file uploaded successfully');
+
+  await this.nextButton.click();
+}
+
   async assertConfirmImportOpportunityButtonVisible() {
     await expect(this.confirmmportopportunityButton).toBeVisible();
   }
 
   async NoFile(fileType) {
    
-     await this.nextButton.click();
+     await this.nextButton.click({ timeout: 1500000 });
 
     
 
@@ -345,7 +380,7 @@ export class OpportunitiesPage {
 
   }
 
-  async uploadFileInvalid(fileType) {
+  async uploadFileInvalid() {
     await this.chooseFileButton.setInputFiles("Playwright_numpy47/test-data/invalid opportunities file.md");
      //console.log(`Uploading file`);
      await this.nextButton.click();

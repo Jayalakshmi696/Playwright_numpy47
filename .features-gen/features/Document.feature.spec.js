@@ -1,4 +1,4 @@
-// Generated from: features/Document.feature
+// Generated from: features\Document.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Documents Module - View, Navigate and  Activities', () => {
@@ -72,9 +72,6 @@ test.describe('Documents Module - View, Navigate and  Activities', () => {
 });
 
 // == technical section ==
-
-test.beforeEach('BeforeEach Hooks', ({ $runScenarioHooks, page }) => $runScenarioHooks('before', { page }));
-test.afterEach('AfterEach Hooks', ({ $runScenarioHooks, page }) => $runScenarioHooks('after', { page }));
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],

@@ -1,5 +1,7 @@
 import { expect } from '@playwright/test';
 import { logger } from "../utils/logger.js";
+import cData from "../test-data/contactsData.json" with { type: "json" };
+import opportunitiesData from '../test-data/opportunitiesData.json' with { type: 'json' };
 
 export class ContactsPage {
   constructor(page) {
@@ -60,11 +62,14 @@ export class ContactsPage {
     this.selectVCardAlert = page.locator('iframe').contentFrame().getByText(/select a vcard file/i).first();
     this.vCardRequiredFieldError = page.locator('.error-message, .field-error, [role="alert"]').first();
     this.importVCardPageTitlelabel = page.locator('scrm-dynamic-label').getByText('Test User1');
+    this.invalidvcffileMessage = page.locator('iframe').contentFrame().getByText('vCard does not have all the');
+    this.nofilevcard = page.locator('iframe').contentFrame().getByText('Alert');
 
     
 
     // ----- Import Contacts page -----
-    this.uploadImportFilePageTitle = page.locator('iframe').contentFrame().getByRole('heading', { name: 'Step 1: Upload Import File' });
+    //this.uploadImportFilePageTitle = page.locator('iframe').contentFrame().locator('h2.module-title-text').filter({ hasText: 'Step 1: Upload Import File' });
+   this.uploadImportFilePageTitle = page.locator('iframe').contentFrame().getByRole('heading', { name: 'Step 1: Upload Import File' });
     this.chooseFileButtonImport = page.locator('iframe').contentFrame().getByRole('button', { name: 'Select file:' });
     this.nextButtonImport = page.locator('iframe').contentFrame().getByRole('button', { name: 'Next >' });
     this.noFileChosenLabelImport = page.locator('text=No File Chosen').first();
@@ -72,17 +77,18 @@ export class ContactsPage {
     this.createNewOnlyRadio = page.locator('iframe').contentFrame().locator('#import_create');
     this.createNewAndUpdateRadio = page.locator('iframe').contentFrame().locator('#import_update');
     this.importRequiredFieldError = page.locator('.error-message, .field-error, [role="alert"]').first();
-    this.invalidImportFileMessage = page.locator('text=/invalid import file/i').first();
+    this.invalidImportFileMessage = page.locator('iframe').contentFrame().getByText('Invalid import file name');
     this.importVCardPageTitle = page.locator('iframe').contentFrame().getByRole('heading', { name: 'Import vCard' });
     this.step2pageTitle=page.locator('iframe').contentFrame().getByRole('heading', { name: 'Step 2: Confirm Import File' });
     //this.demolabel=page.locator('scrm-dynamic-label').getByText('John Doe');
     this.requiredFieldError = page.locator('iframe').contentFrame().getByText('Missing required fields:');
   }
 
-
   
   // ----- Menu actions -----
   async hoverContactsMenu() {
+    logger.info('Opening contacts menu');
+
 
 
     await this.contactsMenu.hover();
@@ -104,10 +110,21 @@ export class ContactsPage {
   }
 
   async clickCreateFromVCard() {
+
+    console.log('Before clicking Create Contact From vCard');
+
+  await this.createFromVCardOption.click();
+
+  console.log('After clicking Create Contact From vCard');
+}
+    /*
+    
     console.log('Clicked Create From vCard option');
 
     await this.createFromVCardOption.click();
-  }
+
+    */
+  
 
   async clickImportContacts() {
     await this.importContactsOption.click();
@@ -118,10 +135,26 @@ export class ContactsPage {
         console.log('Import vCard page is visible');
 
   }
+  async importFilePageTitleVisible() {
+
+      //await this.page.waitForURL(url =>url.toString().includes('/#/import/step1') && url.toString().includes('import_module=Contacts') && url.toString().includes('return_module=Contacts'));
+
+  await expect(this.uploadImportFilePageTitle).toBeVisible();
+
+  console.log('Import file page title is visible');
+
+  await expect(this.uploadImportFilePageTitle).toBeVisible({
+    timeout: 10000
+  });
+
+  console.log('Import file page title is visible');
+}
+
+  /*
 async importFilePageTitleVisible(){
   console.log('Import file page title is visible');
   await expect(this.uploadImportFilePageTitle).toBeVisible();
-}
+}*/
    
 
   async chooseFileButtonImportVisible(){
@@ -143,13 +176,8 @@ async
   uploadImportFilePageTitle
   // ----- Create Contact actions -----
 
-async fillContactForm({
-  firstName,
-  lastName,
-  email,
-  
-} = {}) {
-
+async fillContactForm({ firstName, lastName } = {}) {
+  logger.info('Filling contact form)');
   if (firstName) {
     await this.firstNameField.fill(firstName);
   }
@@ -157,12 +185,6 @@ async fillContactForm({
   if (lastName) {
     await this.lastNameField.fill(lastName);
   }
-
-  if (email) {
-    await this.emailField.fill(email);
-  }
-  //this.createdContactName = `${firstName} ${lastName}`;
-  
 }
 
 async verifyCreatedContact() {
@@ -182,32 +204,29 @@ async verifyCreatedContact() {
 
 
 async createContact(contact) {
-   await this.hoverContactsMenu();
+  await this.hoverContactsMenu();
   await this.clickCreateContact();
-console.log('Contact received:', contact);
-  const uniqueEmail = contact.email.replace(
-    '@',
-    `.${Date.now()}@`
-  );
+
+  console.log('Contact received:', contact);
 
   const contactToCreate = {
-    ...contact,
-    email: uniqueEmail
+    firstName: contact.firstName,
+    lastName: contact.lastName
   };
 
-  console.log(`Creating contact: ${contact.firstName} ${contact.lastName}`);
-  console.log(`Generated email: ${uniqueEmail}`);
+  console.log(
+    `Creating contact: ${contactToCreate.firstName} ${contactToCreate.lastName}`
+  );
 
   await this.fillContactForm(contactToCreate);
 
   this.createdContactName =
-    `${contact.firstName} ${contact.lastName}`;
+    `${contactToCreate.firstName} ${contactToCreate.lastName}`;
 
   await this.save();
 
   console.log(`Saved contact: ${this.createdContactName}`);
 
-  // Wait until SuiteCRM navigates to the Contact Detail/Edit page
   await this.page.waitForURL(
     /#\/contacts\/edit\?return_module=Contacts&return_action=DetailView/i,
     { timeout: 30000 }
@@ -215,11 +234,7 @@ console.log('Contact received:', contact);
 
   console.log('Contact Detail View page opened');
   console.log('Current URL:', this.page.url());
-
-
-   
-  };
-
+}
 
 
   async save() {
@@ -235,25 +250,56 @@ console.log('Contact received:', contact);
       console.log('Choose file button for vCard clicked');
     }
   // ----- vCard actions -----
- async uploadVCardFile() {
-    const filePath = "Playwright_numpy47/test-data/Vcard.vcf";
+ async uploadVCardFile(inputFile) {
+  logger.info('Uploading vCard file')
 
-    console.log(`Uploading vCard file: ${filePath}`);
+//console.log(`Uploading vCard file: ${inputFile}`);
+  const fileMap = {
+    ValidFile: 'ValidVcardFile',
+    InValidFile: 'InValidFile',
+    NoFile: 'NoFile'
+  };
 
-    const fileInput = this.page
-        .locator('iframe')
-        .contentFrame()
-        .locator('input[type="file"]');
+  const fileKey = fileMap[inputFile];
 
-    await fileInput.setInputFiles(filePath);
+  if (!fileKey) {
+    throw new Error(`Unknown vCard file type: ${inputFile}`);
+  }
 
-    console.log('vCard file uploaded successfully');
+  // No file selected
+  if (inputFile === 'NoFile') {
+    console.log('No vCard file selected');
+    return;
+  }
+
+  const filePath = opportunitiesData[fileKey]?.filepath;
+
+  if (!filePath) {
+    throw new Error(`File path is missing for: ${fileKey}`);
+  }
+
+  console.log(`Uploading vCard ${inputFile}: ${filePath}`);
+
+  const fileInput = this.page
+    .locator('iframe')
+    .first()
+    .contentFrame()
+    .locator('input[type="file"]');
+
+  await fileInput.setInputFiles(filePath, {
+    timeout: 10000
+  });
+
+  const fileName = await fileInput.evaluate(
+    input => input.files[0]?.name
+  );
+
+  console.log(`Selected vCard file: ${fileName}`);
 }
-
 async clickImportVCardButton() {
   console.log('Clicking Import vCard button');
 
-  await this.importVCardButton.click();
+   await this.importVCardButton.click();
 
   await this.page.waitForTimeout(2000);
 
@@ -271,12 +317,101 @@ async importVCardNewPageTitle() {
 }
 
 
-  async uploadFile() {
-    await this.chooseFileButtonImport.setInputFiles("Playwright_numpy47/test-data/Contacts.csv");
-     console.log(`Uploading file`);
-     await this.nextButtonImport.click();
+  async uploadContactsFile(inputFile) {
+    logger.info('Uploading Contacts file');
 
+  const fileMap = {
+    ValidFile: 'ValidContactsCSVFile',
+    InValidFile: 'InvalidContactsCSVFile',
+    NoFile: 'NoContactsFile'
+  };
+
+  const fileKey = fileMap[inputFile];
+
+  if (!fileKey) {
+    throw new Error(`Unknown Contacts file type: ${inputFile}`);
+  }
+
+  // No file selected
+  if (inputFile === 'NoFile') {
+    console.log('No Contacts file selected');
+    return;
+  }
+
+  const filePath = opportunitiesData[fileKey]?.filepath;
+
+  if (!filePath) {
+    throw new Error(`File path is missing for: ${fileKey}`);
+  }
+
+  console.log(`Uploading Contacts ${inputFile}: ${filePath}`);
+
+  await this.chooseFileButtonImport.setInputFiles(filePath);
+
+  console.log(`${inputFile} uploaded successfully`);
+}
     
+async clickNextButtonImport() {
+  await this.nextButtonImport.click();
+}
 
+async verifyImportContactsResult(result) {
+
+  if (result === 'Contacts dashboard page') {
+    await this.step2PageTitleVisible();
+
+  } else if (result === 'Required field error messages') {
+    await this.requiredFieldErrorVisible();
+
+  } else if (result === 'Invalid Import File name message') {
+    await this.invalidImportFileMessageVisible();
+
+  } else {
+    throw new Error(`Unknown import result: ${result}`);
   }
 }
+
+async invalidImportFileMessageVisible() {
+  console.log('Verifying invalid import file message');
+  await expect(this.invalidImportFileMessage).toBeVisible();
+}
+
+async verifyImportVCardResult(result) {
+
+  if (result === 'Detailed view page of new Contact') {
+
+    await this.importVCardNewPageTitle();
+
+  } else if (result === 'Select a Vcard file Alert appears') {
+
+    await this.selectVCardAlertVisible();
+
+  } else if (result === 'Required field error messages') {
+
+    await this.requiredFieldErrorVisible();
+
+  } else {
+
+    throw new Error(`Unknown vCard result: ${result}`);
+  }
+}
+async selectVCardAlertVisible() {
+  await expect(this.selectVCardAlert).toBeVisible({
+    timeout: 10000
+  });
+
+  console.log('Select a vCard file alert is visible');
+}
+
+async invalidVCardFileMessageVisible() {
+  console.log('Verifying invalid vCard file message');
+  await expect(this.invalidvcffileMessage).toBeVisible({ timeout: 10000 });
+}
+async noFileVCardVisible() {
+  
+  console.log('Verifying no file vCard message');
+  await expect(this.nofilevcard).toBeVisible({ timeout: 10000 });
+}
+
+
+  }

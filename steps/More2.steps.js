@@ -1,6 +1,7 @@
 import { createBdd } from 'playwright-bdd';
 import { test} from '../fixtures/suite8Fixtures.js';
 import { expect } from '@playwright/test';
+import { logger } from "../utils/logger.js";
 const { Given, When, Then } = createBdd();
 When('User clicks on View Tasks option in More Menu', async ({more2Page}) => {
   // Step: When User clicks on View Tasks option in More Menu

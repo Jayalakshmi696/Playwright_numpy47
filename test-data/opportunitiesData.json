@@ -1,23 +1,30 @@
 
+
 {
 "ValidVcardFile": {
-    "filepath": "Playwright_numpy47/test-data/Vcard.vcf"
+    "filepath": "./test-data/Vcard.vcf"
   },
 "InValidFile":{
-  "filepath": "Playwright_numpy47/test-data/invalid_contacts.vcf"
+  "filepath": "./test-data/invalid_contacts.vcf"
 },
 "NoFile":{
   "filepath": ""
 },
   "ValidContactsCSVFile": {
-    "filepath": "Playwright_numpy47/test-data/Contacts.csv"
+    "filepath": "./test-data/Contacts.csv"
   },
 
+  "InvalidContactsCSVFile":{
+    "filepath": "./test-data/invalid import file.md"
+  },
+  "NoContactsFile":{
+  "filepath": ""
+  },
 "OpportunitiesCSVFile": {
-    "filepath": "Playwright_numpy47/test-data/Opportunities.csv"
+    "filepath": "./test-data/Opportunities.csv"
   },
   "InvalidOpportunitiesCSVFile":{
-    "filepath": "Playwright_numpy47/test-data/invalid opportunities file.md"
+    "filepath": "./test-data/invalid opportunities file.md"
   },
 
   "NoOpportunitiesFile":{
