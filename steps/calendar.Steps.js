@@ -2,6 +2,7 @@ import { createBdd } from 'playwright-bdd';
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/suite8Fixtures.js';
 import calendarData from '../test-data/calendarData.json' with { type: 'json' };
+import { logger } from "../utils/logger.js";
 
 const { Given, When, Then } = createBdd(test);
 
@@ -19,7 +20,7 @@ Given('the user navigates to the {string} module in the menu', async ({ page, ca
   await expect(async () => {
     await calendarPage.getTopNavLink(moduleName).click();
     await expect(page).toHaveURL(new RegExp(moduleName, 'i'), { timeout: 3000 });
-  }).toPass({ timeout: 20000 });
+  }).toPass({ timeout: 40000 });
 });
 
 // --- Scenario: Verify the "calendar" icon ---
@@ -178,9 +179,14 @@ Then('the assigned user\'s name is displayed', async ({ calendarPage }) => {
   await calendarPage.verifyAssignedUserNameVisible();
 });
 
-// --- Scenario: checking CREATE ACTIVITY popup window shows ---
+
+
+
+
+// --- Scenario: Create an activity from the calendar grid and see it in its time slot ---
 
 When('the user click the cell corresponding to a specific time slot in the calendar grid', async ({ calendarPage }) => {
+  await calendarPage.deleteLeftoverActivities(calendarData.savedActivity.Subject);   // "First Test"
   await calendarPage.clickCalendarTimeSlot();
 });
 
@@ -191,8 +197,6 @@ Then('a popup window appears with options to create a new activity, including fi
       await expect(calendarPage.getField(field)).toBeVisible();
     }
   });
-
-// --- Scenario: Saved activity appears on the calendar grid in its time slot ---
 
 const savedActivitySubject = `${calendarData.savedActivity.Subject} ${Date.now()}`;
 

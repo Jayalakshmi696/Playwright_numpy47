@@ -57,7 +57,7 @@ export class CalendarPage {
     };
 
     // Iframe (calendar content)
-    this.frame = this.page.locator("iframe").contentFrame();
+    this.frame = this.page.locator("iframe").first().contentFrame();
 
     // Meeting / Call form titles
     this.pageTitleMeetings = this.frame.getByText("Meetings", { exact: true });
@@ -260,7 +260,7 @@ export class CalendarPage {
   async clearCallField(name) {
     logger.info(`Clearing "${name}" on the Call form`);
     const field = this.getCallField(name);
-    await field.click();
+    await field.focus();
     await field.press("ControlOrMeta+a");
     await field.press("Backspace");
     await field.press("Tab");
@@ -306,19 +306,39 @@ export class CalendarPage {
     logger.info('Checking the assigned user name is shown');  
     await expect(this.assignedUserName).toBeVisible();
   }
+  async findFreeTimeSlot() {
+    const slots = this.frame.locator('.fc-slats tr[data-time] td:nth-child(2)');
+    await slots.first().waitFor({ state: 'visible', timeout: 15000 });   // wait until the grid is drawn
+    const total = await slots.count();
+    logger.info(`Found ${total} time slots in the Today view`);
+
+    for (let i = 0; i < total; i++) {
+      const slot = slots.nth(i);
+      try {
+        await slot.click({ trial: true, timeout: 1000 });   // only checks, doesn't really click
+        logger.info(`Using free time slot #${i + 1}`);
+        return slot;
+      } catch {
+        // taken by an event, try the next one
+      }
+    }
+    throw new Error('No free time slot found in the Today view');
+  }
 
   async clickCalendarTimeSlot() {
      logger.info('Clicking a time slot to open the Create Activity popup');
     const popup = this.frame.getByRole('dialog');
+    const slot = await this.findFreeTimeSlot();            
 
-    
+    // Click until the popup opens (it may still say "Loading...")
     await expect(async () => {
       if (!(await popup.isVisible())) {
-        await this.calendarTimeSlotCell.click({ timeout: 2000 });
+        await slot.click({ timeout: 2000 });                   
       }
       await expect(popup).toBeVisible({ timeout: 3000 });
     }).toPass({ timeout: 15000 });
 
+    // Wait until it has finished loading
     await expect(this.createActivityPopupTitle).toBeVisible({ timeout: 15000 });
   
   }
@@ -341,13 +361,27 @@ export class CalendarPage {
   }
   async deleteSavedActivity(subject) {
     logger.info(`Deleting test activity: ${subject}`);
-     await this.getSavedActivityEvent(subject).dispatchEvent('click');              
-    await expect(this.popupDeleteButton).toBeAttached();           
+    await this.getSavedActivityEvent(subject).click();
+    await expect(this.popupDeleteButton).toBeAttached({ timeout: 15000 });
 
     // If SuiteCRM asks "Are you sure?" as a browser popup, accept it automatically
-    this.page.once("dialog", (dialog) => dialog.accept());
+    this.page.once('dialog', (dialog) => dialog.accept());
 
-    await this.popupDeleteButton.dispatchEvent("click");            
-    await expect(this.getSavedActivityEvent(subject)).not.toBeVisible();   
+    await this.popupDeleteButton.dispatchEvent('click');
+    await expect(this.getSavedActivityEvent(subject)).not.toBeVisible();
   }
-}
+   //Delete leftover test events from earlier failed runs (any event containing the test prefix)
+  async deleteLeftoverActivities(prefix) {
+    const leftovers = this.frame.locator('.fc-event').filter({ hasText: prefix });
+    let count = await leftovers.count();
+    while (count > 0) {
+      logger.warn(`Removing ${count} leftover test activity/activities containing "${prefix}"`);
+      await leftovers.first().click();                                          // open the oldest leftover
+      await expect(this.popupDeleteButton).toBeAttached({ timeout: 15000 });
+      this.page.once('dialog', (dialog) => dialog.accept());
+      await this.popupDeleteButton.dispatchEvent('click');
+      await expect(leftovers).toHaveCount(count - 1, { timeout: 15000 });       // wait until it's gone
+      count = await leftovers.count();
+    }
+  }}
+

@@ -17,21 +17,24 @@ Given('User successfully logged into the suite8demo application', async ({userPr
   await page.goto('/#/home', { waitUntil: 'domcontentloaded' });
 
   const usernameInput = page.getByRole('textbox', { name: 'Username' });
+  const homeSearch = page.getByRole('textbox', { name: 'Search' });
 
-  await Promise.race([
-    usernameInput.waitFor({ state: 'visible' }),
-    userProfilePage.profileMenu.waitFor({ state: 'visible' })
-  ]);
+  await expect.poll(async () =>
+    await usernameInput.isVisible() || await homeSearch.isVisible(),
+    { timeout: 15000 }
+  ).toBe(true);
 
   // Login only if login page is displayed
   if (await usernameInput.isVisible()) {
     const loginPage = new LoginPage(page);
     const credentials = loginData.validUsernameAndPassword;
-
     await loginPage.login(credentials.username, credentials.password);
   }
   await expect(page).toHaveURL(/#\/home/);
-  await expect(userProfilePage.profileMenu).toBeVisible();
+  await expect(homeSearch).toBeVisible();
+  await expect(page.locator('app-full-page-spinner .app-overlay')).toBeHidden({
+    timeout: 30000
+  });
 });
 
 When('the user clicks the User Profile icon', async ({userProfilePage}) => {
@@ -103,6 +106,7 @@ Then('the user should be navigated to Community Forum page.', async ({userProfil
 
 await expect(userProfilePage.communityForumPage)
   .toHaveURL('https://community.suitecrm.com/');
+  await userProfilePage.communityForumPage.close();
 
 });
 
