@@ -523,13 +523,5 @@ export class QuotesPage {
           logger.info(`Step 5 URL: ${this.page.url()}`);
         }
     }
-    
-    
-    
-
-
-
-
-
 };
 

@@ -13,7 +13,10 @@ export class QuickActionsPage {
         this.scheduleMeeting=page.getByRole('link', { name: 'Schedule Meeting' });
         this.scheduleCall=page.getByRole('link', { name: 'Schedule Call' });
         this.createPage=page.getByText('Create', { exact: true });
-        this.quotecreatePage=page.getByText('Quotes', { exact: true })
+        this.quotecreatePage=page.getByRole('link', {name: 'Quotes',
+            exact: true
+        });
+        //page.getByText('Quotes', { exact: true });
         this.scheduleMeetingPage=page.locator('iframe').contentFrame().getByText('Meetings');
     }
 
@@ -52,7 +55,8 @@ export class QuickActionsPage {
      await this.clickQuickActions();
     await expect(this.createQuote).toBeVisible();
     await this.createQuote.click();
-    await expect(this.quotecreatePage).toBeVisible();
+    await expect(this.page).toHaveURL(/#\/quotes/);
+    //await expect(this.quotecreatePage).toBeVisible();
   }
   async clickScheduleMeeting() {
     await this.clickQuickActions();

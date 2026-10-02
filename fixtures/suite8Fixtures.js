@@ -1,13 +1,17 @@
 import { test as base } from "playwright-bdd";
+import { ContactsPage } from "../pages/ContactsPage.js";
 //import { LoginPage } from '../pages/LoginPage.js';
-import {AccountsPage} from '../pages/AccountsPage.js';
 import {LeadsPage} from '../pages/LeadsPage.js';
 import {QuotesPage} from '../pages/QuotesPage.js';
 import {More3Page} from '../pages/More3Page.js';
-import {UserProfilePage} from '../pages/UserProfilePage.js';
-import { AccountsImportFile } from '../pages/AccountsImportFile.js';
-import {QuickActionsPage} from '../pages/QuickActionsPage.js';
-import {More1Page} from '../pages/More1Page.js';
+import { AccountsPage } from "../pages/AccountsPage.js";
+import { OpportunitiesPage } from "../pages/OpportunitiesPage.js";
+import { UserProfilePage } from "../pages/UserProfilePage.js";
+import { More2Page } from "../pages/More2Page.js";
+import { AccountsImportFile } from "../pages/AccountsImportFile.js";
+import { QuickActionsPage } from "../pages/QuickActionsPage.js";
+import { More1Page } from "../pages/More1Page.js";
+//import { test } from '../fixtures/pageFixtures.js';
 import { CalendarPage } from "../pages/CalendarPage.js";
 import { DocumentPage } from "../pages/DocumentPage.js";
 import { More4Page } from "../pages/More4Page.js";
@@ -50,27 +54,21 @@ export const test = base.extend({
 },
      
      
-     // Leads fixture
+    // Leads fixture
   leadsPage: async ({ page }, use) => {
-  
     const leadsPage = new LeadsPage(page);
-
     await use(leadsPage);
   },
 
-      // Quotes fixture
+    // Quotes fixture
     quotesPage: async ({ page }, use) => {
-  
     const quotesPage = new QuotesPage(page);
-
     await use(quotesPage);
   },
 
     // More3 fixture
     more3Page: async ({ page }, use) => {
-  
     const more3Page = new More3Page(page);
-
     await use(more3Page);
   },
 
@@ -92,6 +90,25 @@ export const test = base.extend({
     const more4Page = new More4Page(page);
     await use(more4Page);
   },
+
+  // Contacts fixture
+  contactsPage: async ({ page }, use) => {
+    // await page.goto('https://suite8demo.suiteondemand.com/#/home');
+    const contactsPage = new ContactsPage(page);
+    await use(contactsPage);
+  },
+  // Opportunities fixture
+  opportunitiesPage: async ({ page }, use) => {
+    // await page.goto('https://suite8demo.suiteondemand.com/#/home');
+    const opportunitiesPage = new OpportunitiesPage(page);
+    await use(opportunitiesPage);
+  },
+   // More2 fixture
+  more2Page: async ({ page }, use) => {
+    // await page.goto('https://suite8demo.suiteondemand.com/#/home');
+    const more2Page = new More2Page(page);
+    await use(more2Page);
+  }
 });
 
 

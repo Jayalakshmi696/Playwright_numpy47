@@ -486,67 +486,6 @@ export class LeadsPage {
   }
 };
 
-/*
-
-  async verifyLeadResult(expectedResult) {
-    if (expectedResult === 'Detailed view page of new Lead') {
-      await expect(this.importLeadCnfrmLbl).toBeVisible();
-      console.log (await this.importLeadCnfrmLbl.textContent());
-      await this.importLeadExtBtn.click();
-      await this.page.waitForURL(url => url.toString().includes('/#/leads/index'));
-    } 
-    else if (expectedResult === 'Import Lead Error Popup alert appears ') {
-      await expect(this.importLeadAlertPopup).toBeVisible();
-      await expect(this.importLeadAlertPopupTxt).toContainText('The selected file does not');
-      console.log (await this.importLeadAlertPopupTxt.textContent());      
-    } 
-    else if (expectedResult === 'Required field error messages') {
-      await expect(this.importLeadFieldErrMsg.first()).toBeVisible();
-      console.log (await this.importLeadFieldErrMsg.textContent());
-    }
-  }
-
-    async verifyVCardResult(expectedResult) {
-    if (expectedResult === 'Detailed view page of new Lead') {
-      await this.page.waitForURL(url => url.toString().includes('/#/leads/importvcard'), { timeout: 30000 });
-      await expect(this.leadDetailedViewTitle).toBeVisible();
-      console.log (await this.leadDetailedViewTitle.textContent());
-    } 
-    else if (expectedResult === 'Select a Vcard file Alert appears') {
-      await expect(this.vCardAlertPopup).toBeVisible();
-      await expect(this.vCardAlertPopupTxt).toContainText('Please select a vCard file');
-      console.log (await this.vCardAlertPopupTxt.textContent());      
-    } 
-    else if (expectedResult === 'Required field error messages') {
-      await expect(this.vCardFieldErrMsg.first()).toBeVisible();
-      console.log (await this.vCardFieldErrMsg.textContent());
-    }
-  }
-
-    async verifyCreateLeadResult(result) {
-    switch (result) {
-      case 'Detailed view page of new Lead':{
-        await expect(this.leadDetailedViewTitle).toBeVisible();
-        console.log (await this.leadDetailedViewTitle.textContent());
-      }
-        break;
-      case 'Required field error messages':{
-        await expect(this.leadFieldErrMsg.first()).toBeVisible();
-        console.log (await this.leadFieldErrMsg.textContent());
-      }
-        break;
-      case 'Confirmation dialog appears':{
-        await expect(this.leadCancelPopup).toBeVisible();
-        console.log (await this.leadCancelPopup.textContent());
-      }
-        break;
-      default:
-        throw new Error(`Unknown expected result: ${result}`);
-    }
-  }
-  
-*/
-
 
 
 
