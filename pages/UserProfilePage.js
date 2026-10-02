@@ -10,21 +10,26 @@ export class UserProfilePage {
         this.communityForum=page.getByRole('link', { name: 'Community Forum' });
         this.about=page.getByRole('link', { name: 'About' });
         this.logout=page.getByText('Logout');
-       this.editProfileText=page.getByText('EMPLOYEES', { exact: true });
+        this.editProfileText=page.getByText('EMPLOYEES', { exact: true });
        //this.editProfileText = page.locator('div.dropdown-menu.global-links-dropdown.border.shadow-sm-2.dropdown-menu-right.ng-tns-c2316037842-2.show').locator('a').nth(0);
-        this.editSave=page.locator('iframe:visible').contentFrame().getByRole('button', { name: 'Save' });
-        this.lastNameInput=page.locator('iframe:visible').contentFrame().locator('input[name="last_name"]');
-        this.errorMessageLocator=page.locator('iframe:visible').contentFrame().getByText('Missing required field: Last Name', { exact: true });
-        this.photoUpload=page.locator('iframe').contentFrame().getByRole('button', { name: 'Choose File' }); 
-        this.photoFile = page.locator('iframe:visible').contentFrame().locator('#photo_file');
-        this.settingsButton=page.locator('iframe:visible').contentFrame().getByRole('button', { name: 'Settings' });
-        this.settingsPopup=page.locator('iframe:visible').contentFrame().getByRole('heading', { name: 'Preferences' });
-        this.addEmailButton=page.locator('iframe').contentFrame().getByTitle('Add Email Address ');
-        this.emailInput=page.locator('iframe').contentFrame().locator('#Users0emailAddress3');
+        this.profileFrame = page.frameLocator('iframe').first();
+        this.editSave=this.profileFrame.getByRole('button', { name: 'Save' });
+        this.lastNameInput = this.profileFrame.locator('input[name="last_name"]');
+        //this.lastNameInput=page.locator('iframe:visible').contentFrame().locator('input[name="last_name"]');
+        this.errorMessageLocator=this.profileFrame.getByText('Missing required field: Last Name', { exact: true });
+        this.photoUpload=this.profileFrame.getByRole('button', { name: 'Choose File' }); 
+        this.photoFile = this.profileFrame.locator('#photo_file');
+        this.settingsButton=this.profileFrame.getByRole('button', { name: 'Settings' });
+        this.settingsPopup=this.profileFrame.getByRole('heading', { name: 'Preferences' });
+        this.addEmailButton=this.profileFrame.getByTitle('Add Email Address ');
+        this.emailInput=this.profileFrame.locator('#Users0emailAddress3');
     }
 
          async userProfileIcon()
          {
+                await expect(this.page.locator('app-full-page-spinner .app-overlay'))
+                     .toBeHidden({ timeout: 30000 });
+                await expect(this.profileMenu).toBeVisible({ timeout: 15000 });
             await this.profileMenu.click();
          }
           async verifySettingsPopup()
@@ -77,7 +82,7 @@ export class UserProfilePage {
          }
          async editprofilePage()
          {
-              await expect(this.lastNameInput).toBeVisible();
+                await expect(this.lastNameInput).toBeVisible({ timeout: 15000 });
          }
 
          async employees()
@@ -93,11 +98,14 @@ export class UserProfilePage {
          
          async communityNavigation()
          {
-            const newPagePromise = this.page.context().waitForEvent('page');
-            await this.communityForum.click();
-            const newPage = await newPagePromise;
-            await newPage.waitForLoadState();
-            return newPage;
+           const [newPage] = await Promise.all([
+        this.page.context().waitForEvent('page'),
+        this.communityForum.click()
+          ]);
+
+        await newPage.waitForLoadState('domcontentloaded');
+
+             return newPage;
         }
 
         async userLogout()
