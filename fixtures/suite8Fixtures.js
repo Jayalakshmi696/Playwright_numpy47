@@ -1,11 +1,15 @@
 import { test as base } from "playwright-bdd";
+import { ContactsPage } from "../pages/ContactsPage.js";
 //import { LoginPage } from '../pages/LoginPage.js';
 import { AccountsPage } from "../pages/AccountsPage.js";
+import { OpportunitiesPage } from "../pages/OpportunitiesPage.js";
 import { UserProfilePage } from "../pages/UserProfilePage.js";
+import { More2Page } from "../pages/More2Page.js";
 import { AccountsImportFile } from "../pages/AccountsImportFile.js";
 import { QuickActionsPage } from "../pages/QuickActionsPage.js";
 import { More1Page } from "../pages/More1Page.js";
 //import { test } from '../fixtures/pageFixtures.js';
+
 import { CalendarPage } from "../pages/CalendarPage.js";
 import { DocumentPage } from "../pages/DocumentPage.js";
 import { More4Page } from "../pages/More4Page.js";
@@ -65,8 +69,25 @@ export const test = base.extend({
     await use(more4Page);
   },
 
-  });
-
+  // Contacts fixture
+  contactsPage: async ({ page }, use) => {
+    // await page.goto('https://suite8demo.suiteondemand.com/#/home');
+    const contactsPage = new ContactsPage(page);
+    await use(contactsPage);
+  },
+  // Opportunities fixture
+  opportunitiesPage: async ({ page }, use) => {
+    // await page.goto('https://suite8demo.suiteondemand.com/#/home');
+    const opportunitiesPage = new OpportunitiesPage(page);
+    await use(opportunitiesPage);
+  },
+   // More2 fixture
+  more2Page: async ({ page }, use) => {
+    // await page.goto('https://suite8demo.suiteondemand.com/#/home');
+    const more2Page = new More2Page(page);
+    await use(more2Page);
+  }
+});
 
 // 2. Pass your extended test to createBdd
 //export const { Given, When, Then } = createBdd(test);

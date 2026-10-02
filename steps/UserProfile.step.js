@@ -196,3 +196,4 @@ Then('User should see the email address added in the profile', async ({userProfi
   // Step: Then User should see the email address added in the profile
   // From: features\UserProfile.feature:60:5
 });
+

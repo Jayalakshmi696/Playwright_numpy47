@@ -1,0 +1,33 @@
+
+
+{
+"ValidVcardFile": {
+    "filepath": "./test-data/Vcard.vcf"
+  },
+"InValidFile":{
+  "filepath": "./test-data/invalid_contacts.vcf"
+},
+"NoFile":{
+  "filepath": ""
+},
+  "ValidContactsCSVFile": {
+    "filepath": "./test-data/Contacts.csv"
+  },
+
+  "InvalidContactsCSVFile":{
+    "filepath": "./test-data/invalid import file.md"
+  },
+  "NoContactsFile":{
+  "filepath": ""
+  },
+"OpportunitiesCSVFile": {
+    "filepath": "./test-data/Opportunities.csv"
+  },
+  "InvalidOpportunitiesCSVFile":{
+    "filepath": "./test-data/invalid opportunities file.md"
+  },
+
+  "NoOpportunitiesFile":{
+  "filepath": ""
+}
+}

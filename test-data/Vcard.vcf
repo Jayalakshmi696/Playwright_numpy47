@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:User1;Test;;;
+FN:Test User1
+ORG:xyz
+TITLE:Analyst
+EMAIL;TYPE=INTERNET:testUser1@example.com
+TEL;TYPE=CELL:1234567890
+ADR;TYPE=WORK:;;Street 1 \, City1\, Country1.;;;;
+END:VCARD
