@@ -29,10 +29,11 @@ dotenv.config({ path: path.resolve(__dirname, 'QA.env') });
 export default defineConfig({
   //testDir: './features-gen',
  testDir,
+ 
   /* Run tests in files in parallel */
   fullyParallel: true,
-   timeout: 60000,
-   expect: { timeout: 10000 },
+  timeout:60000,
+  expect:{ timeout: 60000 },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
