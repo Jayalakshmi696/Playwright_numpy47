@@ -1,4 +1,4 @@
-// Generated from: features\opportunities.feature
+// Generated from: features/opportunities.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Opportunities module functionality of suite8demo application', () => {
@@ -84,7 +84,7 @@ test.describe('Opportunities module functionality of suite8demo application', ()
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\opportunities.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features/opportunities.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

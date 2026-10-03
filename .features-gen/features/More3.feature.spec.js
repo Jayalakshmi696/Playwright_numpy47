@@ -54,7 +54,7 @@ test.describe('Testing 3rd section of modules listed on More menu in suite8demo 
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\More3.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features/More3.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

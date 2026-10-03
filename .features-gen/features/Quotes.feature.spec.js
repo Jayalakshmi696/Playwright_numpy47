@@ -126,7 +126,7 @@ test.describe('Quotes module functionality of suite8demo application', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\Quotes.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features/Quotes.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 
