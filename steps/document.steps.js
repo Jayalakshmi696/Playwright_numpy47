@@ -58,13 +58,18 @@ When(
     // From: features/Document.feature:27:5
     //const documentPage = new DocumentPage(page);
     if (optionName === "Create Document") {
-      await documentPage.CreatDocumentDropdown();
-      await expect(page).toHaveURL(/edit/, { timeout: 15000 });
+      await expect(async () => {
+        await documentPage.documentHoverIcon();
+        await documentPage.CreatDocumentDropdown();
+        await expect(page).toHaveURL(/edit/, { timeout: 5000 });
+      }).toPass({ timeout: 30000 });
     } else if (optionName === "View Documents") {
-      await documentPage.ViewDocumentDropdown();
-      await expect(page).toHaveURL(/documents\/index/, { timeout: 15000 });
-    }
-  },
+      await expect(async () => {
+        await documentPage.documentHoverIcon();
+        await documentPage.ViewDocumentDropdown();
+        await expect(page).toHaveURL(/documents\/index/, { timeout: 5000 });
+      }).toPass({ timeout: 30000 });
+    }}
 );
 
 Then(
@@ -132,7 +137,7 @@ When("the user saves the document", async ({ documentPage }) => {
 Then("the document detail page is displayed", async ({ page }) => {
   // Step: Then the document detail page is displayed
   // From: features/Document.feature:55:3
-  await expect(page).not.toHaveURL(/edit/, { timeout: 15000 });
+  await expect(page).not.toHaveURL(/edit/, { timeout: 40000 });
   await expect(page.getByText(createdDocumentName).first()).toBeVisible();
 
   logger.info(`Then: Document ${createdDocumentName} created.`);

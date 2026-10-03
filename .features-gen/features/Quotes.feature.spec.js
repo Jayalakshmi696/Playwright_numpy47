@@ -1,4 +1,4 @@
-// Generated from: features\Quotes.feature
+// Generated from: features/Quotes.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Quotes module functionality of suite8demo application', () => {

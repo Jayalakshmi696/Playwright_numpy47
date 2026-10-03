@@ -1,4 +1,4 @@
-// Generated from: features\Leads.feature
+// Generated from: features/Leads.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Leads module functionality of suite8demo application', () => {
