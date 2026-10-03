@@ -89,7 +89,7 @@ When('User clicks on Create Lead from vCard option', async ({leadsPage}) => {
   await leadsPage.clickCreateLeadFromVcard();
 });
 
-Then('User should see the import vCard page with correct components', async ({leadsPage}, dataTable)=> {
+Then('User should see the import vCard page with correct components for Leads module', async ({leadsPage}, dataTable)=> {
   // Step: Then User should see the import vCard page with correct components
   // From: features\Leads.feature:54:9
   const componentsList = dataTable.hashes();
@@ -97,21 +97,21 @@ Then('User should see the import vCard page with correct components', async ({le
   await leadsPage.verifyLeadsPageComponents(componentsList);
 });
 
-Given('User is on import vCard page', async ({leadsPage}) => {
+Given('User is on import vCard page for Leads module', async ({leadsPage}) => {
   // Step: Given User is on import vCard page
   // From: features\Leads.feature:62:11
   await leadsPage.openLeadsDropDown();
   await leadsPage.clickCreateLeadFromVcard();
 });
 
-When('User uploads {string} and clicks Import Vcard button', async ({leadsPage}, InputFile) => {
+When('User uploads {string} and clicks Import Vcard button for Leads module', async ({leadsPage}, InputFile) => {
   // Step: When User uploads "<Input File>" and clicks Import Vcard button
   // From: features\Leads.feature:63:11
   //await leadsPage.uploadAndImportVCardFiles(InputFile);
   await leadsPage.uploadAndImportAllLeadFiles(InputFile,'importVcard');
 });
 
-Then('User should see the Import vCard {string}', async ({leadsPage}, Result) => {
+Then('User should see the Import vCard {string} for Leads module', async ({leadsPage}, Result) => {
   // Step: Then User should see the Import vCard "Detailed view page of new Lead"
   // From: features\Leads.feature:64:11
   await leadsPage.verifyAllLeadResults(Result);

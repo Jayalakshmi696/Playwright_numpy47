@@ -58,20 +58,20 @@ test.describe('Opportunities module functionality of suite8demo application', ()
 
   test.describe('Verify the functionality of importing Opportunities', () => {
 
-    test('Example #1', { tag: ['@OpportunitiesModule', '@ImportFunctionality'] }, async ({ Given, When, Then, opportunitiesPage }) => { 
-      await Given('User is on Upload Import File page'); 
+    test('Example #1', { tag: ['@OpportunitiesModule', '@ImportFunctionality'] }, async ({ Given, When, Then, opportunitiesPage, quotesPage }) => { 
+      await Given('User is on Upload Import File page', null, { quotesPage }); 
       await When('User uploads Opportunities Valid File and clicks Next button', null, { opportunitiesPage }); 
       await Then('User should see Import Opportunities Detailed view page of new Opportunity', null, { opportunitiesPage }); 
     });
 
-    test('Example #2', { tag: ['@OpportunitiesModule', '@ImportFunctionality'] }, async ({ Given, When, Then, opportunitiesPage }) => { 
-      await Given('User is on Upload Import File page'); 
+    test('Example #2', { tag: ['@OpportunitiesModule', '@ImportFunctionality'] }, async ({ Given, When, Then, opportunitiesPage, quotesPage }) => { 
+      await Given('User is on Upload Import File page', null, { quotesPage }); 
       await When('User uploads Opportunities No File and clicks Next button', null, { opportunitiesPage }); 
       await Then('User should see Import Opportunities Select a Vcard file Alert appears', null, { opportunitiesPage }); 
     });
 
-    test('Example #3', { tag: ['@OpportunitiesModule', '@ImportFunctionality'] }, async ({ Given, When, Then, opportunitiesPage }) => { 
-      await Given('User is on Upload Import File page'); 
+    test('Example #3', { tag: ['@OpportunitiesModule', '@ImportFunctionality'] }, async ({ Given, When, Then, opportunitiesPage, quotesPage }) => { 
+      await Given('User is on Upload Import File page', null, { quotesPage }); 
       await When('User uploads Opportunities InValid File and clicks Next button', null, { opportunitiesPage }); 
       await Then('User should see Import Opportunities Required field error messages', null, { opportunitiesPage }); 
     });

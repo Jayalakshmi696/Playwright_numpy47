@@ -11,38 +11,38 @@ test.describe('Testing 2nd section of modules listed on More menu in suite8demo 
     await Then('User should see More menu in the menu bar'); 
   });
 
-  test('Verify that View Tasks page', { tag: ['@MoreModuleSection2', '@ViewLTargetListPage'] }, async ({ Given, When, Then, more2Page }) => { 
-    await Given('More menu drop down list is displayed'); 
+  test('Verify that View Tasks page', { tag: ['@MoreModuleSection2', '@ViewLTargetListPage'] }, async ({ Given, When, Then, more2Page, more3Page }) => { 
+    await Given('More menu drop down list is displayed', null, { more3Page }); 
     await When('User clicks on View Tasks option in More Menu', null, { more2Page }); 
     await Then('User should be navigated to Tasks dashboard page', null, { more2Page }); 
   });
 
-  test('Verify that View Notes page', { tag: ['@MoreModuleSection2', '@ViewNotesPage'] }, async ({ Given, When, Then, more2Page }) => { 
-    await Given('More menu drop down list is displayed'); 
+  test('Verify that View Notes page', { tag: ['@MoreModuleSection2', '@ViewNotesPage'] }, async ({ Given, When, Then, more2Page, more3Page }) => { 
+    await Given('More menu drop down list is displayed', null, { more3Page }); 
     await When('User clicks on View Notes option in More Menu', null, { more2Page }); 
     await Then('User should be navigated to Notes dashboard page', null, { more2Page }); 
   });
 
-  test('Verify that View Invoices page', { tag: ['@MoreModuleSection2', '@ViewInvoicesPage'] }, async ({ Given, When, Then, more2Page }) => { 
-    await Given('More menu drop down list is displayed'); 
+  test('Verify that View Invoices page', { tag: ['@MoreModuleSection2', '@ViewInvoicesPage'] }, async ({ Given, When, Then, more2Page, more3Page }) => { 
+    await Given('More menu drop down list is displayed', null, { more3Page }); 
     await When('User clicks on View Invoices option in More Menu', null, { more2Page }); 
     await Then('User should be navigated to Invoices dashboard page', null, { more2Page }); 
   });
 
-  test('Verify that View Contracts page', { tag: ['@MoreModuleSection2', '@ViewContractsPage'] }, async ({ Given, When, Then, more2Page }) => { 
-    await Given('More menu drop down list is displayed'); 
+  test('Verify that View Contracts page', { tag: ['@MoreModuleSection2', '@ViewContractsPage'] }, async ({ Given, When, Then, more2Page, more3Page }) => { 
+    await Given('More menu drop down list is displayed', null, { more3Page }); 
     await When('User clicks on View Contracts option in More Menu', null, { more2Page }); 
     await Then('User should be navigated to Contracts dashboard page', null, { more2Page }); 
   });
 
-  test('Verify that View Cases page', { tag: ['@MoreModuleSection2', '@ViewCasesPage'] }, async ({ Given, When, Then, more2Page }) => { 
-    await Given('More menu drop down list is displayed'); 
+  test('Verify that View Cases page', { tag: ['@MoreModuleSection2', '@ViewCasesPage'] }, async ({ Given, When, Then, more2Page, more3Page }) => { 
+    await Given('More menu drop down list is displayed', null, { more3Page }); 
     await When('User clicks on View Cases option in More Menu', null, { more2Page }); 
     await Then('User should be navigated to Cases dashboard page', null, { more2Page }); 
   });
 
-  test('Verify that View Targets page', { tag: ['@MoreModuleSection2', '@ViewTargetsPage'] }, async ({ Given, When, Then, more2Page }) => { 
-    await Given('More menu drop down list is displayed'); 
+  test('Verify that View Targets page', { tag: ['@MoreModuleSection2', '@ViewTargetsPage'] }, async ({ Given, When, Then, more2Page, more3Page }) => { 
+    await Given('More menu drop down list is displayed', null, { more3Page }); 
     await When('User clicks on View Targets option in More Menu', null, { more2Page }); 
     await Then('User should be navigated to Targets dashboard page', null, { more2Page }); 
   });

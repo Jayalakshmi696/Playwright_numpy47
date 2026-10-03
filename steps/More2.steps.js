@@ -3,6 +3,12 @@ import { test} from '../fixtures/suite8Fixtures.js';
 import { expect } from '@playwright/test';
 import { logger } from "../utils/logger.js";
 const { Given, When, Then } = createBdd();
+
+Then('User should see More menu in the menu bar', async ({}) => {
+  // Step: Then User should see More menu in the menu bar
+  // From: features\More2.feature:12:9
+});
+
 When('User clicks on View Tasks option in More Menu', async ({more2Page}) => {
   // Step: When User clicks on View Tasks option in More Menu
   // From: features\More2.feature:15:13

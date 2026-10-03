@@ -47,11 +47,11 @@ Feature: Leads module functionality of suite8demo application
         | Header Contents | SelectDropDown, BulkActionsDropDown, ColumnButton, NextPageButton, PreviousPageButton, EndPageButton, BeginingPageButton, PageNumber  |
         | Footer Contents | SelectDropDown, BulkActionsDropDown, columnButton, NextPageButton, PreviousPageButton, EndPageButton, BeginingPageButton, PageNumber  |
 
-      @VCardpageComponents
+      @LeadsVCardpageComponents
       Scenario: Verify that user is on the vCard page
         Given Leads menu drop-down list is displayed
         When User clicks on Create Lead from vCard option
-        Then User should see the import vCard page with correct components
+        Then User should see the import vCard page with correct components for Leads module
         | Component       | ExpectedValues                |
         | PageTitle       | ImportVCard                   |
         | Buttons         | VcardChooseFile, ImportVCard  |
@@ -59,9 +59,9 @@ Feature: Leads module functionality of suite8demo application
 
         @CreateLeadFromVCard
         Scenario Outline: Verify importing a lead via vCard using <InputFile>
-          Given User is on import vCard page
-          When User uploads "<InputFile>" and clicks Import Vcard button
-          Then User should see the Import vCard "<Result>"
+          Given User is on import vCard page for Leads module
+          When User uploads "<InputFile>" and clicks Import Vcard button for Leads module
+          Then User should see the Import vCard "<Result>" for Leads module
           Examples:
           | InputFile        |  Result                                    |
           | ValidVcardFile   |  Detailed view page of new Lead via Vcard  |
