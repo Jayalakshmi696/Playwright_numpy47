@@ -1,4 +1,4 @@
-// Generated from: features\More2.feature
+// Generated from: features/More2.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Testing 2nd section of modules listed on More menu in suite8demo application', () => {
@@ -53,7 +53,7 @@ test.describe('Testing 2nd section of modules listed on More menu in suite8demo 
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\More2.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features/More2.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

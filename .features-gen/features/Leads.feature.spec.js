@@ -1,4 +1,4 @@
-// Generated from: features\Leads.feature
+// Generated from: features/Leads.feature
 import { test } from "playwright-bdd";
 
 test.describe('Testing Leads module in SuiteCRM application', () => {
@@ -115,7 +115,7 @@ test.describe('Testing Leads module in SuiteCRM application', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\Leads.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features/Leads.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

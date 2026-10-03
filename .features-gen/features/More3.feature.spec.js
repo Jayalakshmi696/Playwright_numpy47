@@ -1,4 +1,4 @@
-// Generated from: features\More3.feature
+// Generated from: features/More3.feature
 import { test } from "playwright-bdd";
 
 test.describe('Testing 3rd section of modules listed on More menu in SuiteCRM application', () => {
@@ -55,7 +55,7 @@ test.describe('Testing 3rd section of modules listed on More menu in SuiteCRM ap
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\More3.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features/More3.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

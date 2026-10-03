@@ -1,4 +1,4 @@
-// Generated from: features\Accounts.feature
+// Generated from: features/Accounts.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Accounts module functionality of suite8demo application', () => {
@@ -68,7 +68,7 @@ test.describe('Accounts module functionality of suite8demo application', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\Accounts.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features/Accounts.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

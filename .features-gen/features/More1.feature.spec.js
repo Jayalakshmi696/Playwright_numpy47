@@ -1,4 +1,4 @@
-// Generated from: features\More1.feature
+// Generated from: features/More1.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('More module dropdown list functionality of suite8demo application', () => {
@@ -43,7 +43,7 @@ test.describe('More module dropdown list functionality of suite8demo application
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\More1.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features/More1.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 
