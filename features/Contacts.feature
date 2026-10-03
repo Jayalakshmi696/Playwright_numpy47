@@ -32,7 +32,7 @@ Feature:Contacts module functionality of suite8demo application
 
         @CreateContactFunctionality
           Scenario: Verify that user is able to create new Contacts
-           Given User successfully logged in to the application
+           Given User is on the Create Contact page
             When User enters Contacts Valid Data and clicks the Save button
             Then User should see Create Contacts Detailed view page of new Contacts
       @ViewContactsPage
@@ -59,7 +59,7 @@ Feature:Contacts module functionality of suite8demo application
 
         @CreateContactFromVCard
         Scenario Outline: Verify the functionality of creating Contact from vCard
-          Given User is on import vCard page
+          Given Contacts menu is visible
           When User uploads "<InputFile>" and clicks Import Vcard button
           Then User should see the Import vCard "<Result>"
           Examples:

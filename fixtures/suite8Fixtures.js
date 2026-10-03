@@ -1,6 +1,9 @@
 import { test as base } from "playwright-bdd";
 import { ContactsPage } from "../pages/ContactsPage.js";
 //import { LoginPage } from '../pages/LoginPage.js';
+import {LeadsPage} from '../pages/LeadsPage.js';
+import {QuotesPage} from '../pages/QuotesPage.js';
+import {More3Page} from '../pages/More3Page.js';
 import { AccountsPage } from "../pages/AccountsPage.js";
 import { OpportunitiesPage } from "../pages/OpportunitiesPage.js";
 import { UserProfilePage } from "../pages/UserProfilePage.js";
@@ -9,7 +12,6 @@ import { AccountsImportFile } from "../pages/AccountsImportFile.js";
 import { QuickActionsPage } from "../pages/QuickActionsPage.js";
 import { More1Page } from "../pages/More1Page.js";
 //import { test } from '../fixtures/pageFixtures.js';
-
 import { CalendarPage } from "../pages/CalendarPage.js";
 import { DocumentPage } from "../pages/DocumentPage.js";
 import { More4Page } from "../pages/More4Page.js";
@@ -41,15 +43,35 @@ export const test = base.extend({
     await use(userProfilePage);
   },
   //quickActions fixture
-  quickActionsPage: async ({ page }, use) => {
-    const quickActionsPage = new QuickActionsPage(page);
-    await use(quickActionsPage);
+ quickActionsPage: async ({ page }, use) => {
+  const quickActionsPage = new QuickActionsPage(page);
+  await use(quickActionsPage);
+},
+ //More1 fixture
+ more1Page: async ({ page }, use) => {
+  const more1Page = new More1Page(page);
+  await use(more1Page);
+},
+     
+     
+    // Leads fixture
+  leadsPage: async ({ page }, use) => {
+    const leadsPage = new LeadsPage(page);
+    await use(leadsPage);
   },
-  //More1 fixture
-  more1Page: async ({ page }, use) => {
-    const more1Page = new More1Page(page);
-    await use(more1Page);
+
+    // Quotes fixture
+    quotesPage: async ({ page }, use) => {
+    const quotesPage = new QuotesPage(page);
+    await use(quotesPage);
   },
+
+    // More3 fixture
+    more3Page: async ({ page }, use) => {
+    const more3Page = new More3Page(page);
+    await use(more3Page);
+  },
+
   // Calendar fixture
   calendarPage: async ({ page }, use) => {
     // await page.goto('https://suite8demo.suiteondemand.com/#/home');
@@ -88,6 +110,7 @@ export const test = base.extend({
     await use(more2Page);
   }
 });
+
 
 // 2. Pass your extended test to createBdd
 //export const { Given, When, Then } = createBdd(test);

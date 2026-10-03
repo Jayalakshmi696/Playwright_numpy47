@@ -25,7 +25,7 @@ dotenv.config({ path: path.resolve(__dirname, 'QA.env') });
 
 /**
  * @see https://playwright.dev/docs/test-configuration
- */
+ */ 
 export default defineConfig({
   //testDir: './features-gen',
  testDir,
