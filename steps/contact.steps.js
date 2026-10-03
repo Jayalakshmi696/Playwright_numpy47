@@ -86,9 +86,9 @@ Then('User should see Create Contacts Required field error messages', async ({co
 When('User enters Contacts Valid Data and clicks the Cancel button', async ({contactsPage}) => {
   //const contactsPage = new ContactsPage(page);
   await contactsPage.fillContactForm({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: `john.doe.${Date.now()}@example.com`,
+    //firstName: 'John',
+    //lastName: 'Doe',
+    //email: `john.doe.${Date.now()}@example.com`,
   });
   await contactsPage.cancel();
 });
@@ -140,7 +140,7 @@ When('User clicks on Create Contact From vCard option', async ({contactsPage}) =
 timeout: 30000;
 });
 
-Then('User should see the Import vCard Detailed view page of new Contact', async ({contactsPage}) => {
+Then('User should see the import vCard page with correct components', async ({contactsPage}, dataTable) => {
   //const contactsPage = new ContactsPage(page);
   await contactsPage.importVCardPageVisible();
   

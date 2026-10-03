@@ -1,0 +1,14 @@
+{
+  "quoteData1": {
+    "quoteRecordTitle": "TestUserQuoteA",
+    "quoteApprovalIssues": "Resolved"    
+  },
+    "noData": {
+    "quoteRecordTitle": "",
+    "quoteApprovalIssues": ""   
+  },
+  "quoteData2": {
+    "quoteRecordTitle": "TestUserQuoteB",
+    "quoteApprovalIssues": "None"   
+  }
+}

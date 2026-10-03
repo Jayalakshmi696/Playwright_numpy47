@@ -1,112 +1,123 @@
-// Generated from: features/Quotes.feature
-import { test } from "playwright-bdd";
+// Generated from: features\Quotes.feature
+import { test } from "../../fixtures/suite8Fixtures.js";
 
-test.describe('Testing Quotes module in SuiteCRM application', () => {
+test.describe('Quotes module functionality of suite8demo application', () => {
 
-  test.beforeEach('Background', async ({ Given }, testInfo) => { if (testInfo.error) return;
-    await Given('User launches the application'); 
+  test.beforeEach('Background', async ({ Given, page, userProfilePage }, testInfo) => { if (testInfo.error) return;
+    await Given('User successfully logged into the suite8demo application', null, { page, userProfilePage }); 
   });
   
-  test('Verify that Quotes Menu is present in the Menu bar', { tag: ['@QuotesModule', '@QuotesMenu'] }, async ({ Given, When, Then }) => { 
-    await Given('User successfully logged in to the application'); 
-    await When('User is on the Home dashboard page'); 
-    await Then('User should see Quotes menu in the menu bar'); 
+  test('Verify that Quotes Menu drop down list contents', { tag: ['@QuotesModule', '@QuotesDropDownList'] }, async ({ When, Then, quotesPage }) => { 
+    await When('User hovers over the Quotes Menu', null, { quotesPage }); 
+    await Then('Quotes menu drop down list is displayed', null, { quotesPage }); 
   });
 
-  test('Verify that Quotes Menu drop down list contents', { tag: ['@QuotesModule', '@QuotesDropDownList'] }, async ({ Given, When, Then }) => { 
-    await Given('User is on the Home dashboard page'); 
-    await When('User hovers over the Quotes Menu'); 
-    await Then('Quotes menu drop down list is displayed'); 
+  test('Verify components on the Create Quote page', { tag: ['@QuotesModule', '@CreateQuotePage'] }, async ({ Given, When, Then, quotesPage }) => { 
+    await Given('Quotes menu drop-down list is displayed', null, { quotesPage }); 
+    await When('User clicks on the Create Quote option in the Quotes Menu', null, { quotesPage }); 
+    await Then('User should see the correct components on the Create Quote page', {"dataTable":{"rows":[{"cells":[{"value":"Component"},{"value":"ExpectedValues"}]},{"cells":[{"value":"PageTitle"},{"value":"QuoteCreate"}]},{"cells":[{"value":"Buttons"},{"value":"QuoteSave, QuoteCancel"}]},{"cells":[{"value":"Tabs"},{"value":"QuoteOverview, QuoteAddrInformation, LineItems"}]}]}}, { quotesPage }); 
   });
 
-  test('Verify components on the Create Quote page', { tag: ['@QuotesModule', '@CreateQuotePage'] }, async ({ Given, When, Then }) => { 
-    await Given('Quotes menu drop-down list is displayed'); 
-    await When('User clicks on the Create Quote option in the Quotes Menu'); 
-    await Then('User should see the correct components on the Create Quote page', {"dataTable":{"rows":[{"cells":[{"value":"Component"},{"value":"Expected Values"}]},{"cells":[{"value":"PageTitle"},{"value":"create"}]},{"cells":[{"value":"Buttons"},{"value":"Save, Cancel"}]},{"cells":[{"value":"Tabs"},{"value":"Overview, MoreInformation, other"}]}]}}); 
-  });
+  test.describe('Verify creating Quotes when user clicks <Action> with <Data>', () => {
 
-  test.describe('Verify that user is able to create a new Quote', () => {
-
-    test('Example #1', { tag: ['@QuotesModule', '@CreateQuoteFunctionality'] }, async ({ Given, When, Then }) => { 
-      await Given('User is on the Create Quote page'); 
-      await When('User enters Quotes Valid Data and clicks the Save button'); 
-      await Then('User should see create Quotes Detailed view page of new Quote'); 
+    test('Verify creating Quotes when user clicks QuoteSave with quoteData1', { tag: ['@QuotesModule', '@CreateQuoteFunctionality'] }, async ({ Given, When, Then, quotesPage }) => { 
+      await Given('User is on the Create Quote page', null, { quotesPage }); 
+      await When('User enters Quotes "quoteData1" and clicks the "QuoteSave" button', null, { quotesPage }); 
+      await Then('User should see create Quotes "Detailed view page of Created new Quote"', null, { quotesPage }); 
     });
 
-    test('Example #2', { tag: ['@QuotesModule', '@CreateQuoteFunctionality'] }, async ({ Given, When, Then }) => { 
-      await Given('User is on the Create Quote page'); 
-      await When('User enters Quotes No Data and clicks the Save button'); 
-      await Then('User should see create Quotes Required field error messages'); 
+    test('Verify creating Quotes when user clicks QuoteSave with noData', { tag: ['@QuotesModule', '@CreateQuoteFunctionality'] }, async ({ Given, When, Then, quotesPage }) => { 
+      await Given('User is on the Create Quote page', null, { quotesPage }); 
+      await When('User enters Quotes "noData" and clicks the "QuoteSave" button', null, { quotesPage }); 
+      await Then('User should see create Quotes "Required field error messages for Create Quote"', null, { quotesPage }); 
     });
 
-    test('Example #3', { tag: ['@QuotesModule', '@CreateQuoteFunctionality'] }, async ({ Given, When, Then }) => { 
-      await Given('User is on the Create Quote page'); 
-      await When('User enters Quotes Valid Data and clicks the Cancel button'); 
-      await Then('User should see create Quotes Confirmation dialog appears'); 
+    test('Verify creating Quotes when user clicks QuoteCancel with quoteData2', { tag: ['@QuotesModule', '@CreateQuoteFunctionality'] }, async ({ Given, When, Then, quotesPage }) => { 
+      await Given('User is on the Create Quote page', null, { quotesPage }); 
+      await When('User enters Quotes "quoteData2" and clicks the "QuoteCancel" button', null, { quotesPage }); 
+      await Then('User should see create Quotes "Confirmation dialog appears for Create Quote"', null, { quotesPage }); 
     });
 
   });
 
-  test('Verify components on the View Quotes page', { tag: ['@QuotesModule', '@ViewQuotesPage'] }, async ({ Given, When, Then }) => { 
-    await Given('Quotes menu drop-down list is displayed'); 
-    await When('User clicks on the "View Quotes" option in the Quotes Menu'); 
-    await Then('User should see the correct components on the Quotes dashboard page', {"dataTable":{"rows":[{"cells":[{"value":"Component"},{"value":"Expected Values"}]},{"cells":[{"value":"PageTitle"},{"value":"Quotes"}]},{"cells":[{"value":"Buttons"},{"value":"Filter, Insights"}]},{"cells":[{"value":"Sections"},{"value":"Records, QuickCharts"}]},{"cells":[{"value":"Header Contents"},{"value":"SelectDropDown, BulkActionsDropDown, NextPageButton, PreviousPageButton, BeginingPageButton, EndPageButton, PageNumber"}]},{"cells":[{"value":"Footer Contents"},{"value":"SelectDropDown, BulkActionsDropDown, NextPageButton, PreviousPageButton, BeginingPageButton, EndPageButton, PageNumber"}]}]}}); 
+  test('Verify components on the View Quotes page', { tag: ['@QuotesModule', '@ViewQuotesPage'] }, async ({ Given, When, Then, quotesPage }) => { 
+    await Given('Quotes menu drop-down list is displayed', null, { quotesPage }); 
+    await When('User clicks on the View Quotes option in the Quotes Menu', null, { quotesPage }); 
+    await Then('User should see the correct components on the Quotes dashboard page', {"dataTable":{"rows":[{"cells":[{"value":"Component"},{"value":"ExpectedValues"}]},{"cells":[{"value":"PageTitle"},{"value":"ViewQuotes"}]},{"cells":[{"value":"Buttons"},{"value":"QuoteFilter"}]},{"cells":[{"value":"Sections"},{"value":"QuoteRecords"}]},{"cells":[{"value":"Header Contents"},{"value":"SelectDropDown, BulkActionsDropDown, NextPageButton, PreviousPageButton, BeginingPageButton, EndPageButton, PageNumber"}]},{"cells":[{"value":"Footer Contents"},{"value":"SelectDropDown, BulkActionsDropDown, NextPageButton, PreviousPageButton, BeginingPageButton, EndPageButton, PageNumber"}]}]}}, { quotesPage }); 
   });
 
-  test('Verify that user is on the Import page', { tag: ['@QuotesModule', '@ImportPage'] }, async ({ Given, When, Then }) => { 
-    await Given('User has opened Quotes menu'); 
-    await When('User clicks the Import option'); 
-    await Then('User should see the import page with correct components', {"dataTable":{"rows":[{"cells":[{"value":"Component"},{"value":"Expected Values"}]},{"cells":[{"value":"PageTitle"},{"value":"UploadImport File"}]},{"cells":[{"value":"Buttons"},{"value":"Choose File, Next"}]},{"cells":[{"value":"Label"},{"value":"No File Chosen"}]},{"cells":[{"value":"HyperLink"},{"value":"Download Import File Template"}]},{"cells":[{"value":"Radio buttons"},{"value":"Create New Records only, Create New Records and Update Existing Records"}]}]}}); 
+  test('Verify that user is on the Import Quotes page', { tag: ['@QuotesModule', '@ImportQuotesPageComponents'] }, async ({ Given, When, Then, quotesPage }) => { 
+    await Given('Quotes menu drop-down list is displayed', null, { quotesPage }); 
+    await When('User clicks on Import option in Quotes Menu', null, { quotesPage }); 
+    await Then('User should see the import Quotes page with correct components', {"dataTable":{"rows":[{"cells":[{"value":"Component"},{"value":"ExpectedValues"}]},{"cells":[{"value":"PageTitle"},{"value":"UploadImportQuotesFile"}]},{"cells":[{"value":"Buttons"},{"value":"QuoteChooseFile, QuoteNext"}]},{"cells":[{"value":"Label"},{"value":"InformationTextImportQuotes"}]},{"cells":[{"value":"HyperLink"},{"value":"DownloadImportFileTemplateQuotes"}]},{"cells":[{"value":"Radiobuttons"},{"value":"RadioButtonQuotes1, RadioButtonQuotes2"}]}]}}, { quotesPage }); 
   });
 
-  test.describe('Verify the functionality of importing Quotes', () => {
+  test.describe('Verify importing Quotes using <InputFile>', () => {
 
-    test('Example #1', { tag: ['@QuotesModule', '@ImportFunctionality'] }, async ({ Given, When, Then }) => { 
-      await Given('User is on Upload Import File page'); 
-      await When('User uploads QuotesValid File and clicks Next button'); 
-      await Then('User should see Import Quotes Detailed view page of new Quote'); 
+    test('Verify importing Quotes using ValidQuoteFile', { tag: ['@QuotesModule', '@sequential', '@ImportAndCreateQuotes'] }, async ({ Given, When, Then, quotesPage }) => { 
+      await Given('User is on Upload Import File page', null, { quotesPage }); 
+      await When('User uploads Quotes "ValidQuoteFile" and clicks Next button', null, { quotesPage }); 
+      await Then('User should see Import Quotes "Quote Dashboard page"', null, { quotesPage }); 
     });
 
-    test('Example #2', { tag: ['@QuotesModule', '@ImportFunctionality'] }, async ({ Given, When, Then }) => { 
-      await Given('User is on Upload Import File page'); 
-      await When('User uploads QuotesNo File and clicks Next button'); 
-      await Then('User should see Import Quotes Select a Vcard file Alert appears'); 
+    test('Verify importing Quotes using NoFile', { tag: ['@QuotesModule', '@sequential', '@ImportAndCreateQuotes'] }, async ({ Given, When, Then, quotesPage }) => { 
+      await Given('User is on Upload Import File page', null, { quotesPage }); 
+      await When('User uploads Quotes "NoFile" and clicks Next button', null, { quotesPage }); 
+      await Then('User should see Import Quotes "Required field error messages for Import Quotes"', null, { quotesPage }); 
     });
 
-    test('Example #3', { tag: ['@QuotesModule', '@ImportFunctionality'] }, async ({ Given, When, Then }) => { 
-      await Given('User is on Upload Import File page'); 
-      await When('User uploads QuotesInValid File and clicks Next button'); 
-      await Then('User should see Import Quotes Required field error messages'); 
+    test('Verify importing Quotes using InValidFile', { tag: ['@QuotesModule', '@sequential', '@ImportAndCreateQuotes'] }, async ({ Given, When, Then, quotesPage }) => { 
+      await Given('User is on Upload Import File page', null, { quotesPage }); 
+      await When('User uploads Quotes "InValidFile" and clicks Next button', null, { quotesPage }); 
+      await Then('User should see Import Quotes "Import Quote Error Popup alert appears"', null, { quotesPage }); 
     });
 
   });
 
-  test('Verify Import Line Items Page', { tag: ['@QuotesModule', '@ImportLineItemsPage'] }, async ({ Given, When, Then }) => { 
-    await Given('Quotes menu is visible'); 
-    await When('User clicks on Import Line Items option in Quotes Menu'); 
-    await Then('User should see the import Line Items page with correct components', {"dataTable":{"rows":[{"cells":[{"value":"Component"},{"value":"Expected Values"}]},{"cells":[{"value":"PageTitle"},{"value":"UploadImport File"}]},{"cells":[{"value":"Buttons"},{"value":"Choose File, Next"}]},{"cells":[{"value":"Label"},{"value":"No File Chosen"}]},{"cells":[{"value":"HyperLink"},{"value":"Download Import File Template"}]},{"cells":[{"value":"Radio buttons"},{"value":"Create New Records only, Create New Records and Update Existing Records"}]}]}}); 
+  test('Verify Import Line Items Page', { tag: ['@QuotesModule', '@ImportLineItemsPage'] }, async ({ Given, When, Then, quotesPage }) => { 
+    await Given('Quotes menu drop-down list is displayed', null, { quotesPage }); 
+    await When('User clicks on Import Line Items option in Quotes Menu', null, { quotesPage }); 
+    await Then('User should see the import Line Items page with correct components', {"dataTable":{"rows":[{"cells":[{"value":"Component"},{"value":"ExpectedValues"}]},{"cells":[{"value":"PageTitle"},{"value":"UploadImportLineItemsFile"}]},{"cells":[{"value":"Buttons"},{"value":"LineItemsChooseFile, LineItemsNext"}]},{"cells":[{"value":"Label"},{"value":"InformationTextImportLineItems"}]},{"cells":[{"value":"HyperLink"},{"value":"DownloadImportFileTemplateLineItems"}]},{"cells":[{"value":"Radiobuttons"},{"value":"RadioButtonLineItems1, RadioButtonLineItems2"}]}]}}, { quotesPage }); 
   });
 
-  test.describe('Verify the functionality of importing Line Items', () => {
+  test.describe('Verify importing Line Items using <InputFile>', () => {
 
-    test('Example #1', { tag: ['@QuotesModule', '@ImportLineItems'] }, async ({ Given, When, Then }) => { 
-      await Given('User is on Import Line Items page'); 
-      await When('User uploads Line ItemsValid File and clicks Next button'); 
-      await Then('User should see Import Line Items Line Items dashboard page'); 
+    test('Example #1', { tag: ['@QuotesModule', '@ImportandCreateLineItems'] }, async ({ Given, When, Then, quotesPage }) => { 
+      await Given('User is on Import Line Items page', null, { quotesPage }); 
+      await When('User uploads Line Items "ValidLineItemFile" and clicks Next button', null, { quotesPage }); 
+      await Then('User should see Import Line Items "Line Items dashboard page"', null, { quotesPage }); 
     });
 
-    test('Example #2', { tag: ['@QuotesModule', '@ImportLineItems'] }, async ({ Given, When, Then }) => { 
-      await Given('User is on Import Line Items page'); 
-      await When('User uploads Line ItemsNo File and clicks Next button'); 
-      await Then('User should see Import Line Items Required field error messages'); 
+    test('Example #2', { tag: ['@QuotesModule', '@ImportandCreateLineItems'] }, async ({ Given, When, Then, quotesPage }) => { 
+      await Given('User is on Import Line Items page', null, { quotesPage }); 
+      await When('User uploads Line Items "NoFile" and clicks Next button', null, { quotesPage }); 
+      await Then('User should see Import Line Items "Required field error messages for Line Items"', null, { quotesPage }); 
     });
 
-    test('Example #3', { tag: ['@QuotesModule', '@ImportLineItems'] }, async ({ Given, When, Then }) => { 
-      await Given('User is on Import Line Items page'); 
-      await When('User uploads Line ItemsInValid File and clicks Next button'); 
-      await Then('User should see Import Line Items Invalid Import File name message'); 
+    test('Example #3', { tag: ['@QuotesModule', '@ImportandCreateLineItems'] }, async ({ Given, When, Then, quotesPage }) => { 
+      await Given('User is on Import Line Items page', null, { quotesPage }); 
+      await When('User uploads Line Items "InValidFile" and clicks Next button', null, { quotesPage }); 
+      await Then('User should see Import Line Items "Import Line Items Error Popup alert appears"', null, { quotesPage }); 
     });
 
+  });
+
+  test('Verify the availability recently viewed item in Quotes menu', { tag: ['@QuotesModule', '@sequential'] }, async ({ Given, When, Then, quotesPage }) => { 
+    await Given('User created a quote', null, { quotesPage }); 
+    await When('User hovers over the Quotes menu', null, { quotesPage }); 
+    await Then('User should see the option Recently viewed in the Quotes menu', null, { quotesPage }); 
+  });
+
+  test('Verify the availability recently viewed Quotes record', { tag: ['@QuotesModule', '@sequential'] }, async ({ Given, When, Then, quotesPage }) => { 
+    await Given('User created a quote', null, { quotesPage }); 
+    await When('User hovers over the Recently viewed option in the quotes menu', null, { quotesPage }); 
+    await Then('User should see the name of the recently viewed Quote record in its drop down', null, { quotesPage }); 
+  });
+
+  test('Verify opening recently viewed Quotes record', { tag: ['@QuotesModule', '@sequential'] }, async ({ Given, When, Then, quotesPage }) => { 
+    await Given('User created a quote', null, { quotesPage }); 
+    await When('User clicks and opens the recently viewed Quotes record from the Quotes menu', null, { quotesPage }); 
+    await Then('User should see detailed view page of the recently viewed Quotes record', null, { quotesPage }); 
   });
 
 });
@@ -120,19 +131,21 @@ test.use({
 });
 
 const bddFileData = [ // bdd-data-start
-  {"pwTestLine":10,"pickleLine":7,"tags":["@QuotesModule","@QuotesMenu"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":11,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged in to the application","stepMatchArguments":[]},{"pwStepLine":12,"gherkinStepLine":9,"keywordType":"Action","textWithKeyword":"When User is on the Home dashboard page","stepMatchArguments":[]},{"pwStepLine":13,"gherkinStepLine":10,"keywordType":"Outcome","textWithKeyword":"Then User should see Quotes menu in the menu bar","stepMatchArguments":[]}]},
-  {"pwTestLine":16,"pickleLine":13,"tags":["@QuotesModule","@QuotesDropDownList"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":17,"gherkinStepLine":14,"keywordType":"Context","textWithKeyword":"Given User is on the Home dashboard page","stepMatchArguments":[]},{"pwStepLine":18,"gherkinStepLine":15,"keywordType":"Action","textWithKeyword":"When User hovers over the Quotes Menu","stepMatchArguments":[]},{"pwStepLine":19,"gherkinStepLine":16,"keywordType":"Outcome","textWithKeyword":"Then Quotes menu drop down list is displayed","stepMatchArguments":[]}]},
-  {"pwTestLine":22,"pickleLine":19,"tags":["@QuotesModule","@CreateQuotePage"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":23,"gherkinStepLine":20,"keywordType":"Context","textWithKeyword":"Given Quotes menu drop-down list is displayed","stepMatchArguments":[]},{"pwStepLine":24,"gherkinStepLine":21,"keywordType":"Action","textWithKeyword":"When User clicks on the Create Quote option in the Quotes Menu","stepMatchArguments":[]},{"pwStepLine":25,"gherkinStepLine":22,"keywordType":"Outcome","textWithKeyword":"Then User should see the correct components on the Create Quote page","stepMatchArguments":[]}]},
-  {"pwTestLine":30,"pickleLine":35,"tags":["@QuotesModule","@CreateQuoteFunctionality"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":31,"gherkinStepLine":30,"keywordType":"Context","textWithKeyword":"Given User is on the Create Quote page","stepMatchArguments":[]},{"pwStepLine":32,"gherkinStepLine":31,"keywordType":"Action","textWithKeyword":"When User enters Quotes Valid Data and clicks the Save button","stepMatchArguments":[]},{"pwStepLine":33,"gherkinStepLine":32,"keywordType":"Outcome","textWithKeyword":"Then User should see create Quotes Detailed view page of new Quote","stepMatchArguments":[]}]},
-  {"pwTestLine":36,"pickleLine":36,"tags":["@QuotesModule","@CreateQuoteFunctionality"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":37,"gherkinStepLine":30,"keywordType":"Context","textWithKeyword":"Given User is on the Create Quote page","stepMatchArguments":[]},{"pwStepLine":38,"gherkinStepLine":31,"keywordType":"Action","textWithKeyword":"When User enters Quotes No Data and clicks the Save button","stepMatchArguments":[]},{"pwStepLine":39,"gherkinStepLine":32,"keywordType":"Outcome","textWithKeyword":"Then User should see create Quotes Required field error messages","stepMatchArguments":[]}]},
-  {"pwTestLine":42,"pickleLine":37,"tags":["@QuotesModule","@CreateQuoteFunctionality"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":43,"gherkinStepLine":30,"keywordType":"Context","textWithKeyword":"Given User is on the Create Quote page","stepMatchArguments":[]},{"pwStepLine":44,"gherkinStepLine":31,"keywordType":"Action","textWithKeyword":"When User enters Quotes Valid Data and clicks the Cancel button","stepMatchArguments":[]},{"pwStepLine":45,"gherkinStepLine":32,"keywordType":"Outcome","textWithKeyword":"Then User should see create Quotes Confirmation dialog appears","stepMatchArguments":[]}]},
-  {"pwTestLine":50,"pickleLine":40,"tags":["@QuotesModule","@ViewQuotesPage"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":51,"gherkinStepLine":41,"keywordType":"Context","textWithKeyword":"Given Quotes menu drop-down list is displayed","stepMatchArguments":[]},{"pwStepLine":52,"gherkinStepLine":42,"keywordType":"Action","textWithKeyword":"When User clicks on the \"View Quotes\" option in the Quotes Menu","stepMatchArguments":[{"group":{"start":19,"value":"\"View Quotes\"","children":[{"start":20,"value":"View Quotes","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":53,"gherkinStepLine":43,"keywordType":"Outcome","textWithKeyword":"Then User should see the correct components on the Quotes dashboard page","stepMatchArguments":[]}]},
-  {"pwTestLine":56,"pickleLine":52,"tags":["@QuotesModule","@ImportPage"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":57,"gherkinStepLine":53,"keywordType":"Context","textWithKeyword":"Given User has opened Quotes menu","stepMatchArguments":[]},{"pwStepLine":58,"gherkinStepLine":54,"keywordType":"Action","textWithKeyword":"When User clicks the Import option","stepMatchArguments":[]},{"pwStepLine":59,"gherkinStepLine":55,"keywordType":"Outcome","textWithKeyword":"Then User should see the import page with correct components","stepMatchArguments":[]}]},
-  {"pwTestLine":64,"pickleLine":70,"tags":["@QuotesModule","@ImportFunctionality"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":65,"gherkinStepLine":65,"keywordType":"Context","textWithKeyword":"Given User is on Upload Import File page","stepMatchArguments":[]},{"pwStepLine":66,"gherkinStepLine":66,"keywordType":"Action","textWithKeyword":"When User uploads QuotesValid File and clicks Next button","stepMatchArguments":[]},{"pwStepLine":67,"gherkinStepLine":67,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Quotes Detailed view page of new Quote","stepMatchArguments":[]}]},
-  {"pwTestLine":70,"pickleLine":71,"tags":["@QuotesModule","@ImportFunctionality"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":71,"gherkinStepLine":65,"keywordType":"Context","textWithKeyword":"Given User is on Upload Import File page","stepMatchArguments":[]},{"pwStepLine":72,"gherkinStepLine":66,"keywordType":"Action","textWithKeyword":"When User uploads QuotesNo File and clicks Next button","stepMatchArguments":[]},{"pwStepLine":73,"gherkinStepLine":67,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Quotes Select a Vcard file Alert appears","stepMatchArguments":[]}]},
-  {"pwTestLine":76,"pickleLine":72,"tags":["@QuotesModule","@ImportFunctionality"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":77,"gherkinStepLine":65,"keywordType":"Context","textWithKeyword":"Given User is on Upload Import File page","stepMatchArguments":[]},{"pwStepLine":78,"gherkinStepLine":66,"keywordType":"Action","textWithKeyword":"When User uploads QuotesInValid File and clicks Next button","stepMatchArguments":[]},{"pwStepLine":79,"gherkinStepLine":67,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Quotes Required field error messages","stepMatchArguments":[]}]},
-  {"pwTestLine":84,"pickleLine":75,"tags":["@QuotesModule","@ImportLineItemsPage"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":85,"gherkinStepLine":76,"keywordType":"Context","textWithKeyword":"Given Quotes menu is visible","stepMatchArguments":[]},{"pwStepLine":86,"gherkinStepLine":77,"keywordType":"Action","textWithKeyword":"When User clicks on Import Line Items option in Quotes Menu","stepMatchArguments":[]},{"pwStepLine":87,"gherkinStepLine":78,"keywordType":"Outcome","textWithKeyword":"Then User should see the import Line Items page with correct components","stepMatchArguments":[]}]},
-  {"pwTestLine":92,"pickleLine":93,"tags":["@QuotesModule","@ImportLineItems"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":93,"gherkinStepLine":88,"keywordType":"Context","textWithKeyword":"Given User is on Import Line Items page","stepMatchArguments":[]},{"pwStepLine":94,"gherkinStepLine":89,"keywordType":"Action","textWithKeyword":"When User uploads Line ItemsValid File and clicks Next button","stepMatchArguments":[]},{"pwStepLine":95,"gherkinStepLine":90,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Line Items Line Items dashboard page","stepMatchArguments":[]}]},
-  {"pwTestLine":98,"pickleLine":94,"tags":["@QuotesModule","@ImportLineItems"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":99,"gherkinStepLine":88,"keywordType":"Context","textWithKeyword":"Given User is on Import Line Items page","stepMatchArguments":[]},{"pwStepLine":100,"gherkinStepLine":89,"keywordType":"Action","textWithKeyword":"When User uploads Line ItemsNo File and clicks Next button","stepMatchArguments":[]},{"pwStepLine":101,"gherkinStepLine":90,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Line Items Required field error messages","stepMatchArguments":[]}]},
-  {"pwTestLine":104,"pickleLine":95,"tags":["@QuotesModule","@ImportLineItems"],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given User launches the application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":105,"gherkinStepLine":88,"keywordType":"Context","textWithKeyword":"Given User is on Import Line Items page","stepMatchArguments":[]},{"pwStepLine":106,"gherkinStepLine":89,"keywordType":"Action","textWithKeyword":"When User uploads Line ItemsInValid File and clicks Next button","stepMatchArguments":[]},{"pwStepLine":107,"gherkinStepLine":90,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Line Items Invalid Import File name message","stepMatchArguments":[]}]},
+  {"pwTestLine":10,"pickleLine":11,"tags":["@QuotesModule","@QuotesDropDownList"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":11,"gherkinStepLine":13,"keywordType":"Action","textWithKeyword":"When User hovers over the Quotes Menu","stepMatchArguments":[]},{"pwStepLine":12,"gherkinStepLine":14,"keywordType":"Outcome","textWithKeyword":"Then Quotes menu drop down list is displayed","stepMatchArguments":[]}]},
+  {"pwTestLine":15,"pickleLine":17,"tags":["@QuotesModule","@CreateQuotePage"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":16,"gherkinStepLine":18,"keywordType":"Context","textWithKeyword":"Given Quotes menu drop-down list is displayed","stepMatchArguments":[]},{"pwStepLine":17,"gherkinStepLine":19,"keywordType":"Action","textWithKeyword":"When User clicks on the Create Quote option in the Quotes Menu","stepMatchArguments":[]},{"pwStepLine":18,"gherkinStepLine":20,"keywordType":"Outcome","textWithKeyword":"Then User should see the correct components on the Create Quote page","stepMatchArguments":[]}]},
+  {"pwTestLine":23,"pickleLine":33,"tags":["@QuotesModule","@CreateQuoteFunctionality"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":24,"gherkinStepLine":28,"keywordType":"Context","textWithKeyword":"Given User is on the Create Quote page","stepMatchArguments":[]},{"pwStepLine":25,"gherkinStepLine":29,"keywordType":"Action","textWithKeyword":"When User enters Quotes \"quoteData1\" and clicks the \"QuoteSave\" button","stepMatchArguments":[{"group":{"start":19,"value":"\"quoteData1\"","children":[{"start":20,"value":"quoteData1","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":47,"value":"\"QuoteSave\"","children":[{"start":48,"value":"QuoteSave","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":26,"gherkinStepLine":30,"keywordType":"Outcome","textWithKeyword":"Then User should see create Quotes \"Detailed view page of Created new Quote\"","stepMatchArguments":[{"group":{"start":30,"value":"\"Detailed view page of Created new Quote\"","children":[{"start":31,"value":"Detailed view page of Created new Quote","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
+  {"pwTestLine":29,"pickleLine":34,"tags":["@QuotesModule","@CreateQuoteFunctionality"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":30,"gherkinStepLine":28,"keywordType":"Context","textWithKeyword":"Given User is on the Create Quote page","stepMatchArguments":[]},{"pwStepLine":31,"gherkinStepLine":29,"keywordType":"Action","textWithKeyword":"When User enters Quotes \"noData\" and clicks the \"QuoteSave\" button","stepMatchArguments":[{"group":{"start":19,"value":"\"noData\"","children":[{"start":20,"value":"noData","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":43,"value":"\"QuoteSave\"","children":[{"start":44,"value":"QuoteSave","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":32,"gherkinStepLine":30,"keywordType":"Outcome","textWithKeyword":"Then User should see create Quotes \"Required field error messages for Create Quote\"","stepMatchArguments":[{"group":{"start":30,"value":"\"Required field error messages for Create Quote\"","children":[{"start":31,"value":"Required field error messages for Create Quote","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
+  {"pwTestLine":35,"pickleLine":35,"tags":["@QuotesModule","@CreateQuoteFunctionality"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":36,"gherkinStepLine":28,"keywordType":"Context","textWithKeyword":"Given User is on the Create Quote page","stepMatchArguments":[]},{"pwStepLine":37,"gherkinStepLine":29,"keywordType":"Action","textWithKeyword":"When User enters Quotes \"quoteData2\" and clicks the \"QuoteCancel\" button","stepMatchArguments":[{"group":{"start":19,"value":"\"quoteData2\"","children":[{"start":20,"value":"quoteData2","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"},{"group":{"start":47,"value":"\"QuoteCancel\"","children":[{"start":48,"value":"QuoteCancel","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":38,"gherkinStepLine":30,"keywordType":"Outcome","textWithKeyword":"Then User should see create Quotes \"Confirmation dialog appears for Create Quote\"","stepMatchArguments":[{"group":{"start":30,"value":"\"Confirmation dialog appears for Create Quote\"","children":[{"start":31,"value":"Confirmation dialog appears for Create Quote","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
+  {"pwTestLine":43,"pickleLine":38,"tags":["@QuotesModule","@ViewQuotesPage"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":44,"gherkinStepLine":39,"keywordType":"Context","textWithKeyword":"Given Quotes menu drop-down list is displayed","stepMatchArguments":[]},{"pwStepLine":45,"gherkinStepLine":40,"keywordType":"Action","textWithKeyword":"When User clicks on the View Quotes option in the Quotes Menu","stepMatchArguments":[]},{"pwStepLine":46,"gherkinStepLine":41,"keywordType":"Outcome","textWithKeyword":"Then User should see the correct components on the Quotes dashboard page","stepMatchArguments":[]}]},
+  {"pwTestLine":49,"pickleLine":50,"tags":["@QuotesModule","@ImportQuotesPageComponents"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":50,"gherkinStepLine":51,"keywordType":"Context","textWithKeyword":"Given Quotes menu drop-down list is displayed","stepMatchArguments":[]},{"pwStepLine":51,"gherkinStepLine":52,"keywordType":"Action","textWithKeyword":"When User clicks on Import option in Quotes Menu","stepMatchArguments":[]},{"pwStepLine":52,"gherkinStepLine":53,"keywordType":"Outcome","textWithKeyword":"Then User should see the import Quotes page with correct components","stepMatchArguments":[]}]},
+  {"pwTestLine":57,"pickleLine":68,"tags":["@QuotesModule","@sequential","@ImportAndCreateQuotes"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":58,"gherkinStepLine":63,"keywordType":"Context","textWithKeyword":"Given User is on Upload Import File page","stepMatchArguments":[]},{"pwStepLine":59,"gherkinStepLine":64,"keywordType":"Action","textWithKeyword":"When User uploads Quotes \"ValidQuoteFile\" and clicks Next button","stepMatchArguments":[{"group":{"start":20,"value":"\"ValidQuoteFile\"","children":[{"start":21,"value":"ValidQuoteFile","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":60,"gherkinStepLine":65,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Quotes \"Quote Dashboard page\"","stepMatchArguments":[{"group":{"start":30,"value":"\"Quote Dashboard page\"","children":[{"start":31,"value":"Quote Dashboard page","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
+  {"pwTestLine":63,"pickleLine":69,"tags":["@QuotesModule","@sequential","@ImportAndCreateQuotes"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":64,"gherkinStepLine":63,"keywordType":"Context","textWithKeyword":"Given User is on Upload Import File page","stepMatchArguments":[]},{"pwStepLine":65,"gherkinStepLine":64,"keywordType":"Action","textWithKeyword":"When User uploads Quotes \"NoFile\" and clicks Next button","stepMatchArguments":[{"group":{"start":20,"value":"\"NoFile\"","children":[{"start":21,"value":"NoFile","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":66,"gherkinStepLine":65,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Quotes \"Required field error messages for Import Quotes\"","stepMatchArguments":[{"group":{"start":30,"value":"\"Required field error messages for Import Quotes\"","children":[{"start":31,"value":"Required field error messages for Import Quotes","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
+  {"pwTestLine":69,"pickleLine":70,"tags":["@QuotesModule","@sequential","@ImportAndCreateQuotes"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":70,"gherkinStepLine":63,"keywordType":"Context","textWithKeyword":"Given User is on Upload Import File page","stepMatchArguments":[]},{"pwStepLine":71,"gherkinStepLine":64,"keywordType":"Action","textWithKeyword":"When User uploads Quotes \"InValidFile\" and clicks Next button","stepMatchArguments":[{"group":{"start":20,"value":"\"InValidFile\"","children":[{"start":21,"value":"InValidFile","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":72,"gherkinStepLine":65,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Quotes \"Import Quote Error Popup alert appears\"","stepMatchArguments":[{"group":{"start":30,"value":"\"Import Quote Error Popup alert appears\"","children":[{"start":31,"value":"Import Quote Error Popup alert appears","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
+  {"pwTestLine":77,"pickleLine":73,"tags":["@QuotesModule","@ImportLineItemsPage"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":78,"gherkinStepLine":74,"keywordType":"Context","textWithKeyword":"Given Quotes menu drop-down list is displayed","stepMatchArguments":[]},{"pwStepLine":79,"gherkinStepLine":75,"keywordType":"Action","textWithKeyword":"When User clicks on Import Line Items option in Quotes Menu","stepMatchArguments":[]},{"pwStepLine":80,"gherkinStepLine":76,"keywordType":"Outcome","textWithKeyword":"Then User should see the import Line Items page with correct components","stepMatchArguments":[]}]},
+  {"pwTestLine":85,"pickleLine":91,"tags":["@QuotesModule","@ImportandCreateLineItems"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":86,"gherkinStepLine":86,"keywordType":"Context","textWithKeyword":"Given User is on Import Line Items page","stepMatchArguments":[]},{"pwStepLine":87,"gherkinStepLine":87,"keywordType":"Action","textWithKeyword":"When User uploads Line Items \"ValidLineItemFile\" and clicks Next button","stepMatchArguments":[{"group":{"start":24,"value":"\"ValidLineItemFile\"","children":[{"start":25,"value":"ValidLineItemFile","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":88,"gherkinStepLine":88,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Line Items \"Line Items dashboard page\"","stepMatchArguments":[{"group":{"start":34,"value":"\"Line Items dashboard page\"","children":[{"start":35,"value":"Line Items dashboard page","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
+  {"pwTestLine":91,"pickleLine":92,"tags":["@QuotesModule","@ImportandCreateLineItems"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":92,"gherkinStepLine":86,"keywordType":"Context","textWithKeyword":"Given User is on Import Line Items page","stepMatchArguments":[]},{"pwStepLine":93,"gherkinStepLine":87,"keywordType":"Action","textWithKeyword":"When User uploads Line Items \"NoFile\" and clicks Next button","stepMatchArguments":[{"group":{"start":24,"value":"\"NoFile\"","children":[{"start":25,"value":"NoFile","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":94,"gherkinStepLine":88,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Line Items \"Required field error messages for Line Items\"","stepMatchArguments":[{"group":{"start":34,"value":"\"Required field error messages for Line Items\"","children":[{"start":35,"value":"Required field error messages for Line Items","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
+  {"pwTestLine":97,"pickleLine":93,"tags":["@QuotesModule","@ImportandCreateLineItems"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":98,"gherkinStepLine":86,"keywordType":"Context","textWithKeyword":"Given User is on Import Line Items page","stepMatchArguments":[]},{"pwStepLine":99,"gherkinStepLine":87,"keywordType":"Action","textWithKeyword":"When User uploads Line Items \"InValidFile\" and clicks Next button","stepMatchArguments":[{"group":{"start":24,"value":"\"InValidFile\"","children":[{"start":25,"value":"InValidFile","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":100,"gherkinStepLine":88,"keywordType":"Outcome","textWithKeyword":"Then User should see Import Line Items \"Import Line Items Error Popup alert appears\"","stepMatchArguments":[{"group":{"start":34,"value":"\"Import Line Items Error Popup alert appears\"","children":[{"start":35,"value":"Import Line Items Error Popup alert appears","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
+  {"pwTestLine":105,"pickleLine":96,"tags":["@QuotesModule","@sequential"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":106,"gherkinStepLine":97,"keywordType":"Context","textWithKeyword":"Given User created a quote","stepMatchArguments":[]},{"pwStepLine":107,"gherkinStepLine":98,"keywordType":"Action","textWithKeyword":"When User hovers over the Quotes menu","stepMatchArguments":[]},{"pwStepLine":108,"gherkinStepLine":99,"keywordType":"Outcome","textWithKeyword":"Then User should see the option Recently viewed in the Quotes menu","stepMatchArguments":[]}]},
+  {"pwTestLine":111,"pickleLine":102,"tags":["@QuotesModule","@sequential"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":112,"gherkinStepLine":103,"keywordType":"Context","textWithKeyword":"Given User created a quote","stepMatchArguments":[]},{"pwStepLine":113,"gherkinStepLine":104,"keywordType":"Action","textWithKeyword":"When User hovers over the Recently viewed option in the quotes menu","stepMatchArguments":[]},{"pwStepLine":114,"gherkinStepLine":105,"keywordType":"Outcome","textWithKeyword":"Then User should see the name of the recently viewed Quote record in its drop down","stepMatchArguments":[]}]},
+  {"pwTestLine":117,"pickleLine":108,"tags":["@QuotesModule","@sequential"],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given User successfully logged into the suite8demo application","isBg":true,"stepMatchArguments":[]},{"pwStepLine":118,"gherkinStepLine":109,"keywordType":"Context","textWithKeyword":"Given User created a quote","stepMatchArguments":[]},{"pwStepLine":119,"gherkinStepLine":110,"keywordType":"Action","textWithKeyword":"When User clicks and opens the recently viewed Quotes record from the Quotes menu","stepMatchArguments":[]},{"pwStepLine":120,"gherkinStepLine":111,"keywordType":"Outcome","textWithKeyword":"Then User should see detailed view page of the recently viewed Quotes record","stepMatchArguments":[]}]},
 ]; // bdd-data-end
