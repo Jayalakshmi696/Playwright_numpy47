@@ -1,4 +1,4 @@
-// Generated from: features\More3.feature
+// Generated from: features/More3.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Testing 3rd section of modules listed on More menu in suite8demo application', () => {
