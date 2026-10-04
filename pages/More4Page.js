@@ -53,6 +53,7 @@ export class More4Page {
       await item.click();
       await expect(this.page).toHaveURL(this.pageUrls[name], { timeout: 5000 });
     }).toPass({ timeout: 30000 });
+  
   }
 
   async verifyPageOpened(name) {
