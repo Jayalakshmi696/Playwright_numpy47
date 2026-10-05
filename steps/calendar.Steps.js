@@ -3,6 +3,8 @@ import { expect } from '@playwright/test';
 import { test } from '../fixtures/suite8Fixtures.js';
 import calendarData from '../test-data/calendarData.json' with { type: 'json' };
 import { logger } from "../utils/logger.js";
+import { LoginPage } from '../pages/LoginPage.js';
+import loginData from '../test-data/loginData.json' with { type: 'json' };
 
 const { Given, When, Then } = createBdd(test);
 
@@ -10,14 +12,26 @@ const { Given, When, Then } = createBdd(test);
 
 let currentFormType; // meeting / call / task, set in "the user is on the {string} page"
 
-Given('the user is logged into the SuitCRM', async ({ page }) => {
+//Given('the user is logged into the SuitCRM', async ({ page }) => {
+  //await page.goto('https://suite8demo.suiteondemand.com/#/home');
+//});
+Given('the user is logged into the SuitCRM', async ({ page, $testInfo }) => {
+   $testInfo.setTimeout(120000);
   await page.goto('https://suite8demo.suiteondemand.com/#/home');
+  const usernameInput = page.getByRole('textbox', { name: 'Username' });
+  const homeSearch = page.getByRole('textbox', { name: 'Search' });
+  await expect.poll(async () => (await usernameInput.isVisible()) || (await homeSearch.isVisible()), { timeout: 15000 }).toBe(true);
+  if (await usernameInput.isVisible()) {   // log in again only if the session ended
+    const credentials = loginData.validUsernameAndPassword;
+    await new LoginPage(page).login(credentials.username, credentials.password);
+  }
 });
 
 Given('the user navigates to the {string} module in the menu', async ({ page, calendarPage }, moduleName) => {
   await page.waitForLoadState('load');
   
   await expect(async () => {
+     await calendarPage.getTopNavLink(moduleName).hover(); 
     await calendarPage.getTopNavLink(moduleName).click();
     await expect(page).toHaveURL(new RegExp(moduleName, 'i'), { timeout: 3000 });
   }).toPass({ timeout: 40000 });
