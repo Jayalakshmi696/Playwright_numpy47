@@ -9,7 +9,6 @@ const testDir = defineBddConfig({
     'fixtures/**/*.js'
         ],
    // importTestFrom: './fixtures/loginFixture.js',
-  //tags: '@Login1 or @Accounts1'
   // importTestFrom: './fixtures/accountfixture.js'
    //tags : '@calendar or @document or @more',
 
@@ -101,6 +100,8 @@ export default defineConfig({
       testIgnore: /.*login(?:PageUI)?\.feature\.spec\.js/,
       use: { 
         ...devices['Desktop Safari'],
+        viewport:{width: 1920, height: 1080},
+
       storageState: 'playwright/.auth/user.json',
       },
       dependencies: ['setup'],
