@@ -1,4 +1,4 @@
-// Generated from: features/Leads.feature
+// Generated from: features\Leads.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Leads module functionality of suite8demo application', () => {
@@ -126,7 +126,7 @@ test.describe('Leads module functionality of suite8demo application', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/Leads.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\Leads.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 
