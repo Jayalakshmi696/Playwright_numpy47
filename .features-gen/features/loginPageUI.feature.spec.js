@@ -1,4 +1,4 @@
-// Generated from: features/loginPageUI.feature
+// Generated from: features\loginPageUI.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Login Page UI Verification', () => {
@@ -17,7 +17,7 @@ test.describe('Login Page UI Verification', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/loginPageUI.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\loginPageUI.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

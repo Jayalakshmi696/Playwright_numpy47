@@ -1,4 +1,4 @@
-// Generated from: features/AccountsImportFile.feature
+// Generated from: features\AccountsImportFile.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Accounts module import file functionality of suite8demo application', () => {
@@ -37,7 +37,7 @@ test.describe('Accounts module import file functionality of suite8demo applicati
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features/AccountsImportFile.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\AccountsImportFile.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 
