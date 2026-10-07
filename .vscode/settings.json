@@ -1,5 +1,18 @@
-{
+{/*
     "playwrightBdd.configPath": "playwright.config.js",
     "playwrightBdd.featureFolder": "features",
     "playwrightBdd.stepsFolder": "e2e"
+    */
+   
+    "cucumberautocomplete.steps": [
+        "steps/**/*.js"
+    ],
+    "cucumberautocomplete.syncfeatures": [
+        "features/**/*.feature"
+    ],
+    "cucumberautocomplete.strictGherkinValidation": false
+
+
 }
+
+
