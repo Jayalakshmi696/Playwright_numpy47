@@ -42,14 +42,18 @@ export class More4Page {
     await this.moreMenu.hover();
   }
 
-  // Click an item in the More dropdown by its name
+  /// Click an item in the More dropdown by its name (retries if the click does not navigate)
   async clickMoreItem(name) {
-
     logger.info(`Clicking "${name}" in the More menu`);
-    
+
     const item = this.more4Items[name];
-    await expect(item).toBeVisible();   // wait for the dropdown to show it
-    await item.click();
+    await expect(async () => {
+      await this.openMoreMenu();
+      await expect(item).toBeVisible({ timeout: 5000 });
+      await item.click();
+      await expect(this.page).toHaveURL(this.pageUrls[name], { timeout: 5000 });
+    }).toPass({ timeout: 30000 });
+  
   }
 
   async verifyPageOpened(name) {

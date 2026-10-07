@@ -1,0 +1,20 @@
+{
+    "ValidVcardFile": {
+        "filePath" : "test-data/Vcard.vcf"
+    },
+    "InValidFile": {
+        "filePath" : "test-data/InvalidV-Card.jpg"
+    },
+    "NoFile": {
+        "filePath" : ""
+    },
+    "ValidLeadFile": {
+        "filePath" : "test-data/Leads.csv"
+    },
+    "ValidQuoteFile":{
+        "filePath": "test-data/Quotes.csv"
+    },
+    "ValidLineItemFile":{
+        "filePath": "test-data/LineItems.csv"
+    }    
+}

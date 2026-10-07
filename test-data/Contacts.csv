@@ -1,0 +1,25 @@
+"First Name","Last Name","ID","Salutation","Job Title","Department","Account Name","Email Address","Non Primary E-mails","Mobile","Office Phone","Home","Other Phone","Fax","Primary Address Street","Primary Address City","Primary Address State","Primary Address Postal Code","Primary Address Country","Alternate Address Street","Alternate Address City","Alternate Address State","Alternate Address Postal Code","Alternate Address Country","Description","Birthdate","Lead Source","Campaign ID","Do Not Call","Reports to ID","Assistant","Assistant Phone","Assigned to","Assigned User","Date Created","Date Modified","Modified By","Created By","Deleted","Photo","Lawful Basis","Lawful Basis Date Reviewed","Lawful Basis Source","Joomla Account ID","Account Disabled","Portal User Type","Longitude","Latitude","Geocode Status","Address"
+"Dewitt","Hecker","00f0813e-11a7-43c6-b46c-15f31d6596f0","","Director Operations","","Jungle Systems Inc","kid.vegan.kid@example.net","","(876) 731-1439","(124) 166-4035","(994) 149-7130","","","4275 Elm Dr","Los Angeles","NY","44253","USA","","","","","","","","Trade Show","","0","","","","chris","seed_chris_id","2024-11-30 17:00","2026-09-11 01:01","1","1","0","","","","","","","Single user","","","",""
+"Kelley","Abramson","032d2d18-bdbe-4b49-a0d0-c2018d7e92fc","","Senior Product Manager","","Air Safety Inc","im.sugar@example.org","","(368) 011-4803","(330) 544-2778","(456) 971-4706","","","48920 San Carlos Ave","Hartford","CA","72191","USA","","","","","","","","Direct Mail","","0","","","","sally","seed_sally_id","2022-02-14 17:15","2026-09-11 01:01","1","1","0","","","","","","","Single user","","","",""
+"Buster","Reichman","050d2474-6662-45ef-a408-bbd69a429a94","","IT Developer","","Income Free Investing LP","kid48@example.it","","(719) 920-0398","(742) 383-6168","(562) 690-0111","","","32 University Ave.","Salt Lake City","CA","83291","USA","","","","","","","","Direct Mail","","0","","","","max","seed_max_id","2023-07-06 09:45","2026-09-11 01:01","1","1","0","","","","","","","Single user","","","",""
+"Eliza","Corn","05881eb0-98e9-4ebe-b87d-5aa215374ea4","","Senior Product Manager","","Davenport Investing","vegan.hr@example.tv","","(655) 870-1431","(953) 661-9007","(265) 800-6842","","","74 South Cemetery Ave","San Mateo","CA","87161","USA","","","","","","","","Partner","","0","","","","sally","seed_sally_id","2022-03-28 06:15","2026-09-11 01:01","1","1","0","","","","","","","Single user","","","",""
+"Ellsworth","Nunez","0668bec1-d179-4b11-9c73-fd0bef24cb75","","Senior Product Manager","","Constrata Trust LLC","the23@example.tv","","(583) 112-7119","(437) 937-0946","(977) 659-3524","","","32 University Ave.","San Mateo","NY","27410","USA","","","","","","","","Other","","0","","","","will","seed_will_id","2022-11-30 08:15","2026-09-11 01:01","1","1","0","","","","","","","Single user","","","",""
+
+
+"This is a sample import file which provides an example of the expected contents of a file that is ready for import."
+"The file is a comma-delimited .csv file, using double-quotes as the field qualifier."
+
+"The header row is the top-most row in the file and contains the field labels as you would see them in the application."
+"These labels are used for mapping the data in the file to the fields in the application."
+
+"Notes: The database names could also be used in the header row. This is useful when you are using phpMyAdmin or another database tool to provide an exported list of data to import."
+"The column order is not critical as the import process matches the data to the appropriate fields based on the header row."
+
+
+"To use this file as a template, do the following:"
+"1. Remove the sample rows of data"
+"2. Remove the help text that you are reading right now"
+"3. Input your own data into the appropriate rows and columns"
+"4. Save the file to a known location on your system"
+"5. Click on the Import option from the Actions menu in the application and choose the file to upload"
+   

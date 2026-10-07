@@ -1,14 +1,14 @@
   // @ts-check
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig, cucumberReporter } from 'playwright-bdd'; 
+//import { globalSetup, globalTeardown } from './setup/testSetup.js';
  
 const testDir = defineBddConfig({
   features: ['features/**/*.feature'],
   steps: [
      'steps/**/*.js',
     'fixtures/**/*.js'
-        
-    ],
+        ],
    // importTestFrom: './fixtures/loginFixture.js',
   //tags: '@Login1 or @Accounts1'
   // importTestFrom: './fixtures/accountfixture.js'
@@ -26,11 +26,12 @@ dotenv.config({ path: path.resolve(__dirname, 'QA.env') });
 
 /**
  * @see https://playwright.dev/docs/test-configuration
- */
+ */ 
 export default defineConfig({
   //testDir: './features-gen',
  testDir,
  grepInvert:/@calendar|@document|@LeadsModule|@MoreModuleSection3|@More4module|@QuotesModule/,
+  globalSetup: './setup/testSetup.js',
   /* Run tests in files in parallel */
   fullyParallel: true,
   timeout:60000,
@@ -42,11 +43,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 2: undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
- // reporter: 'html',
-  reporter: [
-    ['html'],
-    ['allure-playwright']
-  ],
+  reporter: [['html'], ['allure-playwright']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
