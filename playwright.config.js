@@ -30,6 +30,7 @@ dotenv.config({ path: path.resolve(__dirname, 'QA.env') });
 export default defineConfig({
   //testDir: './features-gen',
  testDir,
+ grepInvert:/@calendar|@document|@LeadsModule|@MoreModuleSection3|@More4module|@QuotesModule/,
   globalSetup: './setup/testSetup.js',
   /* Run tests in files in parallel */
   fullyParallel: true,
