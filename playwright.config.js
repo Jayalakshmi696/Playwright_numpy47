@@ -1,6 +1,7 @@
   // @ts-check
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig, cucumberReporter } from 'playwright-bdd'; 
+//import { globalSetup, globalTeardown } from './setup/testSetup.js';
  
 const testDir = defineBddConfig({
   features: ['features/**/*.feature'],
@@ -28,7 +29,8 @@ dotenv.config({ path: path.resolve(__dirname, 'QA.env') });
 export default defineConfig({
   //testDir: './features-gen',
  testDir,
- 
+// grepInvert:/@calendar|@document|@LeadsModule|@MoreModuleSection3|@More4module|@QuotesModule/,
+  globalSetup: './setup/testSetup.js',
   /* Run tests in files in parallel */
   fullyParallel: true,
   timeout:60000,
