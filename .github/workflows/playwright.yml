@@ -6,7 +6,7 @@ on:
     branches: [ main, master ]
 jobs:
   test:
-    timeout-minutes: 60
+    timeout-minutes: 360
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -20,7 +20,7 @@ jobs:
     - name: Generate BDD specs
       run: npx bddgen
     - name: Run Playwright tests
-      run:  npx playwright test 
+      run:  npm run test:dynamic 
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:

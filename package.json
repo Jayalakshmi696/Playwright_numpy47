@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:dynamic": "node scripts/runTests.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Jayalakshmi696/Playwright_numpy47.git"
