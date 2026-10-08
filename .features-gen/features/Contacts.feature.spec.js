@@ -1,4 +1,4 @@
-// Generated from: features\Contacts.feature
+// Generated from: features/Contacts.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('Contacts module functionality of suite8demo application', () => {
@@ -96,7 +96,7 @@ test.describe('Contacts module functionality of suite8demo application', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\Contacts.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features/Contacts.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 

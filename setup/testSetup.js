@@ -33,7 +33,7 @@ async function globalSetup() {
         if (fs.existsSync('allure-results')) {
 
             execSync(
-                'npx allure generate allure-results -o allure-report --clean --single-file',
+                'npx allure generate allure-results -o allure-report --clean', 
                 {
                     stdio: 'inherit'
                 }

@@ -1,4 +1,4 @@
-// Generated from: features\More4.feature
+// Generated from: features/More4.feature
 import { test } from "../../fixtures/suite8Fixtures.js";
 
 test.describe('more Module - View, Navigate and  Activities', () => {
@@ -43,7 +43,7 @@ test.describe('more Module - View, Navigate and  Activities', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\More4.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features/More4.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
 });
 
