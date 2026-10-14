@@ -13,3 +13,8 @@ node_modules/
 .DS_Store
 /.DS_Store/
 
+# Environment files - do not push to GitHub
+QA.env
+UAT.env
+PROD.env
+

@@ -10,7 +10,8 @@ setup('authenticate', async ({ page }) => {
 
     const loginPage = new LoginPage(page);
 
-    await page.goto('https://suite8demo.suiteondemand.com/#/Login');
+    //await page.goto('https://suite8demo.suiteondemand.com/#/Login');
+    await page.goto(`${process.env.BASE_URL}/#/Login`);
 
     const user = testData.validUsernameAndPassword;
 
