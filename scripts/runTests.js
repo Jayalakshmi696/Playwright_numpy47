@@ -37,9 +37,16 @@ if (!envFile) {
   process.exit(1);
 }
 
-// 3. Load the selected environment file.
-const envPath = path.resolve(__dirname, '..', envFile);
-const result = dotenv.config({ path: envPath, override: true });
+/* 3. Load the selected environment file.
+   Use ENV_DIR in Jenkins; otherwise use the local project root. */
+
+const envDirectory = process.env.ENV_DIR
+  ? path.resolve(process.env.ENV_DIR)
+  : path.resolve(__dirname, '..');
+
+const envPath = path.resolve(envDirectory, envFile);
+
+const result = dotenv.config({ path: envPath, override: true,});
 
 if (result.error) {
   console.error(`Failed to load ${envFile}: ${result.error.message}`);
